@@ -45,13 +45,12 @@ import kotlinx.coroutines.delay
 fun TopSliderSection() {
 
     val sliderList = listOf(
-        "https://raw.githubusercontent.com/ihoseinam/French-pastry/master/slider1.png?token=GHSAT0AAAAAACQMYXPN5Q5ONOPSMAG3W4SCZRD6E2Q",
-        "https://raw.githubusercontent.com/ihoseinam/French-pastry/master/digiclub1.jpg?token=GHSAT0AAAAAACQMYXPMLHR4HG2NS672LCOUZRD6AZA",
-        "https://raw.githubusercontent.com/ihoseinam/French-pastry/master/slider1.png?token=GHSAT0AAAAAACQMYXPN5Q5ONOPSMAG3W4SCZRD6E2Q",
-        "https://raw.githubusercontent.com/ihoseinam/French-pastry/master/digiclub2.jpg?token=GHSAT0AAAAAACQMYXPNXV6H7LY2KWJNYXL2ZRD6BBQ",
-        "https://raw.githubusercontent.com/ihoseinam/French-pastry/master/slider1.png?token=GHSAT0AAAAAACQMYXPN5Q5ONOPSMAG3W4SCZRD6E2Q",
-
-        )
+        "https://raw.githubusercontent.com/ihoseinam/video-shop/main/slider1.png",
+        "https://raw.githubusercontent.com/ihoseinam/video-shop/main/slider1.png",
+        "https://raw.githubusercontent.com/ihoseinam/video-shop/main/slider1.png",
+        "https://raw.githubusercontent.com/ihoseinam/video-shop/main/slider1.png",
+        "https://raw.githubusercontent.com/ihoseinam/video-shop/main/slider1.png",
+    )
 
     Column(
         modifier = Modifier
@@ -104,7 +103,7 @@ fun TopSliderSection() {
                         .padding(bottom = 3.dp)
                         .size(73.dp, 21.dp)
                         .clip(
-                            RoundedCornerShape(12.dp,)
+                            RoundedCornerShape(12.dp)
                         )
                         .background(Color(0xffF0F3FF)),
                     horizontalArrangement = Arrangement.Center,
