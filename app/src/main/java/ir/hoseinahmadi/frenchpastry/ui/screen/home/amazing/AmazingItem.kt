@@ -1,4 +1,4 @@
-package ir.hoseinahmadi.frenchpastry.ui.screen.home
+package ir.hoseinahmadi.frenchpastry.ui.screen.home.amazing
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -27,7 +27,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
@@ -37,13 +39,13 @@ import ir.hoseinahmadi.frenchpastry.data.model.home.PastryItem
 import ir.hoseinahmadi.frenchpastry.ui.theme.body1
 import ir.hoseinahmadi.frenchpastry.ui.theme.darkText
 import ir.hoseinahmadi.frenchpastry.ui.theme.h3
-import ir.hoseinahmadi.frenchpastry.ui.theme.h5
+import ir.hoseinahmadi.frenchpastry.ui.theme.h4
 import ir.hoseinahmadi.frenchpastry.ui.theme.h6
 import ir.hoseinahmadi.frenchpastry.util.PastryHelper.pastryByLocateAndSeparator
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun HomeItemCard(
+fun AmazingItem(
     navHostController: NavHostController,
     item: PastryItem
 ) {
@@ -52,9 +54,11 @@ fun HomeItemCard(
         shape = RoundedCornerShape(10.dp),
         onClick = { /*TODO*/ },
         modifier = Modifier
-            .padding(5.dp)
-            .width(248.dp)
-            .height(220.dp),
+            .padding(top = 23.dp,
+                bottom = 15.dp,
+                start = 6.dp)
+            .width(155.dp)
+            .height(190.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
         Column(
@@ -63,13 +67,13 @@ fun HomeItemCard(
         ) {
             Box(
                 modifier = Modifier
-                    .width(243.dp)
-                    .height(145.dp)
+                    .width(144.dp)
+                    .height(90.dp)
             ) {
                 GlideImage(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(8.dp)
+                        .padding(4.dp)
                         .clip(RoundedCornerShape(17.dp)),
                     model = item.thumbnail,
                     contentDescription = "",
@@ -105,49 +109,40 @@ fun HomeItemCard(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(horizontal = 15.dp),
+                    .padding(horizontal = 7.dp),
                 horizontalAlignment = Alignment.Start
             ) {
-                Row(
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically
+
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = "${item.title}\n${"(۱ کیلو گرم)"}",
+                    maxLines = 2,
+                    textAlign = TextAlign.Center,
+                    overflow = TextOverflow.Ellipsis,
+                    style = MaterialTheme.typography.h4,
+                    color = MaterialTheme.colorScheme.darkText,
+                    fontWeight = FontWeight.Bold
+                )
+
+                Spacer(modifier = Modifier.height(2.dp))
+                Column(
+                    modifier = Modifier.fillMaxWidth().padding(start = 4.dp),
+                    horizontalAlignment = Alignment.Start,
                 ) {
-                    Text(
-                        text = item.title,
-                        style = MaterialTheme.typography.h3,
-                        color = MaterialTheme.colorScheme.darkText,
-                        fontWeight = FontWeight.Bold
-                    )
-                    Spacer(modifier = Modifier.width(4.dp))
-                    Text(
-                        text = "(۱ کیلو )",
-                        style = MaterialTheme.typography.h5,
-                        color = MaterialTheme.colorScheme.darkText,
-                        fontWeight = FontWeight.Bold
-                    )
-
-                }
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-
-                    Row(
-                        horizontalArrangement = Arrangement.Center,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        if (item.has_discount) {
-                            Text(
-                                text = pastryByLocateAndSeparator((item.price / 10).toString()),
-                                color = Color.LightGray,
-                                textDecoration = TextDecoration.LineThrough,
-                                style = MaterialTheme.typography.body1,
-                            )
-                            Spacer(modifier = Modifier.width(4.dp))
-                        }
+                    if (item.has_discount) {
+                        Text(
+                            text = pastryByLocateAndSeparator((item.price / 10).toString()),
+                            color = Color.LightGray,
+                            textDecoration = TextDecoration.LineThrough,
+                            style = MaterialTheme.typography.body1,
+                        )
+                    } else {
+                        Text(
+                            text = "", color = Color.LightGray,
+                            textDecoration = TextDecoration.LineThrough,
+                            style = MaterialTheme.typography.h6,
+                        )
+                    }
 
                         Text(
                             text = " ${pastryByLocateAndSeparator((item.sale_price / 10).toString())} ${"تومان"}",
@@ -157,20 +152,11 @@ fun HomeItemCard(
 
                         )
 
-                    }
-                    IconButton(
-                        modifier = Modifier.size(40.dp),
-                        onClick = { /*TODO*/ }) {
-                        Icon(
-                            painterResource(id = R.drawable.ic_shopingcard),
-                            contentDescription = "",
-                            tint = Color.Black,
-                            modifier = Modifier.size(35.dp, 25.dp)
-                        )
-                    }
 
 
                 }
+
+
 
             }
 

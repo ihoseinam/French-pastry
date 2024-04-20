@@ -26,6 +26,7 @@ import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import ir.hoseinahmadi.frenchpastry.data.model.home.Pastry
 import ir.hoseinahmadi.frenchpastry.data.model.home.PastryItem
+import ir.hoseinahmadi.frenchpastry.ui.screen.home.amazing.AmazingOfferSection
 import ir.hoseinahmadi.frenchpastry.viewModel.HomeViewModel
 import ir.hoseinahmadi.mydigikala.ui.component.OurLoading
 import kotlinx.coroutines.flow.collectLatest
@@ -93,7 +94,10 @@ fun Home(
                         onClick = {}
                     )
                 }
-                item { NewProductSection(navHostController = navHostController, item = newItemList.pastries) }
+                item { NewProductSection(navHostController, newItemList.pastries) }
+
+
+                item { AmazingOfferSection(navHostController,amazingItemList.pastries) }
             }
         }
 

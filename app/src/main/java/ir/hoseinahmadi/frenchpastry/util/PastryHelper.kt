@@ -2,9 +2,9 @@ package ir.hoseinahmadi.frenchpastry.util
 
 import java.text.DecimalFormat
 
-object DigitHelper {
+object PastryHelper {
 
-    fun digitByLocate(englishStr: String): String {
+    fun pastryByLocate(englishStr: String): String {
         var result = ""
         var fa = '۰'
         for (ch in englishStr) {
@@ -26,17 +26,19 @@ object DigitHelper {
         return result
     }
 
-    fun digitBySeparator(price: String): String {
+    fun pastryByLocateAndSeparator(price: String): String {
+        val priceWithoutCommas = price.replace(",", "")
+        // اول عدد را به صورت اعداد انگلیسی جداسازی کن
+        val formattedPrice = pastryBySeparator(priceWithoutCommas)
+        // سپس اعداد جدا شده را به فارسی تبدیل کن
+        return pastryByLocate(formattedPrice)
+    }
+
+    fun pastryBySeparator(price: String): String {
         val priceFormat = DecimalFormat("###,###")
         return priceFormat.format(Integer.valueOf(price))
     }
 
-
-    fun digitByLocateAndSeparator(price: String): String {
-        val priceWithoutCommas = price.replace(",", "")
-        val persianDigit = digitByLocate(priceWithoutCommas)
-        return digitBySeparator(persianDigit)
-    }
 
     fun applyDiscount(price: Long, discountPercent: Int): Long {
         return if (discountPercent > 0) {
