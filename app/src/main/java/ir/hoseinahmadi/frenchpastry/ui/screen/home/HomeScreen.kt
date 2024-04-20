@@ -1,11 +1,7 @@
 package ir.hoseinahmadi.frenchpastry.ui.screen.home
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -14,22 +10,18 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import ir.hoseinahmadi.frenchpastry.data.model.home.Pastry
-import ir.hoseinahmadi.frenchpastry.data.model.home.PastryItem
 import ir.hoseinahmadi.frenchpastry.ui.screen.home.amazing.AmazingOfferSection
+import ir.hoseinahmadi.frenchpastry.ui.screen.home.popular.PopularProductSection
 import ir.hoseinahmadi.frenchpastry.viewModel.HomeViewModel
 import ir.hoseinahmadi.mydigikala.ui.component.OurLoading
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @Composable
@@ -58,9 +50,12 @@ fun Home(
     var amazingItemList by remember {
         mutableStateOf<Pastry>(Pastry())
     }
-    var topItemList by remember {
+
+
+     var popularItemList by remember {
         mutableStateOf<Pastry>(Pastry())
     }
+
 
     LaunchedEffect(true) {
         refreshedMain(homeViewModel)
@@ -72,7 +67,7 @@ fun Home(
         loading = false
         newItemList = mainResponse.pastries[0]
         amazingItemList = mainResponse.pastries[1]
-        topItemList = mainResponse.pastries[2]
+        popularItemList = mainResponse.pastries[2]
 
     }
     val scope = rememberCoroutineScope()
@@ -90,14 +85,19 @@ fun Home(
             ) {
                 item {
                     TopProductHeader(
-                        title = mainResponse.pastries[0].title,
+                        title = newItemList.title,
                         onClick = {}
                     )
                 }
                 item { NewProductSection(navHostController, newItemList.pastries) }
-
-
                 item { AmazingOfferSection(navHostController,amazingItemList.pastries) }
+                item {
+                    TopProductHeader(
+                        title = popularItemList.title,
+                        onClick = {}
+                    )
+                }
+                item { PopularProductSection(navHostController,popularItemList.pastries) }
             }
         }
 

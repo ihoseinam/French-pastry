@@ -2,8 +2,10 @@ package ir.hoseinahmadi.frenchpastry.ui.screen.home.amazing
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -22,10 +24,11 @@ fun AmazingOfferSection(
     navHostController: NavHostController,
     item: List<PastryItem>
 ) {
+    Spacer(modifier = Modifier.height(10.dp))
     LazyRow(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 5.dp)
+            .padding(vertical = 6.dp)
             .background(Color(0xff532379))
     ) {
         item {
@@ -34,6 +37,7 @@ fun AmazingOfferSection(
         items(item){
             AmazingItem(navHostController,it)
         }
+        item { AmazingItemShowMore() }
 
     }
 

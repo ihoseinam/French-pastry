@@ -1,4 +1,4 @@
-package ir.hoseinahmadi.frenchpastry.ui.screen.home.amazing
+package ir.hoseinahmadi.frenchpastry.ui.screen.home. popular
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -45,7 +45,7 @@ import ir.hoseinahmadi.frenchpastry.util.PastryHelper.pastryByLocateAndSeparator
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun AmazingItem(
+fun PopularItem(
     navHostController: NavHostController,
     item: PastryItem
 ) {
@@ -55,12 +55,10 @@ fun AmazingItem(
         onClick = { /*TODO*/ },
         modifier = Modifier
             .padding(
-                top = 23.dp,
-                bottom = 15.dp,
-                start = 7.dp
-            )
-            .width(190.dp)
-            .height(210.dp),
+                start = 4.dp,
+                top =5.dp)
+            .fillMaxWidth(0.48f)
+            .height(225.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
         Column(
@@ -69,13 +67,13 @@ fun AmazingItem(
         ) {
             Box(
                 modifier = Modifier
-                    .width(170.dp)
-                    .height(100.dp)
+                    .width(192.dp)
+                    .height(115.dp)
             ) {
                 GlideImage(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(5.dp)
+                        .padding(7.dp)
                         .clip(RoundedCornerShape(17.dp)),
                     model = item.thumbnail,
                     contentDescription = "",
