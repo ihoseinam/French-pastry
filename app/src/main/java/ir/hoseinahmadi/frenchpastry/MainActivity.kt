@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
+import ir.hoseinahmadi.frenchpastry.navigation.BottomNavigationBar
 import ir.hoseinahmadi.frenchpastry.navigation.SetUpNavGraph
 import ir.hoseinahmadi.frenchpastry.ui.theme.FrenchPastryTheme
 
@@ -32,7 +33,11 @@ class MainActivity : ComponentActivity() {
         setContent {
             navHostController = rememberNavController()
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
-                Scaffold {
+                Scaffold(
+                    bottomBar = {
+                        BottomNavigationBar(navHostController)
+                    }
+                ) {
                     Column(
                         modifier = Modifier
                             .fillMaxSize()

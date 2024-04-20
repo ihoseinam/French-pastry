@@ -34,7 +34,6 @@ fun AmazingItemShowMore() {
     Card(
         elevation = CardDefaults.cardElevation(2.dp),
         shape = RoundedCornerShape(10.dp),
-        onClick = { /*TODO*/ },
         modifier = Modifier
             .padding(
                 top = 23.dp,
