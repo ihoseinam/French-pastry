@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.hoseinahmadi.frenchpastry.repository.HomeRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -14,8 +15,8 @@ class HomeViewModel @Inject constructor(
 
     val mainResponse = repository.main
 
-    fun getMain() {
-        viewModelScope.launch {
+   suspend fun getMain() {
+        viewModelScope.launch(Dispatchers.IO) {
             repository.getMain()
         }
     }

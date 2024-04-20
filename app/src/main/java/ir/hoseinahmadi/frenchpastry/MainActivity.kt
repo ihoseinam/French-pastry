@@ -1,6 +1,7 @@
 package ir.hoseinahmadi.frenchpastry
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
@@ -22,6 +23,7 @@ import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import ir.hoseinahmadi.frenchpastry.navigation.SetUpNavGraph
 import ir.hoseinahmadi.frenchpastry.ui.theme.FrenchPastryTheme
+import ir.hoseinahmadi.frenchpastry.util.DigitHelper.digitByLocateAndSeparator
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -29,6 +31,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            val price =digitByLocateAndSeparator("1540455656")
+            Log.e("pasi",price)
             navHostController = rememberNavController()
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
                 Scaffold {
