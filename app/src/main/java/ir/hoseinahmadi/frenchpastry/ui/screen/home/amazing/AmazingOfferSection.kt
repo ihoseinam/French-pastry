@@ -28,7 +28,7 @@ fun AmazingOfferSection(
     LazyRow(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 6.dp)
+            .padding(vertical = 3.dp)
             .background(Color(0xff532379))
     ) {
         item {

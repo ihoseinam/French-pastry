@@ -64,7 +64,7 @@ fun TopProductHeader(
                 fontWeight = FontWeight.Bold,
                 style = MaterialTheme.typography.h2,
                 fontFamily = font_bold,
-                fontSize = 20.sp
+                fontSize = 22.sp,
             )
         }
 

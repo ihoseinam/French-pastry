@@ -54,10 +54,8 @@ fun PopularItem(
         shape = RoundedCornerShape(10.dp),
         onClick = { /*TODO*/ },
         modifier = Modifier
-            .padding(
-                start = 4.dp,
-                top =5.dp)
-            .fillMaxWidth(0.48f)
+            .padding(1.5.dp)
+            .fillMaxWidth(0.49f)
             .height(225.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {

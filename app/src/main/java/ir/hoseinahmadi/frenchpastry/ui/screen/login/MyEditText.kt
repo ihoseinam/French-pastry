@@ -30,7 +30,7 @@ fun MyEditText(
 
     TextField(
         modifier = Modifier
-            .width(250.dp)
+            .width(270.dp)
             .height(47.dp)
             .border(0.9.dp, Color.LightGray, RoundedCornerShape(10.dp))
             .clip(RoundedCornerShape(10.dp)),

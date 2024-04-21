@@ -36,12 +36,12 @@ fun AmazingItemShowMore() {
         shape = RoundedCornerShape(10.dp),
         modifier = Modifier
             .padding(
-                top = 23.dp,
-                bottom = 15.dp,
+                top = 35.dp,
+                bottom = 20.dp,
                 start = 7.dp,
-                end = 6.dp
+                end = 15.dp
             )
-            .width(160.dp)
+            .width(165.dp)
             .height(210.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {

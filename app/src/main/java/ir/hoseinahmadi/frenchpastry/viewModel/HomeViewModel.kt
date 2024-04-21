@@ -9,6 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.hoseinahmadi.frenchpastry.repository.HomeRepository
 import ir.hoseinahmadi.frenchpastry.ui.screen.home.HomeScreenState
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,9 +19,13 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
 
     var userPhone by mutableStateOf("")
+    var userCode by mutableStateOf("")
+
     var homeScreenState by mutableStateOf(HomeScreenState.LoginScreen)
     val mainResponse = repository.main
-
+    val loading =repository.loading
+    val sendCodeResponse = repository.sendCodeResponse
+    val verifyCodeResponse = repository.verifyCodeResponse
     suspend fun getMain() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.getMain()
@@ -29,7 +34,14 @@ class HomeViewModel @Inject constructor(
 
     fun login() {
         viewModelScope.launch {
-
+            repository.senCodePhone(userPhone)
         }
     }
+
+    fun verifyCode() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.verifyCode(code = userCode, phone = userPhone)
+        }
+    }
+
 }

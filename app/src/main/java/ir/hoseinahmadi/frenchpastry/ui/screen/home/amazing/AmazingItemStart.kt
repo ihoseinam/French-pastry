@@ -31,6 +31,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ir.hoseinahmadi.frenchpastry.R
+import ir.hoseinahmadi.frenchpastry.ui.theme.font_bold
 import ir.hoseinahmadi.frenchpastry.ui.theme.h1
 import ir.hoseinahmadi.frenchpastry.ui.theme.h3
 import ir.hoseinahmadi.frenchpastry.ui.theme.h5
@@ -39,14 +40,15 @@ import ir.hoseinahmadi.frenchpastry.ui.theme.h5
 fun AmazingItemStart() {
     Box(
         modifier = Modifier
-            .width(160.dp)
-            .height(214.dp)
+            .padding(top = 8.dp, end = 2.dp)
+            .width(170.dp)
+            .height(230.dp)
     ) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
             Image(
                 painter = painterResource(id = R.drawable.ic_amazingstart),
                 contentDescription = "",
-                Modifier.size(145.dp, 170.dp),
+                Modifier.size(160.dp, 190.dp),
                 contentScale = ContentScale.FillBounds
             )
         }
@@ -56,7 +58,7 @@ fun AmazingItemStart() {
                     .padding(start = 4.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Spacer(modifier = Modifier.height(70.dp))
+                Spacer(modifier = Modifier.height(80.dp))
                 Text(
                     textAlign = TextAlign.Center,
                     text = "پـیشنهاد",
@@ -64,6 +66,7 @@ fun AmazingItemStart() {
                     color = Color.White,
                     fontWeight = FontWeight.Black,
                     fontSize = 24.sp,
+                    fontFamily = font_bold
 
                     )
                 Text(
@@ -73,6 +76,7 @@ fun AmazingItemStart() {
                     color = Color(0xFFFFC500),
                     fontWeight = FontWeight.Black,
                     fontSize = 24.sp,
+                    fontFamily = font_bold
 
                     )
 

@@ -53,7 +53,7 @@ fun HomeItemCard(
         onClick = { /*TODO*/ },
         modifier = Modifier
             .padding(5.dp)
-            .width(248.dp)
+            .width(250.dp)
             .height(220.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
@@ -63,13 +63,13 @@ fun HomeItemCard(
         ) {
             Box(
                 modifier = Modifier
-                    .width(243.dp)
+                    .width(235.dp)
                     .height(145.dp)
             ) {
                 GlideImage(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(8.dp)
+                        .padding(5.dp)
                         .clip(RoundedCornerShape(17.dp)),
                     model = item.thumbnail,
                     contentDescription = "",

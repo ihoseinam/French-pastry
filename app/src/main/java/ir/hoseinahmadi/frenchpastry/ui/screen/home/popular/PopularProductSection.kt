@@ -20,7 +20,7 @@ fun PopularProductSection(
     item: List<PastryItem>
 ) {
     FlowRow(
-        modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp),
+        modifier = Modifier.fillMaxWidth(),
         maxItemsInEachRow = 2,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {

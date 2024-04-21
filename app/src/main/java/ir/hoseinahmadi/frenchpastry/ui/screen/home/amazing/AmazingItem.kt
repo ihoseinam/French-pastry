@@ -38,6 +38,7 @@ import ir.hoseinahmadi.frenchpastry.R
 import ir.hoseinahmadi.frenchpastry.data.model.home.PastryItem
 import ir.hoseinahmadi.frenchpastry.ui.theme.body1
 import ir.hoseinahmadi.frenchpastry.ui.theme.darkText
+import ir.hoseinahmadi.frenchpastry.ui.theme.font_bold
 import ir.hoseinahmadi.frenchpastry.ui.theme.h3
 import ir.hoseinahmadi.frenchpastry.ui.theme.h4
 import ir.hoseinahmadi.frenchpastry.ui.theme.h6
@@ -55,8 +56,8 @@ fun AmazingItem(
         onClick = { /*TODO*/ },
         modifier = Modifier
             .padding(
-                top = 23.dp,
-                bottom = 15.dp,
+                top = 35.dp,
+                bottom = 20.dp,
                 start = 7.dp
             )
             .width(190.dp)
@@ -69,13 +70,13 @@ fun AmazingItem(
         ) {
             Box(
                 modifier = Modifier
-                    .width(170.dp)
+                    .width(167.dp)
                     .height(100.dp)
             ) {
                 GlideImage(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(5.dp)
+                        .padding(horizontal = 2.dp, vertical = 4.dp)
                         .clip(RoundedCornerShape(17.dp)),
                     model = item.thumbnail,
                     contentDescription = "",
@@ -123,7 +124,7 @@ fun AmazingItem(
                     overflow = TextOverflow.Ellipsis,
                     style = MaterialTheme.typography.h4,
                     color = MaterialTheme.colorScheme.darkText,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
                 )
 
                 Spacer(modifier = Modifier.height(2.dp))

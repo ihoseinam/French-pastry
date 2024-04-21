@@ -1,6 +1,9 @@
 package ir.hoseinahmadi.frenchpastry.repository
 
+import android.util.Log
 import ir.hoseinahmadi.frenchpastry.data.model.home.HomeResponse
+import ir.hoseinahmadi.frenchpastry.data.model.login.SendCodeResponse
+import ir.hoseinahmadi.frenchpastry.data.model.login.VerifyCodeResponse
 import ir.hoseinahmadi.frenchpastry.data.remote.HomeApiInterFace
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,19 +16,63 @@ class HomeRepository @Inject constructor(
 
     val main = MutableStateFlow<HomeResponse>(HomeResponse())
 
+    val sendCodeResponse = MutableStateFlow<SendCodeResponse>(SendCodeResponse())
+    val verifyCodeResponse = MutableStateFlow<VerifyCodeResponse>(VerifyCodeResponse())
+    val loading = MutableStateFlow(false)
     suspend fun getMain() {
         val response = try {
             apiInterFace.getMain()
         } catch (e: Exception) {
             return
         }
-        if (response.isSuccessful){
-            val body =response.body()
+        if (response.isSuccessful) {
+            val body = response.body()
             body?.let {
                 main.emit(it)
             }
         }
 
+
+    }
+
+    suspend fun senCodePhone(phone: String) {
+        loading.emit(true)
+        val response = try {
+            apiInterFace.sendCodeWithEmail(phone = phone)
+        } catch (e: Exception) {
+            Log.e("pasi", "senCodePhone error :${e.message.toString()}")
+            loading.emit(false)
+            return
+        }
+        if (response.isSuccessful) {
+            loading.emit(false)
+            val body = response.body()
+            body?.let {
+                sendCodeResponse.emit(it)
+            }
+        } else {
+            loading.emit(false)
+            Log.e("pasi", "senCodePhone not succes ")
+
+        }
+    }
+
+    suspend fun verifyCode(code:String ,phone: String){
+        val response = try {
+            apiInterFace.verifyCode(code = code, phone = phone)
+        } catch (e: Exception) {
+            Log.e("pasi", "verifyCode error :${e.message.toString()}")
+            return
+        }
+        if (response.isSuccessful) {
+            val body = response.body()
+            body?.let {
+                verifyCodeResponse.emit(it)
+            }
+        } else {
+            Log.e("pasi", "verifyCode not succes ")
+
+        }
 
     }
 
