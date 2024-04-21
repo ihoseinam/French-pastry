@@ -1,13 +1,19 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.devtools.ksp")
     id("com.google.dagger.hilt.android")
 }
+val apiKeyPropertiesFile = rootProject.file("key.properties")
+val apiKeyProperties = Properties()
+apiKeyProperties.load(apiKeyPropertiesFile.inputStream())
 
 android {
     namespace = "ir.hoseinahmadi.frenchpastry"
     compileSdk = 34
+
 
     defaultConfig {
         applicationId = "ir.hoseinahmadi.frenchpastry"
@@ -15,6 +21,10 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
+
+
+        buildConfigField("String", "KEY", apiKeyProperties.getProperty("KEY"))
+        buildConfigField("String", "IV", apiKeyProperties.getProperty("IV"))
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -41,6 +51,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.5"

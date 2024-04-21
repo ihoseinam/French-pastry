@@ -40,6 +40,8 @@ import ir.hoseinahmadi.frenchpastry.R
 import ir.hoseinahmadi.frenchpastry.data.model.home.Pastry
 import ir.hoseinahmadi.frenchpastry.ui.screen.home.amazing.AmazingOfferSection
 import ir.hoseinahmadi.frenchpastry.ui.screen.home.popular.PopularProductSection
+import ir.hoseinahmadi.frenchpastry.ui.screen.login.LoginScreen
+import ir.hoseinahmadi.frenchpastry.util.Constants
 import ir.hoseinahmadi.frenchpastry.viewModel.HomeViewModel
 import ir.hoseinahmadi.mydigikala.ui.component.OurLoading
 import kotlinx.coroutines.launch
@@ -49,7 +51,18 @@ fun HomeScreen(
     navHostController: NavHostController,
     homeViewModel: HomeViewModel = hiltViewModel()
 ) {
-    Home(navHostController, homeViewModel)
+    if (Constants.CHECKED_LOGIN){
+        Home(navHostController = navHostController,homeViewModel)
+    }else{
+        when (homeViewModel.homeScreenState) {
+            HomeScreenState.LoginScreen ->{
+                LoginScreen(navHostController = navHostController,homeViewModel)
+            }
+
+            HomeScreenState.HomeScreen ->{
+                Home(navHostController = navHostController,homeViewModel) }
+        }
+    }
 
 }
 
@@ -72,7 +85,7 @@ fun Home(
     }
 
 
-     var popularItemList by remember {
+    var popularItemList by remember {
         mutableStateOf<Pastry>(Pastry())
     }
 
@@ -119,14 +132,14 @@ fun Home(
                         )
                     }
                     item { NewProductSection(navHostController, newItemList.pastries) }
-                    item { AmazingOfferSection(navHostController,amazingItemList.pastries) }
+                    item { AmazingOfferSection(navHostController, amazingItemList.pastries) }
                     item {
                         TopProductHeader(
                             title = popularItemList.title,
                             onClick = {}
                         )
                     }
-                    item { PopularProductSection(navHostController,popularItemList.pastries) }
+                    item { PopularProductSection(navHostController, popularItemList.pastries) }
                     item { Spacer(modifier = Modifier.height(30.dp)) }
                 }
             }
@@ -142,8 +155,9 @@ fun Home(
 private suspend fun refreshedMain(homeViewModel: HomeViewModel) {
     homeViewModel.getMain()
 }
+
 @Composable
-private fun TopBarHome(){
+private fun TopBarHome() {
 
     Row(
         modifier = Modifier
@@ -153,20 +167,25 @@ private fun TopBarHome(){
         verticalAlignment = Alignment.CenterVertically
     ) {
         IconButton(onClick = { /*TODO*/ }) {
-            Icon(Icons.Filled.Menu,
-                contentDescription ="",
+            Icon(
+                Icons.Filled.Menu,
+                contentDescription = "",
                 tint = Color.Black
-                )
+            )
         }
 
-        Image(painter = painterResource(id = R.drawable.ic_topbar),
+        Image(
+            painter = painterResource(id = R.drawable.ic_topbar),
             contentDescription = "",
-            Modifier.size(80.dp,46.dp),)
+            Modifier.size(80.dp, 46.dp),
+        )
 
-       IconButton(onClick = { /*TODO*/ }) {
-           Icon(Icons.Outlined.Notifications, contentDescription ="",
-               Modifier.size(26.dp),)
-       }
+        IconButton(onClick = { /*TODO*/ }) {
+            Icon(
+                Icons.Outlined.Notifications, contentDescription = "",
+                Modifier.size(26.dp),
+            )
+        }
 
     }
 }

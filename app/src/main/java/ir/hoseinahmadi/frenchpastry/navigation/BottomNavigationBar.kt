@@ -51,32 +51,35 @@ fun BottomNavigationBar(
 
     val navBakeStack = navHostController.currentBackStackEntry
     val show = navBakeStack?.destination?.route in item.map { it.route }
-    Column {
-        HorizontalDivider(
-            thickness = 1.3.dp,
-            color = Color.LightGray.copy(0.6f)
-        )
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(52.dp)
-        ) {
-            item.forEachIndexed { index, item ->
-                val selected =navBakeStack?.destination?.route ==item.route
-                NavigationBarItem(
-                    selected = selected,
-                    onClick = { navHostController.navigate(item.route) },
-                    icon = {
-                        Icon(painter = item.icon, contentDescription = "",
-                            modifier = Modifier.size(26.dp),
-                            tint = Color.Black
-                        )
-                    })
+    if (show){
+        Column {
+            HorizontalDivider(
+                thickness = 1.3.dp,
+                color = Color.LightGray.copy(0.6f)
+            )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(52.dp)
+            ) {
+                item.forEachIndexed { index, item ->
+                    val selected =navBakeStack?.destination?.route ==item.route
+                    NavigationBarItem(
+                        selected = selected,
+                        onClick = { navHostController.navigate(item.route) },
+                        icon = {
+                            Icon(painter = item.icon, contentDescription = "",
+                                modifier = Modifier.size(26.dp),
+                                tint = Color.Black
+                            )
+                        })
+                }
+
+
             }
-
-
         }
     }
+
 
 
 }
