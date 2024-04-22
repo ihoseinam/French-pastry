@@ -4,6 +4,7 @@ import android.util.Log
 import ir.hoseinahmadi.frenchpastry.data.model.home.HomeResponse
 import ir.hoseinahmadi.frenchpastry.data.model.login.SendCodeResponse
 import ir.hoseinahmadi.frenchpastry.data.model.login.VerifyCodeResponse
+import ir.hoseinahmadi.frenchpastry.data.model.product_detail.ProductResponse
 import ir.hoseinahmadi.frenchpastry.data.remote.HomeApiInterFace
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +16,6 @@ class HomeRepository @Inject constructor(
 ) {
 
     val main = MutableStateFlow<HomeResponse>(HomeResponse())
-
     val sendCodeResponse = MutableStateFlow<SendCodeResponse>(SendCodeResponse())
     val verifyCodeResponse = MutableStateFlow<VerifyCodeResponse>(VerifyCodeResponse())
     val loading = MutableStateFlow(false)

@@ -2,10 +2,16 @@ package ir.hoseinahmadi.frenchpastry.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
+import ir.hoseinahmadi.frenchpastry.ui.screen.BasketScreen
+import ir.hoseinahmadi.frenchpastry.ui.screen.CategoryScreen
 import ir.hoseinahmadi.frenchpastry.ui.screen.home.HomeScreen
 import ir.hoseinahmadi.frenchpastry.ui.screen.login.LoginScreen
+import ir.hoseinahmadi.frenchpastry.ui.screen.product_detail.ProductDetailScreen
+import ir.hoseinahmadi.frenchpastry.ui.screen.profile.ProfileScreen
 import ir.hoseinahmadi.frenchpastry.ui.screen.splash.SplashScreen
 
 @Composable
@@ -14,14 +20,40 @@ fun SetUpNavGraph(navHostController: NavHostController) {
         navController = navHostController,
         startDestination = Screen.SplashScreen.route
     ) {
-        composable(Screen.SplashScreen.route){
+        composable(Screen.SplashScreen.route) {
             SplashScreen(navHostController = navHostController)
         }
-        composable(Screen.HomeScreen.route){
+        composable(Screen.HomeScreen.route) {
             HomeScreen(navHostController = navHostController)
         }
-        composable(Screen.LoginScreen.route){
+        composable(Screen.LoginScreen.route) {
             LoginScreen(navHostController = navHostController)
+        }
+        composable(Screen.ProfileScreen.route) {
+            ProfileScreen()
+        }
+        composable(Screen.BasketScreen.route) {
+            BasketScreen()
+        }
+        composable(Screen.CategoryScreen.route) {
+            CategoryScreen()
+        }
+        composable(Screen.ProductDetailScreen.route + "?id={id}",
+            arguments = listOf(
+                navArgument("id") {
+                    type = NavType.IntType
+                    defaultValue = 34
+                }
+            )
+        ) {
+            it.arguments?.getInt("id")?.let { id ->
+                ProductDetailScreen(
+                    navHostController = navHostController,
+                    productId = id
+                )
+            }
+
+
         }
 
     }

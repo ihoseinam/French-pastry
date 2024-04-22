@@ -1,5 +1,6 @@
 package ir.hoseinahmadi.frenchpastry.ui.screen.home
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -34,6 +35,7 @@ import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import ir.hoseinahmadi.frenchpastry.R
 import ir.hoseinahmadi.frenchpastry.data.model.home.PastryItem
+import ir.hoseinahmadi.frenchpastry.navigation.Screen
 import ir.hoseinahmadi.frenchpastry.ui.theme.body1
 import ir.hoseinahmadi.frenchpastry.ui.theme.darkText
 import ir.hoseinahmadi.frenchpastry.ui.theme.h3
@@ -50,7 +52,9 @@ fun HomeItemCard(
     Card(
         elevation = CardDefaults.cardElevation(2.dp),
         shape = RoundedCornerShape(10.dp),
-        onClick = { /*TODO*/ },
+        onClick = {
+                  navHostController.navigate(Screen.ProductDetailScreen.route+"?id=${item.ID}")
+        },
         modifier = Modifier
             .padding(5.dp)
             .width(250.dp)
@@ -160,7 +164,9 @@ fun HomeItemCard(
                     }
                     IconButton(
                         modifier = Modifier.size(40.dp),
-                        onClick = { /*TODO*/ }) {
+                        onClick = {
+                            Log.e("pasi",item.ID.toString())
+                        }) {
                         Icon(
                             painterResource(id = R.drawable.ic_shopingcard),
                             contentDescription = "",
