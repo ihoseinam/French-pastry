@@ -9,6 +9,7 @@ object Constants {
     const val KEY = BuildConfig.KEY
     const val IV = BuildConfig.IV
 
-     var CHECKED_LOGIN = false
+    var CHECKED_LOGIN = false
+    var USER_PHONE = ""
 
 }

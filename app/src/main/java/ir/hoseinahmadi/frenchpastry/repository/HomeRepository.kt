@@ -19,6 +19,7 @@ class HomeRepository @Inject constructor(
     val sendCodeResponse = MutableStateFlow<SendCodeResponse>(SendCodeResponse())
     val verifyCodeResponse = MutableStateFlow<VerifyCodeResponse>(VerifyCodeResponse())
     val loading = MutableStateFlow(false)
+    val errorVerifyCode =MutableStateFlow(false)
     suspend fun getMain() {
         val response = try {
             apiInterFace.getMain()
@@ -41,7 +42,6 @@ class HomeRepository @Inject constructor(
             apiInterFace.sendCodeWithEmail(phone = phone)
         } catch (e: Exception) {
             Log.e("pasi", "senCodePhone error :${e.message.toString()}")
-            loading.emit(false)
             return
         }
         if (response.isSuccessful) {
@@ -58,6 +58,7 @@ class HomeRepository @Inject constructor(
     }
 
     suspend fun verifyCode(code:String ,phone: String){
+        loading.emit(true)
         val response = try {
             apiInterFace.verifyCode(code = code, phone = phone)
         } catch (e: Exception) {
@@ -65,11 +66,14 @@ class HomeRepository @Inject constructor(
             return
         }
         if (response.isSuccessful) {
+            loading.emit(false)
             val body = response.body()
             body?.let {
                 verifyCodeResponse.emit(it)
             }
         } else {
+            loading.emit(false)
+            errorVerifyCode.emit(true)
             Log.e("pasi", "verifyCode not succes ")
 
         }

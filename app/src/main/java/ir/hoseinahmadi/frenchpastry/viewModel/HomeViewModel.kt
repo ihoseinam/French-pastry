@@ -26,6 +26,7 @@ class HomeViewModel @Inject constructor(
     val loading =repository.loading
     val sendCodeResponse = repository.sendCodeResponse
     val verifyCodeResponse = repository.verifyCodeResponse
+    val errorVerifyCode =repository.errorVerifyCode
     suspend fun getMain() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.getMain()

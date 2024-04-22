@@ -25,6 +25,7 @@ import ir.hoseinahmadi.frenchpastry.navigation.BottomNavigationBar
 import ir.hoseinahmadi.frenchpastry.navigation.SetUpNavGraph
 import ir.hoseinahmadi.frenchpastry.ui.component.AppConfig
 import ir.hoseinahmadi.frenchpastry.ui.theme.FrenchPastryTheme
+import ir.hoseinahmadi.frenchpastry.util.Constants
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -33,7 +34,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             AppConfig()
-
             navHostController = rememberNavController()
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
                 Scaffold(

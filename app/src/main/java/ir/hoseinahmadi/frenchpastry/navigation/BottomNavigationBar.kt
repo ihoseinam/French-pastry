@@ -1,21 +1,27 @@
 package ir.hoseinahmadi.frenchpastry.navigation
 
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import ir.hoseinahmadi.frenchpastry.R
 
 @Composable
@@ -28,7 +34,6 @@ fun BottomNavigationBar(
             route = Screen.HomeScreen.route,
             icon = painterResource(id = R.drawable.home)
         ),
-
 
         MyBottomNavItem(
             route = Screen.HomeScreen.route,
@@ -49,23 +54,26 @@ fun BottomNavigationBar(
         ),
     )
 
-    val navBakeStack = navHostController.currentBackStackEntry
-    val show = navBakeStack?.destination?.route in item.map { it.route }
-    if (show){
-        Column {
+    val backStackEntry = navHostController.currentBackStackEntryAsState()
+    val showBottomBar = backStackEntry.value?.destination?.route in item.map { it.route }
+    if (showBottomBar){
+        Column(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(55.dp)
+        ) {
             HorizontalDivider(
                 thickness = 1.3.dp,
                 color = Color.LightGray.copy(0.6f)
             )
             Row(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(52.dp)
+                    .fillMaxSize()
             ) {
                 item.forEachIndexed { index, item ->
-                    val selected =navBakeStack?.destination?.route ==item.route
+                    val selected = item.route == backStackEntry.value?.destination?.route
                     NavigationBarItem(
-                        selected = selected,
+                        selected = false,
                         onClick = { navHostController.navigate(item.route) },
                         icon = {
                             Icon(painter = item.icon, contentDescription = "",

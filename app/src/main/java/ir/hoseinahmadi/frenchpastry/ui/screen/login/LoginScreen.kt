@@ -1,14 +1,11 @@
 package ir.hoseinahmadi.frenchpastry.ui.screen.login
 
-import android.annotation.SuppressLint
 import android.util.Log
-import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -22,32 +19,25 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleEventObserver
 import androidx.navigation.NavHostController
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
-import ir.hoseinahmadi.frenchpastry.ui.screen.home.HomeScreenState
 import ir.hoseinahmadi.frenchpastry.ui.theme.font_bold
 import ir.hoseinahmadi.frenchpastry.ui.theme.h1
 import ir.hoseinahmadi.frenchpastry.ui.theme.h3
@@ -58,10 +48,8 @@ import ir.hoseinahmadi.frenchpastry.util.PastryHelper
 import ir.hoseinahmadi.frenchpastry.viewModel.DatStoreViewModel
 import ir.hoseinahmadi.frenchpastry.viewModel.HomeViewModel
 import ir.hoseinahmadi.mydigikala.ui.component.Loading3Dots
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.withContext
 
 val steepLogin = mutableIntStateOf(1)
 
@@ -82,11 +70,13 @@ fun LoginScreen(
     val steep by remember {
         steepLogin
     }
-    val loding by homeViewModel.loading.collectAsState()
+    val loading by homeViewModel.loading.collectAsState()
 
     var error by remember {
         mutableStateOf(false)
     }
+    var timeLeft by remember { mutableIntStateOf(180) }
+    var isTimerRunning by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -183,8 +173,8 @@ fun LoginScreen(
                     fontWeight = FontWeight.Bold
                 )
 
-            }else{
-                Spacer(modifier = Modifier.height(15.dp))
+            } else {
+                Spacer(modifier = Modifier.padding(6.dp))
             }
 
             LaunchedEffect(true) {
@@ -193,38 +183,17 @@ fun LoginScreen(
                         200 -> {
                             Log.e("pasi", it.message)
                             steepLogin.intValue = 2
+                            if (!isTimerRunning) {
+                                timeLeft = 180 // Reset the timer to 2 minutes
+                                isTimerRunning = true // Start the timer
+                            }
                         }
 
-                        400 -> {
-                            /*       withContext(Dispatchers.Main) {
-                                            Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
-                                        }
-                                        loding = false*/
-                        }
 
                         else -> {
 
                         }
                     }
-                }
-            }
-            AlertEnterCode(navHostController)
-
-
-            var timeLeft by remember { mutableIntStateOf(180) }
-            var isTimerRunning by remember { mutableStateOf(false) }
-            val lifecycleOwner = LocalLifecycleOwner.current
-
-            DisposableEffect(lifecycleOwner) {
-                val observer = LifecycleEventObserver { _, event ->
-                    if (event == Lifecycle.Event.ON_RESUME) {
-                        // Timer should only run when the screen is active
-                        isTimerRunning = false // Stop the timer when the screen is not active
-                    }
-                }
-                lifecycleOwner.lifecycle.addObserver(observer)
-                onDispose {
-                    lifecycleOwner.lifecycle.removeObserver(observer)
                 }
             }
 
@@ -238,10 +207,14 @@ fun LoginScreen(
                 }
             }
 
+            AlertEnterCode(timeLeft)
+
+
+
             if (isTimerRunning) {
                 Text(
                     modifier = Modifier.padding(4.dp),
-                    text = ") شما میتوانید در ${PastryHelper.pastryByLocate(timeLeft.toString())}دیگر دوباره کد را درخواست کنید ",
+                    text = "${"(${PastryHelper.pastryByLocate(formatTime(timeLeft))})"} تا درخواست مجدد کد",
                     color = Color.Red,
                     style = MaterialTheme.typography.h6
                 )
@@ -258,23 +231,17 @@ fun LoginScreen(
                     .padding(vertical = 2.dp),
                 shape = RoundedCornerShape(8.dp),
                 onClick = {
-                    if (InputValidation.isValidPhoneNumber(homeViewModel.userPhone)){
-                        error =false
-                        if (!isTimerRunning) {
-                            homeViewModel.login()
-                            timeLeft = 120 // Reset the timer to 2 minutes
-                            isTimerRunning = true // Start the timer
-                        }
-                    }else{
-                        error =true
+                    if (InputValidation.isValidPhoneNumber(homeViewModel.userPhone)) {
+                        error = false
+                        homeViewModel.login()
+                    } else {
+                        error = true
                     }
-
-
                 }) {
-                AnimatedVisibility(visible = loding) {
+                AnimatedVisibility(visible = (loading && steep == 1)) {
                     Loading3Dots(isDark = false)
                 }
-                AnimatedVisibility(visible = !loding) {
+                AnimatedVisibility(visible = !loading) {
                     Text(
                         text = "ارسال کد به شماره موبایل من",
                         style = MaterialTheme.typography.h6,
@@ -291,21 +258,9 @@ fun LoginScreen(
 
 }
 
-@Composable
-fun TimerScreen() {
 
-
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-
-        Spacer(modifier = Modifier.height(16.dp))
-        Button(onClick = {
-
-        }) {
-            Text("Start Timer")
-        }
-    }
+fun formatTime(seconds: Int): String {
+    val minutes = seconds / 60
+    val remainingSeconds = seconds % 60
+    return String.format("%d:%02d", minutes, remainingSeconds)
 }

@@ -61,8 +61,8 @@ class DatStoreViewModel @Inject constructor(
         }
     }
 
-    fun getUserPhone(): String? = runBlocking {
-        repository.getString(USER_PHONE_KEY)
+    fun getUserPhone(): String = runBlocking {
+        repository.getString(USER_PHONE_KEY)?:"خالی"
     }
 
     fun saveUserPassword(value: String) {
