@@ -71,6 +71,13 @@ fun Home(
     navHostController: NavHostController,
     homeViewModel: HomeViewModel
 ) {
+    val sliderList = listOf(
+        "https://raw.githubusercontent.com/ihoseinam/video-shop/main/slider1.png",
+        "https://raw.githubusercontent.com/ihoseinam/video-shop/main/slider1.png",
+        "https://raw.githubusercontent.com/ihoseinam/video-shop/main/slider1.png",
+        "https://raw.githubusercontent.com/ihoseinam/video-shop/main/slider1.png",
+        "https://raw.githubusercontent.com/ihoseinam/video-shop/main/slider1.png",
+    )
 
     var loading by remember {
         mutableStateOf(true)
@@ -114,9 +121,7 @@ fun Home(
             OurLoading(height = config.screenHeightDp.dp - 60.dp, isDark = true)
         } else {
             Scaffold(
-                topBar = {
-                    TopBarHome()
-                }
+                topBar = { TopBarHome() }
             ) {
                 LazyColumn(
                     modifier = Modifier
@@ -124,7 +129,7 @@ fun Home(
                         .padding(it)
                         .background(Color(0xffF0F3FF))
                 ) {
-                    item { TopSliderSection() }
+                    item { TopSliderSection(sliderList) }
                     item {
                         TopProductHeader(
                             title = newItemList.title,

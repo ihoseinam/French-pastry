@@ -42,15 +42,10 @@ import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalPagerApi::class, ExperimentalGlideComposeApi::class)
 @Composable
-fun TopSliderSection() {
+fun TopSliderSection(
+    sliderList :List<String>
+) {
 
-    val sliderList = listOf(
-        "https://raw.githubusercontent.com/ihoseinam/video-shop/main/slider1.png",
-        "https://raw.githubusercontent.com/ihoseinam/video-shop/main/slider1.png",
-        "https://raw.githubusercontent.com/ihoseinam/video-shop/main/slider1.png",
-        "https://raw.githubusercontent.com/ihoseinam/video-shop/main/slider1.png",
-        "https://raw.githubusercontent.com/ihoseinam/video-shop/main/slider1.png",
-    )
 
     Column(
         modifier = Modifier
