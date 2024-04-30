@@ -12,24 +12,24 @@ class ProductDetailRepository @Inject constructor(
     private val apiInterFace: ProductDetailApiInterFace
 ) {
     val productItem = MutableStateFlow(ProductResponse())
-
     suspend fun getProductByID(id: Int) {
-        val response = try {
-            apiInterFace.getProductById(id)
-        } catch (e: Exception) {
-            Log.e("pasi", "getProductByID  error ${e.message}")
-            return
-        }
-        withContext(Dispatchers.Main) {
-            if (response.isSuccessful) {
-                val body = response.body()
-                body?.let {
-                    productItem.emit(it)
+        withContext(Dispatchers.IO) {
+            try {
+                val response = apiInterFace.getProductById(id)
+                if (response.isSuccessful) {
+                    val body = response.body()
+                    body?.let {
+                        productItem.emit(it)
+                    }
+                } else {
+                    Log.e("pasi", "getProductByID  notSuccess")
                 }
-            } else {
-                Log.e("pasi", "getProductByID  notSuccess")
+            } catch (e: Exception) {
+                Log.e("pasi", "getProductByID  error ${e.message}")
+                return@withContext
             }
-
         }
+
+
     }
 }

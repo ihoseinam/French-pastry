@@ -1,6 +1,7 @@
 package ir.hoseinahmadi.frenchpastry.ui.screen.home
 
 import android.util.Log
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -29,21 +30,26 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.AsyncImage
+import coil.compose.rememberAsyncImagePainter
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
+import com.bumptech.glide.integration.compose.placeholder
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
 import com.google.accompanist.pager.rememberPagerState
+import ir.hoseinahmadi.frenchpastry.R
 import ir.hoseinahmadi.mydigikala.ui.component.OurLoading
 import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalPagerApi::class, ExperimentalGlideComposeApi::class)
 @Composable
 fun TopSliderSection(
-    sliderList :List<String>
+    sliderList: List<String>
 ) {
 
 
@@ -51,7 +57,7 @@ fun TopSliderSection(
         modifier = Modifier
             .fillMaxWidth()
             .background(Color(0xffF0F3FF))
-            .height(210.dp)
+            .height(240.dp)
     ) {
         Box(
             modifier = Modifier

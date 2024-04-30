@@ -16,7 +16,6 @@ class ProductDetailViewModel @Inject constructor(
 ) : ViewModel() {
 
     val productItem = repository.productItem
-
     suspend fun getProductById(id: Int) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.getProductByID(id)

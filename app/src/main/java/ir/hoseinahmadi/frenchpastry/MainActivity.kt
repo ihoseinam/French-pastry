@@ -45,6 +45,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             AppConfig()
+            Log.e("pasi", "${Constants.API_KEY}\n ${Constants.USER_PHONE}")
             navHostController = rememberNavController()
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
                 Scaffold(

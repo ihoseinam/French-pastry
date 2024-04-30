@@ -30,6 +30,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -66,16 +67,14 @@ fun LoginScreen(
         "https://raw.githubusercontent.com/ihoseinam/video-shop/main/pastry/logo_login.png",
     )
 
+    val context = LocalContext.current
 
-    val steep by remember {
-        steepLogin
-    }
     val loading by homeViewModel.loading.collectAsState()
 
     var error by remember {
         mutableStateOf(false)
     }
-    var timeLeft by remember { mutableIntStateOf(180) }
+    var timeLeft by remember { mutableIntStateOf(150) }
     var isTimerRunning by remember { mutableStateOf(false) }
 
     Column(
@@ -132,7 +131,7 @@ fun LoginScreen(
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(start = 10.dp)
+                .padding(horizontal = 8.dp)
                 .weight(0.45f),
         ) {
             Text(
@@ -207,7 +206,7 @@ fun LoginScreen(
                 }
             }
 
-            AlertEnterCode(timeLeft)
+            AlertEnterCode(timeLeft,navHostController)
 
 
 
@@ -233,15 +232,15 @@ fun LoginScreen(
                 onClick = {
                     if (InputValidation.isValidPhoneNumber(homeViewModel.userPhone)) {
                         error = false
-                        homeViewModel.login()
+                        homeViewModel.login(context)
                     } else {
                         error = true
                     }
                 }) {
-                AnimatedVisibility(visible = (loading && steep == 1)) {
+                AnimatedVisibility(visible = (loading && steepLogin.intValue == 1)) {
                     Loading3Dots(isDark = false)
                 }
-                AnimatedVisibility(visible = !loading) {
+                AnimatedVisibility (!loading && steepLogin.intValue == 1){
                     Text(
                         text = "ارسال کد به شماره موبایل من",
                         style = MaterialTheme.typography.h6,
@@ -249,6 +248,8 @@ fun LoginScreen(
                         fontWeight = FontWeight.Bold
                     )
                 }
+
+
             }
 
         }

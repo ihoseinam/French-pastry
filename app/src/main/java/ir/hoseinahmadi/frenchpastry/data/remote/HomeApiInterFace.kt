@@ -17,15 +17,15 @@ interface HomeApiInterFace {
     @FormUrlEncoded
     @POST("v1/auth/phone/login")
     suspend fun sendCodeWithEmail(
-        @Header("app-device-uid")deviceId:String="8f1e64ec25bb70a3",
-        @Header("app-public-key")publicId:String="e12d805050d03fa9410a6fba3bef6003",
+        @Header("app-device-uid")deviceId:String,
+        @Header("app-public-key")publicId:String,
         @Field("phone") phone:String
     ):Response<SendCodeResponse>
     @FormUrlEncoded
     @POST("v1/auth/phone/login/verify")
     suspend fun verifyCode(
-        @Header("app-device-uid")deviceId:String="8f1e64ec25bb70a3",
-        @Header("app-public-key")publicId:String="e12d805050d03fa9410a6fba3bef6003",
+        @Header("app-device-uid")deviceId:String,
+        @Header("app-public-key")publicId:String,
         @Field("code") code:String,
         @Field("phone") phone:String,
     ):Response<VerifyCodeResponse>

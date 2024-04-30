@@ -1,11 +1,13 @@
 package ir.hoseinahmadi.frenchpastry.repository
 
+import android.content.Context
 import android.util.Log
 import ir.hoseinahmadi.frenchpastry.data.model.home.HomeResponse
 import ir.hoseinahmadi.frenchpastry.data.model.login.SendCodeResponse
 import ir.hoseinahmadi.frenchpastry.data.model.login.VerifyCodeResponse
 import ir.hoseinahmadi.frenchpastry.data.model.product_detail.ProductResponse
 import ir.hoseinahmadi.frenchpastry.data.remote.HomeApiInterFace
+import ir.hoseinahmadi.frenchpastry.wrapper.DeviceInfo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.withContext
@@ -36,10 +38,14 @@ class HomeRepository @Inject constructor(
 
     }
 
-    suspend fun senCodePhone(phone: String) {
+    suspend fun senCodePhone(phone: String,context: Context) {
         loading.emit(true)
         val response = try {
-            apiInterFace.sendCodeWithEmail(phone = phone)
+            apiInterFace.sendCodeWithEmail(
+                phone = phone,
+                deviceId = DeviceInfo.getDeviceID(context),
+                publicId = DeviceInfo.getPublicKey(context)
+            )
         } catch (e: Exception) {
             Log.e("pasi", "senCodePhone error :${e.message.toString()}")
             return
@@ -57,10 +63,13 @@ class HomeRepository @Inject constructor(
         }
     }
 
-    suspend fun verifyCode(code:String ,phone: String){
+    suspend fun verifyCode(code:String ,phone: String,context: Context){
         loading.emit(true)
         val response = try {
-            apiInterFace.verifyCode(code = code, phone = phone)
+            apiInterFace.verifyCode(code = code, phone = phone,
+                deviceId = DeviceInfo.getDeviceID(context),
+                publicId = DeviceInfo.getPublicKey(context)
+            )
         } catch (e: Exception) {
             Log.e("pasi", "verifyCode error :${e.message.toString()}")
             return

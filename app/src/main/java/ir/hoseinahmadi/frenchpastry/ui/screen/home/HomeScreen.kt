@@ -51,17 +51,11 @@ fun HomeScreen(
     navHostController: NavHostController,
     homeViewModel: HomeViewModel = hiltViewModel()
 ) {
-    if (Constants.CHECKED_LOGIN){
-        Home(navHostController = navHostController,homeViewModel)
-    }else{
-        when (homeViewModel.homeScreenState) {
-            HomeScreenState.LoginScreen ->{
-                LoginScreen(navHostController = navHostController,homeViewModel)
-            }
+    if (Constants.CHECKED_LOGIN) {
+        Home(navHostController = navHostController, homeViewModel)
+    } else {
+        LoginScreen(navHostController = navHostController, homeViewModel)
 
-            HomeScreenState.HomeScreen ->{
-                Home(navHostController = navHostController,homeViewModel) }
-        }
     }
 
 }
@@ -180,7 +174,7 @@ private fun TopBarHome() {
         }
 
         Image(
-            painter = painterResource(id = R.drawable.ic_topbar),
+            painter = painterResource(id = R.drawable.black_logo),
             contentDescription = "",
             Modifier.size(80.dp, 46.dp),
         )

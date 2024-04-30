@@ -30,6 +30,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -37,12 +38,14 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import ir.hoseinahmadi.frenchpastry.R
+import ir.hoseinahmadi.frenchpastry.navigation.Screen
 import ir.hoseinahmadi.frenchpastry.ui.screen.home.HomeScreenState
 import ir.hoseinahmadi.frenchpastry.ui.theme.body2
 import ir.hoseinahmadi.frenchpastry.ui.theme.font_bold
 import ir.hoseinahmadi.frenchpastry.ui.theme.h1
 import ir.hoseinahmadi.frenchpastry.ui.theme.h5
 import ir.hoseinahmadi.frenchpastry.ui.theme.h6
+import ir.hoseinahmadi.frenchpastry.util.Constants
 import ir.hoseinahmadi.frenchpastry.util.PastryHelper
 import ir.hoseinahmadi.frenchpastry.viewModel.DatStoreViewModel
 import ir.hoseinahmadi.frenchpastry.viewModel.HomeViewModel
@@ -55,27 +58,33 @@ import kotlinx.coroutines.withContext
 
 @Composable
 fun AlertEnterCode(
-    time:Int,
+    time: Int,
+    navHostController: NavHostController,
     homeViewModel: HomeViewModel = hiltViewModel(),
     datStoreViewModel: DatStoreViewModel = hiltViewModel()
 ) {
 
     if (steepLogin.intValue == 2) {
 
-
+        val context = LocalContext.current
         val loading by homeViewModel.loading.collectAsState()
         val errorVerifyCode by homeViewModel.errorVerifyCode.collectAsState()
 
 
         LaunchedEffect(true) {
             launch {
-                homeViewModel.verifyCodeResponse.collectLatest {
-                    if (it.http_code == 200) {
-                        Log.e("pasi", "code is success ${it.message}")
-                        withContext(Dispatchers.Main) {
-                            homeViewModel.homeScreenState = HomeScreenState.HomeScreen
-                            datStoreViewModel.saveUserLogin(true)
-                            datStoreViewModel.saveUserPhone(homeViewModel.userPhone)
+                homeViewModel.verifyCodeResponse.collectLatest { VerifyCodeResult ->
+                    if (VerifyCodeResult.http_code == 200) {
+                        datStoreViewModel.saveUserLogin(true)
+                        datStoreViewModel.saveUserApiKey(VerifyCodeResult.api)
+                        datStoreViewModel.saveUserPhone(homeViewModel.userPhone)
+                        Constants.USER_PHONE = homeViewModel.userPhone
+                        Constants.API_KEY = VerifyCodeResult.api
+                        Constants.CHECKED_LOGIN = true
+                        navHostController.navigate(Screen.HomeScreen.route) {
+                            popUpTo(0) {
+                                inclusive = true
+                            }
                         }
                     }
                 }
@@ -149,7 +158,9 @@ fun AlertEnterCode(
                         }
 
                         Column(
-                            modifier = Modifier.fillMaxWidth().padding(top = 2.dp),
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 4.dp),
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             Button(
@@ -163,7 +174,7 @@ fun AlertEnterCode(
                                     .height(43.dp)
                                     .padding(vertical = 3.dp),
                                 onClick = {
-                                    homeViewModel.verifyCode()
+                                    homeViewModel.verifyCode(context)
                                 }) {
                                 AnimatedVisibility(visible = (steepLogin.intValue == 2 && loading)) {
                                     Loading3Dots(isDark = false)
@@ -187,9 +198,6 @@ fun AlertEnterCode(
                                     color = Color.Black,
                                     style = MaterialTheme.typography.body2
                                 )
-
-
-
                             }
 
                         }
@@ -199,10 +207,7 @@ fun AlertEnterCode(
                 }
 
             },
-            confirmButton = {
-
-
-            },
+            confirmButton = {},
         )
     }
 

@@ -11,6 +11,7 @@ import ir.hoseinahmadi.frenchpastry.ui.screen.CategoryScreen
 import ir.hoseinahmadi.frenchpastry.ui.screen.home.HomeScreen
 import ir.hoseinahmadi.frenchpastry.ui.screen.login.LoginScreen
 import ir.hoseinahmadi.frenchpastry.ui.screen.product_detail.ProductDetailScreen
+import ir.hoseinahmadi.frenchpastry.ui.screen.profile.ProfileInfoScreen
 import ir.hoseinahmadi.frenchpastry.ui.screen.profile.ProfileScreen
 import ir.hoseinahmadi.frenchpastry.ui.screen.splash.SplashScreen
 
@@ -54,6 +55,9 @@ fun SetUpNavGraph(navHostController: NavHostController) {
             }
 
 
+        }
+        composable(Screen.ProfileInfoScreen.route){
+            ProfileInfoScreen()
         }
 
     }

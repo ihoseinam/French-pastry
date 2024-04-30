@@ -138,6 +138,8 @@ dependencies {
 
     implementation("androidx.compose.material:material-icons-extended:1.6.6")
 
+    implementation("com.fragula2:fragula-compose:2.10.1")
+
 
 
 }

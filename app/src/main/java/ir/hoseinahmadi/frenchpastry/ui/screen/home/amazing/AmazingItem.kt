@@ -89,7 +89,7 @@ fun AmazingItem(
                             modifier = Modifier.padding(bottom = 10.dp)
                         ) {
                             Image(
-                                painter = painterResource(id = R.drawable.ic_discount),
+                                painter = painterResource(id = R.drawable.img_off),
                                 contentDescription = ""
                             )
                             Box(contentAlignment = Alignment.Center) {
@@ -166,7 +166,7 @@ fun AmazingItem(
                             modifier = Modifier.size(40.dp),
                             onClick = { /*TODO*/ }) {
                             Icon(
-                                painterResource(id = R.drawable.ic_shopingcard),
+                                painterResource(id = R.drawable.img_shopping_card_recycler),
                                 contentDescription = "",
                                 tint = Color.Black,
                                 modifier = Modifier.size(35.dp, 25.dp)

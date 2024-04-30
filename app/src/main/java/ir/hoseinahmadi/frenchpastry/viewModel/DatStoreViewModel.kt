@@ -15,7 +15,7 @@ class DatStoreViewModel @Inject constructor(
 ) : ViewModel() {
 
     companion object {
-        const val USER_TOKEN_KEY = "USER_TOKEN_KEY"
+        const val USER_Api_KEY = "USER_Api_KEY"
         const val USER_ID_KEY = "USER_ID_KEY"
         const val USER_PHONE_KEY = "USER_PHONE_KEY"
         const val USER_PASSWORD_KEY = "USER_PASSWORD_KEY"
@@ -34,14 +34,14 @@ class DatStoreViewModel @Inject constructor(
     }
 
 
-    fun saveUserToken(value: String) {
+    fun saveUserApiKey(value: String) {
         viewModelScope.launch {
-            repository.putString(USER_TOKEN_KEY, value)
+            repository.putString(USER_Api_KEY, value)
         }
     }
 
-    fun getUserToken(): String? = runBlocking {
-        repository.getString(USER_TOKEN_KEY)
+    fun getUserApiKey(): String = runBlocking {
+        repository.getString(USER_Api_KEY) ?:""
     }
 
 
@@ -62,7 +62,7 @@ class DatStoreViewModel @Inject constructor(
     }
 
     fun getUserPhone(): String = runBlocking {
-        repository.getString(USER_PHONE_KEY)?:"خالی"
+        repository.getString(USER_PHONE_KEY)?:""
     }
 
     fun saveUserPassword(value: String) {

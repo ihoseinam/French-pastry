@@ -1,5 +1,6 @@
 package ir.hoseinahmadi.frenchpastry.viewModel
 
+import android.content.Context
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -20,28 +21,32 @@ class HomeViewModel @Inject constructor(
 
     var userPhone by mutableStateOf("")
     var userCode by mutableStateOf("")
+//    var userFullName by mutableStateOf("")
+//    var userBirthDay by mutableStateOf("")
+//    var userEmail by mutableStateOf("")
+//    var userNationalCode by mutableStateOf("")
 
     var homeScreenState by mutableStateOf(HomeScreenState.LoginScreen)
     val mainResponse = repository.main
-    val loading =repository.loading
+    val loading = repository.loading
     val sendCodeResponse = repository.sendCodeResponse
     val verifyCodeResponse = repository.verifyCodeResponse
-    val errorVerifyCode =repository.errorVerifyCode
+    val errorVerifyCode = repository.errorVerifyCode
     suspend fun getMain() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.getMain()
         }
     }
 
-    fun login() {
+    fun login(context: Context) {
         viewModelScope.launch {
-            repository.senCodePhone(userPhone)
+            repository.senCodePhone(userPhone,context)
         }
     }
 
-    fun verifyCode() {
+    fun verifyCode(context: Context) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.verifyCode(code = userCode, phone = userPhone)
+            repository.verifyCode(code = userCode, phone = userPhone,context)
         }
     }
 

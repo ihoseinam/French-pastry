@@ -22,6 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -48,6 +49,7 @@ import ir.hoseinahmadi.frenchpastry.ui.theme.h2
 import ir.hoseinahmadi.frenchpastry.ui.theme.h3
 import ir.hoseinahmadi.frenchpastry.viewModel.ProductDetailViewModel
 import ir.hoseinahmadi.mydigikala.ui.component.OurLoading
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -85,14 +87,14 @@ private fun ProductScreen(
         mutableStateOf(true)
     }
 
-    LaunchedEffect(true) {
+    LaunchedEffect(productId) {
         launch { productDetailViewModel.getProductById(productId) }
         launch {
             productDetailViewModel.productItem.collectLatest {
                 if (it.http_code == 200 && it.pastry != null) {
-                    loading = false
                     pastryItem = it
-                    slider =it.pastry.gallery
+                    slider = it.pastry.gallery
+                    loading = false
                 } else {
                     loading = true
                 }
@@ -104,16 +106,13 @@ private fun ProductScreen(
     val swipeRefreshState = rememberSwipeRefreshState(isRefreshing = false)
     val config = LocalConfiguration.current
 
-
-
-    SwipeRefresh(state = swipeRefreshState,
-        onRefresh = {
-            scope.launch { refreshedItem(productDetailViewModel, productId) }
-        }) {
-
-        if (loading) {
-            OurLoading(height = config.screenHeightDp.dp - 60.dp, isDark = true)
-        } else {
+    if (loading) {
+        OurLoading(height = config.screenHeightDp.dp - 60.dp, isDark = true)
+    } else {
+        SwipeRefresh(state = swipeRefreshState,
+            onRefresh = {
+                scope.launch { refreshedItem(productDetailViewModel, productId) }
+            }) {
             Scaffold(
                 topBar = {
                     TopBarDetail(navHostController = navHostController)

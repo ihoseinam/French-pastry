@@ -10,6 +10,9 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.LocalPhone
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -19,7 +22,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.unit.dp
 import ir.hoseinahmadi.frenchpastry.ui.theme.DarkCyan
 import ir.hoseinahmadi.frenchpastry.ui.theme.h5
@@ -37,7 +42,7 @@ fun MyEditText(
 
     TextField(
         modifier = Modifier
-            .width(270.dp)
+            .width(250.dp)
             .height(47.dp)
             .border(0.9.dp, Color.LightGray, RoundedCornerShape(10.dp))
             .clip(RoundedCornerShape(10.dp)),
@@ -46,11 +51,13 @@ fun MyEditText(
         singleLine = true,
         trailingIcon = {
             if (timer.isNotEmpty()) {
-                Box(modifier = Modifier
-                    .clip(RoundedCornerShape(10.dp))
-                    .background(Color.LightGray.copy(0.2f))
-                    .size(55.dp, 33.dp)
-                ){
+                Box(
+                    modifier = Modifier
+                        .padding(4.dp)
+                        .clip(RoundedCornerShape(10.dp))
+                        .background(Color.LightGray.copy(0.25f))
+                        .size(50.dp, 32.dp)
+                ) {
                     Text(
                         modifier = Modifier
                             .align(Alignment.Center),
@@ -61,7 +68,11 @@ fun MyEditText(
                 }
 
             }
-
+            else {
+                Icon(Icons.Filled.LocalPhone,
+                    contentDescription = "",
+                    tint = Color.Black)
+            }
         },
         onValueChange = { onValueChange(it) },
         colors = TextFieldDefaults.colors(
@@ -81,7 +92,10 @@ fun MyEditText(
             )
 
         },
-        textStyle = MaterialTheme.typography.h5,
-    )
+        textStyle = MaterialTheme.typography.h5.copy(
+            textDirection = TextDirection.Ltr
+        ),
+
+        )
 
 }
