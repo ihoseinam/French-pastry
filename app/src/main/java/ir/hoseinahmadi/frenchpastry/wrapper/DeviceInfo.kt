@@ -42,7 +42,6 @@ class DeviceInfo {
             val input = PRIVATE_KEY + getDeviceID(context) + apiKey
             val md = MessageDigest.getInstance("MD5")
 
-            if (publicKey == null)
                 publicKey = BigInteger(
                     1,
                     md.digest(input.toByteArray())

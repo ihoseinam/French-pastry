@@ -1,5 +1,6 @@
 package ir.hoseinahmadi.frenchpastry.viewModel
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,17 +18,13 @@ class UserInfoViewModel @Inject constructor(
 
     val userInfo: Flow<UserInfoResponse> = repository.userInfo
     val loading: Flow<Boolean> = repository.loading
-    val userSendInfo =repository.userSendInfo
+    val userSendInfo = repository.userSendInfo
     fun getUserInfo(
-        apiKey: String,
-        deviceUid: String,
-        publicKey: String,
+        context: Context,
     ) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.getUserInfo(
-                apiKey = apiKey,
-                deviceUid = deviceUid,
-                publicKey = publicKey
+                context = context
             )
         }
     }

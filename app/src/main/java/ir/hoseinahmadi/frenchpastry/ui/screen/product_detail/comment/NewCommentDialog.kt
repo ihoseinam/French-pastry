@@ -1,27 +1,19 @@
 package ir.hoseinahmadi.frenchpastry.ui.screen.product_detail.comment
 
-import android.util.Log
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.material3.Text
@@ -34,7 +26,6 @@ import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -42,9 +33,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
-import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
-import ir.hoseinahmadi.frenchpastry.ui.theme.DarkCyan
+import ir.hoseinahmadi.frenchpastry.ui.theme.LightCyan
 import ir.hoseinahmadi.frenchpastry.ui.theme.amber
 import ir.hoseinahmadi.frenchpastry.ui.theme.body1
 import ir.hoseinahmadi.frenchpastry.ui.theme.darkText
@@ -53,13 +42,10 @@ import ir.hoseinahmadi.frenchpastry.ui.theme.grayCategory
 import ir.hoseinahmadi.frenchpastry.ui.theme.h2
 import ir.hoseinahmadi.frenchpastry.ui.theme.h3
 import ir.hoseinahmadi.frenchpastry.ui.theme.h4
-import ir.hoseinahmadi.frenchpastry.ui.theme.h6
-import ir.hoseinahmadi.frenchpastry.ui.theme.semiDarkText
 import ir.hoseinahmadi.frenchpastry.util.Constants
 import ir.hoseinahmadi.frenchpastry.viewModel.ProductDetailViewModel
 import ir.hoseinahmadi.frenchpastry.wrapper.DeviceInfo
 import ir.hoseinahmadi.mydigikala.ui.component.Loading3Dots
-import ir.hoseinahmadi.mydigikala.ui.component.OurLoading
 import kotlinx.coroutines.flow.collectLatest
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -229,8 +215,8 @@ fun CommentForm(
                 unfocusedContainerColor = MaterialTheme.colorScheme.grayCategory,
                 unfocusedIndicatorColor = Color.Transparent,
                 disabledIndicatorColor = Color.Transparent,
-                cursorColor = MaterialTheme.colorScheme.darkText,
-                focusedIndicatorColor = MaterialTheme.colorScheme.darkText,
+                cursorColor = MaterialTheme.colorScheme.LightCyan,
+                focusedIndicatorColor = MaterialTheme.colorScheme.LightCyan,
             ),
             maxLines = 3,
         )

@@ -34,15 +34,22 @@ import ir.hoseinahmadi.frenchpastry.util.Constants
 var showSetComment = mutableStateOf(false)
 
 @Composable
-fun ProductSetCommentSection() {
+fun ProductSetCommentSection(
+    navHostController: NavHostController
+) {
 
 
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(4.dp),
+            .padding(6.dp),
         onClick = {
-            showSetComment.value = true
+            if (Constants.USER_NAME!=""){
+                showSetComment.value = true
+            }else{
+                navHostController.navigate(Screen.ProfileInfoScreen.route)
+            }
+
         },
         shape = RoundedCornerShape(0.dp),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.main),
@@ -50,7 +57,7 @@ fun ProductSetCommentSection() {
         Row(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(vertical = 15.dp, horizontal = 4.dp),
+                .padding(vertical = 20.dp, horizontal = 7.dp),
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically
         ) {

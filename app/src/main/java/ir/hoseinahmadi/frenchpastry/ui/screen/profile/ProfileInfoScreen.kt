@@ -117,11 +117,7 @@ fun ProfileInfoScreen(
     val context = LocalContext.current
     LaunchedEffect(true) {
         launch {
-            infoViewModel.getUserInfo(
-                deviceUid = DeviceInfo.getDeviceID(context),
-                apiKey = Constants.API_KEY,
-                publicKey = DeviceInfo.getPublicKey(context)
-            )
+            infoViewModel.getUserInfo(context =context)
         }
         launch {
             infoViewModel.userInfo.collectLatest { userResponse ->

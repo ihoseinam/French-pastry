@@ -33,8 +33,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import com.google.gson.Gson
 import ir.hoseinahmadi.frenchpastry.R
 import ir.hoseinahmadi.frenchpastry.data.model.product_detail.Comment
+import ir.hoseinahmadi.frenchpastry.navigation.Screen
 import ir.hoseinahmadi.frenchpastry.ui.theme.body1
 import ir.hoseinahmadi.frenchpastry.ui.theme.body2
 import ir.hoseinahmadi.frenchpastry.ui.theme.h5
@@ -43,6 +46,7 @@ import ir.hoseinahmadi.frenchpastry.util.PastryHelper
 
 @Composable
 fun TextCommentCard(
+    navHostController: NavHostController,
     item: Comment
 ) {
 
@@ -180,7 +184,10 @@ fun TextCommentCard(
         if (item.replies != null){
             TextButton(
                 modifier = Modifier.align(Alignment.Start),
-                onClick = { /*TODO*/ }) {
+                onClick = {
+                    val data =Gson().toJson(item)
+                    navHostController.navigate(Screen.CommentAndReplies.route +"?data=$data")
+                }) {
                 Text(
                     text = "مشاهده پاسخ ها",
                     style = MaterialTheme.typography.h6,

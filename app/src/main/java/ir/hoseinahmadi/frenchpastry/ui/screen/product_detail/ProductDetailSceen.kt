@@ -131,7 +131,7 @@ private fun ProductScreen(
                 item { TopInfoDetail() }
                 item { TopSliderSection(slider) }
 
-                item { ProductSetCommentSection() }
+                item { ProductSetCommentSection(navHostController) }
                 item { NewCommentDialog(productId) }
 
                 item {
@@ -174,7 +174,7 @@ private fun ProductScreen(
                 }
                 if (commentList != null) {
                     items(commentList) {
-                        TextCommentCard(item = it)
+                        TextCommentCard(navHostController,item = it)
                     }
                 } else {
                     item {
