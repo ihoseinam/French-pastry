@@ -21,8 +21,6 @@ import ir.hoseinahmadi.frenchpastry.ui.screen.splash.SplashScreen
 @Composable
 fun SetUpNavGraph(navHostController: NavHostController) {
     NavHost(
-        enterTransition = {  fadeIn() },
-        exitTransition = { fadeOut() },
         navController = navHostController,
         startDestination = Screen.SplashScreen.route
     ) {
@@ -36,7 +34,7 @@ fun SetUpNavGraph(navHostController: NavHostController) {
             LoginScreen(navHostController = navHostController)
         }
         composable(Screen.ProfileScreen.route) {
-            ProfileScreen()
+            ProfileScreen(navHostController)
         }
         composable(Screen.BasketScreen.route) {
             BasketScreen()
@@ -62,7 +60,7 @@ fun SetUpNavGraph(navHostController: NavHostController) {
 
         }
         composable(Screen.ProfileInfoScreen.route){
-            ProfileInfoScreen()
+            ProfileInfoScreen(navHostController)
         }
 
     }

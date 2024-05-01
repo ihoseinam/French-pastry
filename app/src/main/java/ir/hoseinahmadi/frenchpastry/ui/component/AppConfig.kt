@@ -24,6 +24,7 @@ fun getDatStoreVariables(datastore: DatStoreViewModel) {
 
     USER_PHONE = datastore.getUserPhone()
     API_KEY = datastore.getUserApiKey()
+    Constants.USER_NAME =datastore.getUserName()
 
 }
 

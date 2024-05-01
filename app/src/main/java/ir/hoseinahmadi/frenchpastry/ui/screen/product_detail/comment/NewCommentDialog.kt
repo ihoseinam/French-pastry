@@ -1,5 +1,8 @@
 package ir.hoseinahmadi.frenchpastry.ui.screen.product_detail.comment
 
+import android.util.Log
+import android.widget.Toast
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -25,6 +28,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -37,6 +41,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import ir.hoseinahmadi.frenchpastry.ui.theme.DarkCyan
@@ -50,7 +55,12 @@ import ir.hoseinahmadi.frenchpastry.ui.theme.h3
 import ir.hoseinahmadi.frenchpastry.ui.theme.h4
 import ir.hoseinahmadi.frenchpastry.ui.theme.h6
 import ir.hoseinahmadi.frenchpastry.ui.theme.semiDarkText
+import ir.hoseinahmadi.frenchpastry.util.Constants
+import ir.hoseinahmadi.frenchpastry.viewModel.ProductDetailViewModel
+import ir.hoseinahmadi.frenchpastry.wrapper.DeviceInfo
+import ir.hoseinahmadi.mydigikala.ui.component.Loading3Dots
 import ir.hoseinahmadi.mydigikala.ui.component.OurLoading
+import kotlinx.coroutines.flow.collectLatest
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -84,8 +94,17 @@ fun NewCommentDialog(
 @Composable
 fun CommentForm(
     productId: Int,
+    viewModel: ProductDetailViewModel = hiltViewModel()
 ) {
 
+    LaunchedEffect(true) {
+        viewModel.resultSendComment.collectLatest {
+            if (it) {
+                showSetComment.value = false
+                viewModel.getProductById(productId)
+            }
+        }
+    }
 
     var sliderValue by remember {
         mutableFloatStateOf(1f)
@@ -195,7 +214,8 @@ fun CommentForm(
             value = commentBody,
             textStyle = MaterialTheme.typography.body1,
             placeholder = {
-                Text(text = "نظر خود را وارد کنید",
+                Text(
+                    text = "نظر خود را وارد کنید",
                     color = Color.DarkGray,
                     style = MaterialTheme.typography.body1
 
@@ -222,14 +242,12 @@ fun CommentForm(
 
 
         val context = LocalContext.current
-        if (loadin) {
-            OurLoading(height = 60.dp, isDark = true)
-        } else {
-           Button(
-               colors = ButtonDefaults.buttonColors(
-                   containerColor = Color.Black,
-                   contentColor = Color.White
-               ),
+
+            Button(
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Black,
+                    contentColor = Color.White
+                ),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(
@@ -237,58 +255,56 @@ fun CommentForm(
                     ),
                 shape = RoundedCornerShape(8.dp),
                 onClick = {
-//                    loadin = true
-//                    val newComment = NewComment(
-//                        token = Constants.USER_TOKEN,
-//                        title = commentTitle,
-//                        description = commentBody,
-//                        productId = productId,
-//                        star = (sliderValue - 1f).toInt(),
-//                        userName = Constants.USER_NAME
-//                        //todo change user name
-//                    )
-//                    if (newComment.title.isBlank()) {
-//                        loadin = false
-//                        Toast.makeText(
-//                            context,
-//                            context.getString(R.string.comment_title_null),
-//                            Toast.LENGTH_SHORT
-//                        ).show()
-//                    } else if (newComment.star == 0) {
-//                        loadin = false
-//                        Toast.makeText(
-//                            context,
-//                            context.getString(R.string.comment_star_null),
-//                            Toast.LENGTH_SHORT
-//                        ).show()
-//
-//                    } else if (newComment.description.isBlank()) {
-//                        loadin = false
-//                        Toast.makeText(
-//                            context,
-//                            context.getString(R.string.comment_body_null),
-//                            Toast.LENGTH_SHORT
-//                        ).show()
-//                    } else {
-//                        viewModel.setNewComment(newComment)
-//                    }
+                    loadin = true
+                    if (commentBody.isBlank()) {
+                        loadin = false
+                        Toast.makeText(
+                            context,
+                            "commentBody is empty",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else if (sliderValue.toInt() - 1 == 0) {
+                        loadin = false
+                        Toast.makeText(
+                            context,
+                            "not score",
+                            Toast.LENGTH_SHORT
+                        ).show()
 
-                }
+                    } else {
+                        viewModel.setNewComment(
+                            apiKey = Constants.API_KEY,
+                            deviceUid = DeviceInfo.getDeviceID(context),
+                            publicKey = DeviceInfo.getPublicKey(context),
+                            postId = productId,
+                            content = commentBody,
+                            rate = sliderValue.toInt() - 1,
+                        )
+                    }
+
+
+                },
             ) {
-                Text(
-                    text = "ثبت نظر",
-                    modifier = Modifier
-                        .padding(
-                            vertical = 4.dp,
-                        ),
-                    style = MaterialTheme.typography.h4,
-                    color = Color.White,
-                )
+                AnimatedVisibility(visible = loadin) {
+                    Loading3Dots(isDark = false)
+                }
+                AnimatedVisibility(visible = !loadin) {
+                    Text(
+                        text = "ثبت نظر",
+                        modifier = Modifier
+                            .padding(
+                                vertical = 4.dp,
+                            ),
+                        style = MaterialTheme.typography.h4,
+                        color = Color.White,
+                    )
+                }
+
             }
+
 
         }
 
 
     }
 
-}

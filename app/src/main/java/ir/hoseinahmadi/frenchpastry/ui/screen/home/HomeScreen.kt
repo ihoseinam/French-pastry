@@ -1,5 +1,6 @@
 package ir.hoseinahmadi.frenchpastry.ui.screen.home
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -30,6 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -43,6 +45,7 @@ import ir.hoseinahmadi.frenchpastry.ui.screen.home.popular.PopularProductSection
 import ir.hoseinahmadi.frenchpastry.ui.screen.login.LoginScreen
 import ir.hoseinahmadi.frenchpastry.util.Constants
 import ir.hoseinahmadi.frenchpastry.viewModel.HomeViewModel
+import ir.hoseinahmadi.frenchpastry.wrapper.DeviceInfo
 import ir.hoseinahmadi.mydigikala.ui.component.OurLoading
 import kotlinx.coroutines.launch
 

@@ -23,15 +23,16 @@ interface ProductDetailApiInterFace {
         @Path("id") id: Int
     ): Response<ProductResponse>
 
+    @FormUrlEncoded
     @POST("v1/comment/")
     suspend fun setNewComment(
-        @Header("app-api-key")apiKey : String,
-        @Header("app-device-uid")deviceUid : String,
-        @Header("app-public-key")publicKey : String,
-        @Field("post_id") postId:Int,
-        @Field("content") content:String,
-        @Field("rate") rate:Int,
-    ):Response<SetCommentResponse>
+        @Header("app-api-key") apiKey: String,
+        @Header("app-device-uid") deviceUid: String,
+        @Header("app-public-key") publicKey: String,
+        @Field("post_id") postId: Int,
+        @Field("content") content: String,
+        @Field("rate") rate: Int,
+    ): Response<SetCommentResponse>
 
 
 }

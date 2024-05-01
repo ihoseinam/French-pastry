@@ -1,5 +1,7 @@
 package ir.hoseinahmadi.frenchpastry.ui.screen.login
 
+import android.app.Activity
+import android.content.Intent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -32,6 +34,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import ir.hoseinahmadi.frenchpastry.MainActivity
 import ir.hoseinahmadi.frenchpastry.R
 import ir.hoseinahmadi.frenchpastry.navigation.Screen
 import ir.hoseinahmadi.frenchpastry.ui.theme.body2
@@ -65,17 +68,18 @@ fun AlertEnterCode(
             launch {
                 homeViewModel.verifyCodeResponse.collectLatest { VerifyCodeResult ->
                     if (VerifyCodeResult.http_code == 200) {
-                        datStoreViewModel.saveUserLogin(true)
                         datStoreViewModel.saveUserApiKey(VerifyCodeResult.api)
                         datStoreViewModel.saveUserPhone(homeViewModel.userPhone)
                         Constants.USER_PHONE = homeViewModel.userPhone
                         Constants.API_KEY = VerifyCodeResult.api
-                        Constants.CHECKED_LOGIN = true
                         navHostController.navigate(Screen.HomeScreen.route) {
                             popUpTo(0) {
                                 inclusive = true
                             }
                         }
+                        datStoreViewModel.saveUserLogin(true)
+                        Constants.CHECKED_LOGIN = true
+                        steepLogin.intValue = 0
                     }
                 }
             }

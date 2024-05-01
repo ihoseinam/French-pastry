@@ -24,9 +24,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.unit.dp
 import ir.hoseinahmadi.frenchpastry.ui.theme.DarkCyan
+import ir.hoseinahmadi.frenchpastry.ui.theme.body1
+import ir.hoseinahmadi.frenchpastry.ui.theme.body2
 import ir.hoseinahmadi.frenchpastry.ui.theme.h5
 import ir.hoseinahmadi.frenchpastry.ui.theme.h6
 
@@ -92,8 +95,8 @@ fun MyEditText(
             )
 
         },
-        textStyle = MaterialTheme.typography.h5.copy(
-            textDirection = TextDirection.Ltr
+        textStyle = MaterialTheme.typography.body2.copy(
+            textDirection = TextDirection.Ltr,
         ),
 
         )
