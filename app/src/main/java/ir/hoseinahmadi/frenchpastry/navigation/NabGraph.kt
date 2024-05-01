@@ -1,5 +1,8 @@
 package ir.hoseinahmadi.frenchpastry.navigation
 
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -18,6 +21,8 @@ import ir.hoseinahmadi.frenchpastry.ui.screen.splash.SplashScreen
 @Composable
 fun SetUpNavGraph(navHostController: NavHostController) {
     NavHost(
+        enterTransition = {  fadeIn() },
+        exitTransition = { fadeOut() },
         navController = navHostController,
         startDestination = Screen.SplashScreen.route
     ) {

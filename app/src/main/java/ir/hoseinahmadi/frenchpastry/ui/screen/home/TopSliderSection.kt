@@ -57,7 +57,7 @@ fun TopSliderSection(
         modifier = Modifier
             .fillMaxWidth()
             .background(Color(0xffF0F3FF))
-            .height(240.dp)
+            .height(220.dp)
     ) {
         Box(
             modifier = Modifier
@@ -102,7 +102,7 @@ fun TopSliderSection(
                 Row(
                     modifier = Modifier
                         .padding(bottom = 3.dp)
-                        .size(73.dp, 21.dp)
+                        .size(75.dp, 23.dp)
                         .clip(
                             RoundedCornerShape(12.dp)
                         )
@@ -114,8 +114,8 @@ fun TopSliderSection(
                         pagerState = pagerState,
                         activeColor = Color.Black,
                         inactiveColor = Color(0xffD9D9D9),
-                        indicatorWidth = 6.dp,
-                        indicatorHeight = 6.dp,
+                        indicatorWidth = 7.dp,
+                        indicatorHeight = 7.dp,
                         indicatorShape = CircleShape
                     )
                 }

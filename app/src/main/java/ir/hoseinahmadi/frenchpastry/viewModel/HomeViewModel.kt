@@ -8,9 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.hoseinahmadi.frenchpastry.repository.HomeRepository
-import ir.hoseinahmadi.frenchpastry.ui.screen.home.HomeScreenState
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -26,7 +24,6 @@ class HomeViewModel @Inject constructor(
 //    var userEmail by mutableStateOf("")
 //    var userNationalCode by mutableStateOf("")
 
-    var homeScreenState by mutableStateOf(HomeScreenState.LoginScreen)
     val mainResponse = repository.main
     val loading = repository.loading
     val sendCodeResponse = repository.sendCodeResponse

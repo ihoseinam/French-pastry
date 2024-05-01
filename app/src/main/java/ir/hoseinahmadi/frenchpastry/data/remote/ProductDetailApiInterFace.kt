@@ -1,5 +1,6 @@
 package ir.hoseinahmadi.frenchpastry.data.remote
 
+import ir.hoseinahmadi.frenchpastry.data.model.comment.SetCommentResponse
 import ir.hoseinahmadi.frenchpastry.data.model.home.HomeResponse
 import ir.hoseinahmadi.frenchpastry.data.model.login.SendCodeResponse
 import ir.hoseinahmadi.frenchpastry.data.model.login.VerifyCodeResponse
@@ -20,7 +21,17 @@ interface ProductDetailApiInterFace {
     @GET("v1/pastry/{id}")
     suspend fun getProductById(
         @Path("id") id: Int
-    ):Response<ProductResponse>
+    ): Response<ProductResponse>
+
+    @POST("v1/comment/")
+    suspend fun setNewComment(
+        @Header("app-api-key")apiKey : String,
+        @Header("app-device-uid")deviceUid : String,
+        @Header("app-public-key")publicKey : String,
+        @Field("post_id") postId:Int,
+        @Field("content") content:String,
+        @Field("rate") rate:Int,
+    ):Response<SetCommentResponse>
 
 
 }

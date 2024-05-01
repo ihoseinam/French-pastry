@@ -12,5 +12,6 @@ sealed class Screen(val route:String) {
     data object CategoryScreen:Screen("Category_Screen")
     data object ProductDetailScreen:Screen("ProductDetail_Screen")
     data object ProfileInfoScreen:Screen("ProfileInfoScreen")
+    data object NewCommentScreen:Screen("NewCommentScreen")
 
 }

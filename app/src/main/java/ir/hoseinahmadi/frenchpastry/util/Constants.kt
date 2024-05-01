@@ -12,6 +12,7 @@ object Constants {
     var CHECKED_LOGIN = false
     var USER_PHONE = ""
     var API_KEY =""
+    var USER_NAME =""
 
 
 }
