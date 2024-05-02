@@ -125,6 +125,8 @@ fun ProfileInfoScreen(
                 if (userResponse.http_code == 200) {
                     val name = userResponse.user!!.fullname
                     userName = name
+                    Constants.USER_NAME = name
+                    datStoreViewModel.saveUserName(name)
                     userDate = userResponse.user.birthdate
                     userEmail = userResponse.user.email
                     userPhone = userResponse.user.phone

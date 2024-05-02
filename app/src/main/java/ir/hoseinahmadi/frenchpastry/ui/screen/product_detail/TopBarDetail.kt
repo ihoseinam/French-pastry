@@ -93,8 +93,8 @@ fun TopBarDetail(
                     Icon(
                        imageVector = if (isBookmarked)Icons.Rounded.BookmarkAdded else Icons.Filled.BookmarkBorder,
                         contentDescription = "",
-                        tint = Color.DarkGray,
-                        modifier = Modifier.size(27.dp)
+                        tint = Color.Black,
+                        modifier = Modifier.size(28.dp)
                     )
                 }
 
@@ -103,7 +103,7 @@ fun TopBarDetail(
                     Icon(
                         Icons.Rounded.Share,
                         contentDescription = "",
-                        tint = Color.DarkGray,
+                        tint = Color.Black,
                         modifier = Modifier.size(25.dp)
 
                     )

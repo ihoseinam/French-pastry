@@ -18,9 +18,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.LeadingIconTab
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -29,9 +31,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.gmail.hamedvakhide.compose_jalali_datepicker.JalaliDatePickerDialog
 import ir.hoseinahmadi.frenchpastry.R
@@ -41,13 +46,35 @@ import ir.hoseinahmadi.frenchpastry.ui.theme.h1
 import ir.hoseinahmadi.frenchpastry.ui.theme.h2
 import ir.hoseinahmadi.frenchpastry.util.Constants
 import ir.hoseinahmadi.frenchpastry.util.PastryHelper
+import ir.hoseinahmadi.frenchpastry.viewModel.DatStoreViewModel
+import ir.hoseinahmadi.frenchpastry.viewModel.UserInfoViewModel
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalComposeUiApi::class, ExperimentalLayoutApi::class)
 @Composable
 fun ProfileScreen(
-    navHostController: NavHostController
+    navHostController: NavHostController,
+    infoViewModel: UserInfoViewModel = hiltViewModel(),
+    datStoreViewModel: DatStoreViewModel = hiltViewModel()
 ) {
 
+    val context = LocalContext.current
+    LaunchedEffect(true) {
+        launch { infoViewModel.getUserInfo(context = context)  }
+        launch {
+                infoViewModel.userInfo.collectLatest { userResponse ->
+                    if (userResponse.http_code == 200) {
+                        val name = userResponse.user!!.fullname
+                        Constants.USER_NAME = name
+                        datStoreViewModel.saveUserName(name)
+                    }
+                }
+
+
+        }
+
+    }
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -58,20 +85,24 @@ fun ProfileScreen(
                 .fillMaxWidth()
                 .height(130.dp)
         ) {
-            Box(modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.CenterEnd){
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.CenterEnd
+            ) {
                 Image(
                     modifier = Modifier
                         .fillMaxHeight()
                         .width(110.dp),
                     painter = painterResource(id = R.drawable.img_profile_lines),
-                    contentDescription ="",
+                    contentDescription = "",
                     contentScale = ContentScale.FillBounds
-                    )
+                )
             }
 
-            Box(modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center){
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
@@ -81,11 +112,15 @@ fun ProfileScreen(
                         text = Constants.USER_NAME,
                         style = MaterialTheme.typography.h1,
                         color = Color.White,
-                        fontWeight = FontWeight.Black
+                        fontWeight = FontWeight.Black,
+                        fontSize = 23.sp
                     )
-                    Text(text =PastryHelper.pastryByLocate(Constants.USER_PHONE),
+                    Spacer(modifier = Modifier.height(3.dp))
+                    Text(
+                        text = PastryHelper.pastryByLocate(Constants.USER_PHONE),
                         style = MaterialTheme.typography.h2,
                         color = Color.White,
+                        fontSize = 20.sp
                     )
 
                 }
@@ -106,12 +141,25 @@ fun ProfileScreen(
                     .padding(horizontal = 4.dp, vertical = 8.dp),
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
-                BasketItem(onClick = { /*TODO*/ }, painter = painterResource(id = R.drawable.img_sell_state1))
-                BasketItem(onClick = { /*TODO*/ }, painter = painterResource(id = R.drawable.img_sell_state2))
-                BasketItem(onClick = { /*TODO*/ }, painter = painterResource(id = R.drawable.img_sell_state3))
-                BasketItem(onClick = { /*TODO*/ }, painter = painterResource(id = R.drawable.img_sell_state4))
+                BasketItem(
+                    onClick = { /*TODO*/ },
+                    painter = painterResource(id = R.drawable.img_sell_state1)
+                )
+                BasketItem(
+                    onClick = { /*TODO*/ },
+                    painter = painterResource(id = R.drawable.img_sell_state2)
+                )
+                BasketItem(
+                    onClick = { /*TODO*/ },
+                    painter = painterResource(id = R.drawable.img_sell_state3)
+                )
+                BasketItem(
+                    onClick = { /*TODO*/ },
+                    painter = painterResource(id = R.drawable.img_sell_state4)
+                )
             }
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(10.dp))
+            Header("مشخصات من")
             FlowRow(
                 modifier = Modifier
                     .fillMaxWidth()

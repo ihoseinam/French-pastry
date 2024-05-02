@@ -6,9 +6,21 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Category
 import androidx.compose.material.icons.outlined.Home
@@ -18,77 +30,57 @@ import androidx.compose.material.icons.rounded.Category
 import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.Person2
 import androidx.compose.material.icons.rounded.ShoppingBasket
+import androidx.compose.material3.Badge
+import androidx.compose.material3.BadgedBox
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import ir.hoseinahmadi.frenchpastry.R
 import ir.hoseinahmadi.frenchpastry.util.Constants.CHECKED_LOGIN
 import ir.hoseinahmadi.frenchpastry.viewModel.HomeViewModel
 
 @Composable
 fun BottomNavigationBar(
     navHostController: NavHostController,
-    homeViewModel: HomeViewModel = hiltViewModel()
 ) {
 
-    /*
-        val item = listOf<MyBottomNavItem>(
-            MyBottomNavItem(
-                route = Screen.HomeScreen.route,
-                icon = painterResource(id = R.drawable.home)
-            ),
-
-            MyBottomNavItem(
-                route = Screen.HomeScreen.route,
-                icon = painterResource(id = R.drawable.cake)
-            ),
-            MyBottomNavItem(
-                route = Screen.HomeScreen.route,
-                icon = painterResource(id = R.drawable.ic_shopingcard)
-            ),
-            MyBottomNavItem(
-                route = Screen.HomeScreen.route,
-                icon = painterResource(id = R.drawable.coin)
-            ),
-
-            MyBottomNavItem(
-                route = "A",
-                icon = painterResource(id = R.drawable.user)
-            ),
-        )
-    */
 
     val item = listOf<MyBottomNavItem>(
         MyBottomNavItem(
             route = Screen.HomeScreen.route,
-            selectedIcon = Icons.Rounded.Home,
-            unselectedIcon = Icons.Outlined.Home,
+            selectedIcon = painterResource(id = R.drawable.ic_home),
         ),
 
         MyBottomNavItem(
             route = Screen.CategoryScreen.route,
-            selectedIcon = Icons.Rounded.Category,
-            unselectedIcon = Icons.Outlined.Category,
+            selectedIcon = painterResource(id = R.drawable.ic_cake),
         ),
 
         MyBottomNavItem(
             route = Screen.BasketScreen.route,
-            selectedIcon = Icons.Rounded.ShoppingBasket,
-            unselectedIcon = Icons.Outlined.ShoppingBasket,
+            selectedIcon = painterResource(id = R.drawable.ic_shopping_cart),
         ),
 
         MyBottomNavItem(
             route = Screen.ProfileScreen.route,
-            selectedIcon = Icons.Rounded.Person2,
-            unselectedIcon = Icons.Outlined.Person2,
+            selectedIcon = painterResource(id = R.drawable.ic_pastry),
+        ),
+        MyBottomNavItem(
+            route = Screen.ProfileScreen.route,
+            selectedIcon = painterResource(id = R.drawable.ic_user),
         ),
     )
 
@@ -99,43 +91,112 @@ fun BottomNavigationBar(
     AnimatedVisibility(
         visible = showBottomBar && CHECKED_LOGIN,
         enter = fadeIn(),
-        exit =  fadeOut(),
+        exit = fadeOut(),
     ) {
-        Column(
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
+                .height(55.dp)
         ) {
             HorizontalDivider(
                 thickness = 1.3.dp,
                 color = Color.LightGray.copy(0.6f)
             )
-            NavigationBar(
-                containerColor = Color.White,
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 4.dp),
+                    .offset(y = (-20).dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Box(contentAlignment = Alignment.Center) {
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_polygon),
+                        contentDescription = "",
+                        modifier = Modifier.size(80.dp)
+
+                    )
+                }
+                Box(contentAlignment = Alignment.TopCenter) {
+                        IconButton(onClick = {
+                            navHostController
+                                .navigate(Screen.BasketScreen.route){
+                                    popUpTo(0){
+                                        inclusive =true
+                                    }
+                                }
+                        }) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.ic_shopping_cart),
+                                contentDescription = "",
+                                tint = Color.White,
+                                modifier = Modifier.size(22.dp)
+                            )
+                        }
+
+                }
+
+            }
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 12.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 item.forEachIndexed { index, item ->
                     val selected = item.route == backStackEntry.value?.destination?.route
-                    NavigationBarItem(
-                        colors = NavigationBarItemDefaults.colors(
-                            selectedIconColor = Color.White,
-                            unselectedIconColor = Color.DarkGray,
-                            indicatorColor = Color.Black,
-                        ),
-                        selected = selected,
-                        onClick = { navHostController.navigate(item.route) },
-                        icon = {
-                            if (selected) item.selectedIcon else item.unselectedIcon
-                            Icon(
-                                imageVector = if (selected) item.selectedIcon else item.unselectedIcon,
-                                contentDescription = "",
-                            )
-                        })
+                    if (index != 2) {
+                        Box(
+                            modifier = Modifier.fillMaxHeight()
+                                .width(60.dp),
+                        ) {
+                            Box(
+                                modifier = Modifier.fillMaxSize(),
+                                contentAlignment = Alignment.BottomCenter
+                            ) {
+                                Row {
+                                    NavigationBarItem(
+                                        colors = NavigationBarItemDefaults.colors(
+                                            selectedIconColor = Color.Black,
+                                            unselectedIconColor = Color.DarkGray,
+                                            indicatorColor = Color.White
+                                        ),
+                                        selected = selected,
+                                        onClick = { navHostController.navigate(item.route){ popUpTo(0){ inclusive =true } } },
+                                        icon = {
+                                            Icon(
+                                                painter = item.selectedIcon,
+                                                contentDescription = "",
+                                                modifier = Modifier.size(32.dp)
+                                            )
+                                        })
+                                }
+                            }
+                            if (selected) {
+                                Box(
+                                    modifier = Modifier.fillMaxSize(),
+                                    contentAlignment = Alignment.TopCenter
+                                ) {
+                                    Image(
+                                        modifier = Modifier.fillMaxSize(),
+                                        painter = painterResource(id = R.drawable.back_item_bottom_nav),
+                                        contentDescription = "",
+                                        contentScale = ContentScale.FillBounds
+                                    )
+                                }
+                            }
+
+                        }
+                    }
+                    else {
+                       Spacer(modifier = Modifier.padding(horizontal = 12.dp))
+                    }
+
+
                 }
 
 
             }
         }
     }
+
 }
