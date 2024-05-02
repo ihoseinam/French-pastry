@@ -13,9 +13,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -25,12 +22,9 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -43,6 +37,7 @@ import ir.hoseinahmadi.frenchpastry.ui.theme.body2
 import ir.hoseinahmadi.frenchpastry.ui.theme.h5
 import ir.hoseinahmadi.frenchpastry.ui.theme.h6
 import ir.hoseinahmadi.frenchpastry.util.PastryHelper
+import ir.hoseinahmadi.frenchpastry.util.PastryHelper.gregorianToJalali
 
 @Composable
 fun TextCommentCard(
@@ -53,7 +48,7 @@ fun TextCommentCard(
     Column(
         modifier = Modifier
             .padding(
-                horizontal = 10.dp
+                horizontal = 12.dp
             )
             .background(Color.White)
             .fillMaxWidth()
@@ -77,8 +72,8 @@ fun TextCommentCard(
                 style = MaterialTheme.typography.body1,
                 color = Color.Black
             )
-
             Row(
+                verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center
             ) {
                 Text(
@@ -97,7 +92,7 @@ fun TextCommentCard(
         }
         Text(
             modifier = Modifier.padding(start = 8.dp),
-            text = PastryHelper.pastryByLocate(item.date_i18n),
+            text = PastryHelper.pastryByLocate("${extractTime(item.date)} - ${persianDate(item.date)}"),
             style = MaterialTheme.typography.h6,
             color = Color.DarkGray,
         )
@@ -113,10 +108,10 @@ fun TextCommentCard(
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(10.dp),
+                    .padding(8.dp),
                 text = item.body,
-                style = MaterialTheme.typography.body2,
-                color = Color(0xff555353),
+                style = MaterialTheme.typography.h5,
+                color = Color.Black,
                 maxLines = 2,
                 overflow = TextOverflow.Ellipsis
             )
@@ -146,9 +141,8 @@ fun TextCommentCard(
                         Text(
                             text = "این نظر برای شما مفید بود؟",
                             style = MaterialTheme.typography.h6,
-                            color = Color(0xff555353)
+                            color = Color.DarkGray
                         )
-
                         Row {
                             IconButton(
                                 modifier = Modifier.size(22.dp),
@@ -157,7 +151,7 @@ fun TextCommentCard(
                                     painter = painterResource(id = R.drawable.like),
                                     contentDescription = "",
                                     Modifier.size(19.dp),
-                                    tint = Color(0xff706C6C)
+                                    tint = Color.DarkGray
 
                                 )
                             }
@@ -169,7 +163,7 @@ fun TextCommentCard(
                                     painter = painterResource(id = R.drawable.dislike),
                                     contentDescription = "",
                                     Modifier.size(19.dp),
-                                    tint = Color(0xff706C6C)
+                                    tint = Color.DarkGray
 
                                 )
                             }
@@ -190,12 +184,32 @@ fun TextCommentCard(
                 }) {
                 Text(
                     text = "مشاهده پاسخ ها",
-                    style = MaterialTheme.typography.h6,
+                    style = MaterialTheme.typography.body2,
                     color = Color.Black,
-                    fontWeight = FontWeight.Bold
                 )
 
             }
         }
+
     }
+}
+
+private fun convertDateToJalali(dateString: String): String {
+    val parts = dateString.split(" ")[0].split("-")
+    val year = parts[0].toInt()
+    val month = parts[1].toInt()
+    val day = parts[2].toInt()
+
+    return gregorianToJalali(year, month, day)
+}
+
+fun persianDate(date: String): String {
+    // Assuming `date` is directly "2023-04-02 09:59:31" or similar format
+    val jalaliDate = convertDateToJalali(date)
+    return jalaliDate
+}
+
+fun extractTime(dateTimeString: String): String {
+    val timePart = dateTimeString.split(" ")[1]
+    return timePart
 }

@@ -3,6 +3,7 @@ package ir.hoseinahmadi.frenchpastry.ui.screen.product_detail
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -35,6 +36,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import ir.hoseinahmadi.frenchpastry.R
 import ir.hoseinahmadi.frenchpastry.data.model.product_detail.Comment
+import ir.hoseinahmadi.frenchpastry.data.model.product_detail.Material
 import ir.hoseinahmadi.frenchpastry.data.model.product_detail.ProductResponse
 import ir.hoseinahmadi.frenchpastry.ui.screen.home.TopSliderSection
 import ir.hoseinahmadi.frenchpastry.ui.screen.product_detail.comment.NewCommentDialog
@@ -90,6 +92,9 @@ private fun ProductScreen(
     var commentCount by remember {
         mutableStateOf("")
     }
+    var materialList by remember {
+        mutableStateOf<List<Material>>(emptyList())
+    }
 
     LaunchedEffect(productId) {
         launch { productDetailViewModel.getProductById(productId) }
@@ -100,6 +105,7 @@ private fun ProductScreen(
                     slider = it.pastry.gallery
                     commentList = it.pastry.comments
                     commentCount = it.pastry.comment_count.toString()
+                    materialList = it.pastry.materials
                     delay(600)
                     loading = false
                 } else {
@@ -128,9 +134,12 @@ private fun ProductScreen(
             ) {
                 item { Spacer(modifier = Modifier.height(20.dp)) }
                 item { Header(pastryItem.pastry!!.title) }
-                item { TopInfoDetail() }
                 item { TopSliderSection(slider) }
-
+                item { Header("مواد بکار رفته در شیرینی") }
+                items(materialList) {
+                    MaterialCard(item = it)
+                }
+                item { Header("ثبت نظر") }
                 item { ProductSetCommentSection(navHostController) }
                 item { NewCommentDialog(productId) }
 
@@ -139,8 +148,8 @@ private fun ProductScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(
-                                horizontal = 15.dp,
-                                vertical = 8.dp
+                                horizontal = 8.dp,
+                                vertical = 15.dp
                             ),
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
@@ -161,6 +170,8 @@ private fun ProductScreen(
                                 color = Color(0xff101219),
                                 fontWeight = FontWeight.Bold,
                                 style = MaterialTheme.typography.h2,
+                                fontFamily = font_bold,
+                                fontSize = 22.sp,
                             )
                         }
                         Text(
@@ -174,7 +185,7 @@ private fun ProductScreen(
                 }
                 if (commentList != null) {
                     items(commentList) {
-                        TextCommentCard(navHostController,item = it)
+                        TextCommentCard(navHostController, item = it)
                     }
                 } else {
                     item {
@@ -203,7 +214,7 @@ private fun Header(title: String) {
     Row(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 8.dp),
+            .padding(horizontal = 8.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Start
     ) {

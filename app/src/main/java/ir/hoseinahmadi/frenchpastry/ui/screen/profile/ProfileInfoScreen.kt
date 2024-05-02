@@ -67,6 +67,7 @@ import ir.hoseinahmadi.frenchpastry.ui.theme.darkText
 import ir.hoseinahmadi.frenchpastry.ui.theme.font_bold
 import ir.hoseinahmadi.frenchpastry.ui.theme.grayCategory
 import ir.hoseinahmadi.frenchpastry.ui.theme.h2
+import ir.hoseinahmadi.frenchpastry.ui.theme.h4
 import ir.hoseinahmadi.frenchpastry.ui.theme.h6
 import ir.hoseinahmadi.frenchpastry.ui.theme.semiDarkText
 import ir.hoseinahmadi.frenchpastry.util.Constants
@@ -313,7 +314,7 @@ fun ProfileInfoScreen(
                     ) {
                         Text(
                             text = "جنسیت:",
-                            style = MaterialTheme.typography.body2,
+                            style = MaterialTheme.typography.h4,
                             color = Color.Black
                         )
 
@@ -351,7 +352,7 @@ fun ProfileInfoScreen(
                     }
 
                     Button(
-                        shape = RoundedCornerShape(8.dp),
+                        shape = RoundedCornerShape(9.dp),
                         colors = ButtonDefaults.buttonColors(
                             containerColor = Color.Black,
                             contentColor = Color.White
@@ -424,7 +425,7 @@ private fun TextFieldProfileInfo(
     TextField(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 8.dp),
+            .padding(top = 10.dp),
         value = PastryHelper.pastryByLocate(value),
         textStyle = MaterialTheme.typography.body1.copy(
             textDirection = textDirection

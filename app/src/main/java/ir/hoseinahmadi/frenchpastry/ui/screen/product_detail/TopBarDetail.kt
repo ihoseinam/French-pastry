@@ -1,7 +1,9 @@
 package ir.hoseinahmadi.frenchpastry.ui.screen.product_detail
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -10,9 +12,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.ArrowForwardIos
+import androidx.compose.material.icons.filled.BookmarkBorder
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -36,18 +41,46 @@ fun TopBarDetail(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 5.dp, vertical = 2.dp),
-            horizontalArrangement = Arrangement.Start,
+                .background(Color.White)
+                .padding(horizontal = 4.dp, vertical = 5.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            IconButton(onClick = { navHostController.popBackStack()}) {
+            IconButton(onClick = { navHostController.popBackStack() }) {
                 Icon(
-                    Icons.Filled.Close,
+                    Icons.Filled.ArrowForward,
                     contentDescription = "",
                     tint = Color.Black
                 )
             }
 
+            Image(
+                painter = painterResource(id = R.drawable.black_logo),
+                contentDescription = "",
+                Modifier.padding(start = 27.dp),
+            )
+
+            Row(
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                IconButton(onClick = { /*TODO*/ }) {
+                    Icon(
+                        Icons.Filled.BookmarkBorder,
+                        contentDescription = "",
+                        tint = Color.DarkGray
+                    )
+                }
+                IconButton(onClick = { /*TODO*/ }) {
+                    Icon(
+                        Icons.Filled.Share,
+                        contentDescription = "",
+                        tint = Color.DarkGray
+                    )
+                }
+
+
+            }
 
         }
         HorizontalDivider(

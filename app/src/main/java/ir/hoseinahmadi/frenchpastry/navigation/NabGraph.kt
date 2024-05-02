@@ -73,6 +73,7 @@ fun SetUpNavGraph(navHostController: NavHostController) {
             )
             ){
             CommentAndRepliesScreen(
+                navHostController,
                 data = it.arguments?.getString("data").toString()
             )
         }

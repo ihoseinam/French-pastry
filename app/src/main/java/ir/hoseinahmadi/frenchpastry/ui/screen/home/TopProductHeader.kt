@@ -44,7 +44,7 @@ fun TopProductHeader(
     Row(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 8.dp,),
+            .padding(horizontal = 8.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {

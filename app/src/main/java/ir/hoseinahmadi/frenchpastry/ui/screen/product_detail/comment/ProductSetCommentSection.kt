@@ -42,7 +42,7 @@ fun ProductSetCommentSection(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(6.dp),
+            .padding(vertical = 6.dp),
         onClick = {
             if (Constants.USER_NAME!=""){
                 showSetComment.value = true
