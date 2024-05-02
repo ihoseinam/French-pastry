@@ -11,6 +11,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import ir.hoseinahmadi.frenchpastry.ui.screen.BasketScreen
 import ir.hoseinahmadi.frenchpastry.ui.screen.CategoryScreen
+import ir.hoseinahmadi.frenchpastry.ui.screen.PastryScreen
 import ir.hoseinahmadi.frenchpastry.ui.screen.home.HomeScreen
 import ir.hoseinahmadi.frenchpastry.ui.screen.login.LoginScreen
 import ir.hoseinahmadi.frenchpastry.ui.screen.product_detail.ProductDetailScreen
@@ -76,6 +77,10 @@ fun SetUpNavGraph(navHostController: NavHostController) {
                 navHostController,
                 data = it.arguments?.getString("data").toString()
             )
+        }
+
+        composable(Screen.PastryScreen.route){
+            PastryScreen(navHostController)
         }
 
     }

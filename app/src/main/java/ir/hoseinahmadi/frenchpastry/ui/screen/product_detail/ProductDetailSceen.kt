@@ -3,7 +3,6 @@ package ir.hoseinahmadi.frenchpastry.ui.screen.product_detail
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -22,7 +21,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -37,8 +35,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import ir.hoseinahmadi.frenchpastry.R
 import ir.hoseinahmadi.frenchpastry.data.db.entites.FaveEntities
-import ir.hoseinahmadi.frenchpastry.data.model.product_detail.Comment
-import ir.hoseinahmadi.frenchpastry.data.model.product_detail.Material
 import ir.hoseinahmadi.frenchpastry.data.model.product_detail.ProductResponse
 import ir.hoseinahmadi.frenchpastry.ui.screen.home.TopSliderSection
 import ir.hoseinahmadi.frenchpastry.ui.screen.product_detail.comment.NewCommentDialog
@@ -50,7 +46,6 @@ import ir.hoseinahmadi.frenchpastry.ui.theme.darkText
 import ir.hoseinahmadi.frenchpastry.ui.theme.font_bold
 import ir.hoseinahmadi.frenchpastry.ui.theme.h2
 import ir.hoseinahmadi.frenchpastry.ui.theme.h4
-import ir.hoseinahmadi.frenchpastry.ui.theme.h6
 import ir.hoseinahmadi.frenchpastry.util.PastryHelper
 import ir.hoseinahmadi.frenchpastry.viewModel.ProductDetailViewModel
 import ir.hoseinahmadi.mydigikala.ui.component.OurLoading
@@ -105,11 +100,16 @@ private fun ProductScreen(
 
 
     val config = LocalConfiguration.current
-
+    AddOrderBottomSheet()
     if (loading) {
         OurLoading(height = config.screenHeightDp.dp - 60.dp, isDark = true)
     } else {
         Scaffold(
+            bottomBar = {
+                BottomBarHome(
+                    pastryItem.pastry!!
+                )
+            },
             topBar = {
                 TopBarDetail(
                     navHostController = navHostController,

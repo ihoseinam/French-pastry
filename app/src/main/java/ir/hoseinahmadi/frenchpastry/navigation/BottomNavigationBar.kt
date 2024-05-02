@@ -75,7 +75,7 @@ fun BottomNavigationBar(
         ),
 
         MyBottomNavItem(
-            route = Screen.ProfileScreen.route,
+            route = Screen.PastryScreen.route,
             selectedIcon = painterResource(id = R.drawable.ic_pastry),
         ),
         MyBottomNavItem(
