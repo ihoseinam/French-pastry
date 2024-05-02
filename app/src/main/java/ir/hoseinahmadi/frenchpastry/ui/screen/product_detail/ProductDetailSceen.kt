@@ -22,6 +22,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,6 +36,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import ir.hoseinahmadi.frenchpastry.R
+import ir.hoseinahmadi.frenchpastry.data.db.entites.FaveEntities
 import ir.hoseinahmadi.frenchpastry.data.model.product_detail.Comment
 import ir.hoseinahmadi.frenchpastry.data.model.product_detail.Material
 import ir.hoseinahmadi.frenchpastry.data.model.product_detail.ProductResponse
@@ -43,9 +45,12 @@ import ir.hoseinahmadi.frenchpastry.ui.screen.product_detail.comment.NewCommentD
 import ir.hoseinahmadi.frenchpastry.ui.screen.product_detail.comment.ProductSetCommentSection
 import ir.hoseinahmadi.frenchpastry.ui.screen.product_detail.comment.TextCommentCard
 import ir.hoseinahmadi.frenchpastry.ui.theme.body1
+import ir.hoseinahmadi.frenchpastry.ui.theme.body2
+import ir.hoseinahmadi.frenchpastry.ui.theme.darkText
 import ir.hoseinahmadi.frenchpastry.ui.theme.font_bold
 import ir.hoseinahmadi.frenchpastry.ui.theme.h2
 import ir.hoseinahmadi.frenchpastry.ui.theme.h4
+import ir.hoseinahmadi.frenchpastry.ui.theme.h6
 import ir.hoseinahmadi.frenchpastry.util.PastryHelper
 import ir.hoseinahmadi.frenchpastry.viewModel.ProductDetailViewModel
 import ir.hoseinahmadi.mydigikala.ui.component.OurLoading
@@ -78,23 +83,10 @@ private fun ProductScreen(
         mutableStateOf(ProductResponse())
     }
 
-    var slider by remember {
-        mutableStateOf<List<String>>(emptyList())
-    }
-
     var loading by remember {
         mutableStateOf(true)
     }
-    var commentList by remember {
-        mutableStateOf<List<Comment>>(emptyList())
-    }
 
-    var commentCount by remember {
-        mutableStateOf("")
-    }
-    var materialList by remember {
-        mutableStateOf<List<Material>>(emptyList())
-    }
 
     LaunchedEffect(productId) {
         launch { productDetailViewModel.getProductById(productId) }
@@ -102,11 +94,7 @@ private fun ProductScreen(
             productDetailViewModel.productItem.collectLatest {
                 if (it.http_code == 200 && it.pastry != null) {
                     pastryItem = it
-                    slider = it.pastry.gallery
-                    commentList = it.pastry.comments
-                    commentCount = it.pastry.comment_count.toString()
-                    materialList = it.pastry.materials
-                    delay(600)
+                    delay(500)
                     loading = false
                 } else {
                     loading = true
@@ -123,7 +111,15 @@ private fun ProductScreen(
     } else {
         Scaffold(
             topBar = {
-                TopBarDetail(navHostController = navHostController)
+                TopBarDetail(
+                    navHostController = navHostController,
+                    FaveEntities(
+                        id = pastryItem.pastry!!.ID,
+                        name = pastryItem.pastry!!.title,
+                        imgAddress = pastryItem.pastry!!.gallery[0],
+                        salePrice = pastryItem.pastry!!.sale_price
+                    )
+                )
             }
         ) {
             LazyColumn(
@@ -132,12 +128,24 @@ private fun ProductScreen(
                     .background(Color(0xffF0F3FF))
                     .padding(it)
             ) {
-                item { Spacer(modifier = Modifier.height(20.dp)) }
+                item { Spacer(modifier = Modifier.height(10.dp)) }
                 item { Header(pastryItem.pastry!!.title) }
-                item { TopSliderSection(slider) }
+                item { TopSliderSection(pastryItem.pastry!!.gallery) }
                 item { Header("مواد بکار رفته در شیرینی") }
-                items(materialList) {
+                items(pastryItem.pastry!!.materials) {
                     MaterialCard(item = it)
+                }
+                item { Header("توضیحات") }
+
+                item {
+                    Text(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp),
+                        text = "شیرینی نخودچی با آرد ۱۰۰% نخودچی خالص و روغن حیوانی اصل، شیرینی برنجی از برنج معطر آسیاب شده شمال ایران همراه گلاب کاشان، ملکه بادام از خمیر کره ای با عطر هل همراه لایه ای از مخلوط عسل کوهپایه الوند، زعفران و خلال بادام، پسته و زرشک با خمیر کره ای همراه پسته کرمان و زرشک پفکی بی دانه خراسان",
+                        style = MaterialTheme.typography.body2,
+                        color = MaterialTheme.colorScheme.darkText
+                    )
                 }
                 item { Header("ثبت نظر") }
                 item { ProductSetCommentSection(navHostController) }
@@ -175,7 +183,7 @@ private fun ProductScreen(
                             )
                         }
                         Text(
-                            text = "${PastryHelper.pastryByLocate(commentCount)} ${"نظر"}",
+                            text = "${PastryHelper.pastryByLocate(pastryItem.pastry!!.comment_count.toString())} ${"نظر"}",
                             color = Color.Black,
                             style = MaterialTheme.typography.h4,
                         )
@@ -183,8 +191,8 @@ private fun ProductScreen(
                     }
 
                 }
-                if (commentList != null) {
-                    items(commentList) {
+                if (pastryItem.pastry!!.comments != null) {
+                    items(pastryItem.pastry!!.comments) {
                         TextCommentCard(navHostController, item = it)
                     }
                 } else {
@@ -210,10 +218,10 @@ private fun ProductScreen(
 
 
 @Composable
-private fun Header(title: String) {
+ fun Header(title: String) {
     Row(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxWidth()
             .padding(horizontal = 8.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Start

@@ -2,6 +2,7 @@ package ir.hoseinahmadi.frenchpastry.ui.screen.login
 
 import android.app.Activity
 import android.content.Intent
+import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -131,11 +132,7 @@ fun AlertEnterCode(
                         MyEditText(
                             value = homeViewModel.userCode,
                             placeholder = "کد تائید را وارد کنید",
-                            onValueChange = {
-                                if (homeViewModel.userCode.length <= 5) {
-                                    homeViewModel.userCode = it
-                                }
-                            },
+                            onValueChange = { homeViewModel.userCode = it },
                             onError = errorVerifyCode,
                             timer = PastryHelper.pastryByLocate(formatTime(time))
                         )
@@ -154,7 +151,7 @@ fun AlertEnterCode(
                         Column(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(top = 4.dp),
+                                .padding(top = 6.dp),
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             Button(
@@ -167,9 +164,7 @@ fun AlertEnterCode(
                                     .fillMaxWidth()
                                     .height(43.dp)
                                     .padding(vertical = 3.dp),
-                                onClick = {
-                                    homeViewModel.verifyCode(context)
-                                }) {
+                                onClick = { homeViewModel.verifyCode(context) }) {
                                 AnimatedVisibility(visible = (steepLogin.intValue == 2 && loading)) {
                                     Loading3Dots(isDark = false)
                                 }
@@ -182,7 +177,9 @@ fun AlertEnterCode(
                                 }
                             }
                             Row(
-                                modifier = Modifier.fillMaxWidth(),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(top = 4.dp),
                                 horizontalArrangement = Arrangement.Start,
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
