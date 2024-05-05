@@ -2,6 +2,7 @@ package ir.hoseinahmadi.frenchpastry.repository
 
 import ir.hoseinahmadi.frenchpastry.data.db.dao.ShopDao
 import ir.hoseinahmadi.frenchpastry.data.db.entites.ShopEntities
+import ir.hoseinahmadi.frenchpastry.ui.screen.basket.TotalDiscountsAndPaid
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -23,5 +24,6 @@ class ShopRepository @Inject constructor(
 
     fun getAllItemShop(): Flow<List<ShopEntities>> = dao.getAllItemInShop()
 
+    fun getAllPriceAndDiscount(): Flow<TotalDiscountsAndPaid> = dao.getTotalDiscountsAndPaid()
 
 }

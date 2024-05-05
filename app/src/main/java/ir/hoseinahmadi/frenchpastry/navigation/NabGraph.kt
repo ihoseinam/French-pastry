@@ -21,7 +21,7 @@ import ir.hoseinahmadi.frenchpastry.ui.screen.splash.SplashScreen
 fun SetUpNavGraph(navHostController: NavHostController) {
     NavHost(
         navController = navHostController,
-        startDestination = Screen.SplashScreen.route
+        startDestination = Screen.BasketScreen.route
     ) {
         composable(Screen.SplashScreen.route) {
             SplashScreen(navHostController = navHostController)

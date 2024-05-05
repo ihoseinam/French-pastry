@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import ir.hoseinahmadi.frenchpastry.data.db.entites.ShopEntities
 import ir.hoseinahmadi.frenchpastry.repository.ShopRepository
+import ir.hoseinahmadi.frenchpastry.ui.screen.basket.TotalDiscountsAndPaid
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -16,6 +17,7 @@ class ShopViewModel @Inject constructor(
 
     val allItemShop:Flow<List<ShopEntities>> = repository.getAllItemShop()
 
+    val allPriceAndDiscount :Flow<TotalDiscountsAndPaid> =repository.getAllPriceAndDiscount()
      fun addShopOrder(item: ShopEntities) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.addShopOrder(item)
