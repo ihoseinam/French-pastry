@@ -17,7 +17,7 @@ fun OurLoading(height:Dp,isDark:Boolean){
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color.White)
+            .background(Color(0xffF4F6FF))
             .height(height),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center

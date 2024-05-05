@@ -61,15 +61,15 @@ fun ProfileScreen(
 
     val context = LocalContext.current
     LaunchedEffect(true) {
-        launch { infoViewModel.getUserInfo(context = context)  }
+        launch { infoViewModel.getUserInfo(context = context) }
         launch {
-                infoViewModel.userInfo.collectLatest { userResponse ->
-                    if (userResponse.http_code == 200) {
-                        val name = userResponse.user!!.fullname
-                        Constants.USER_NAME = name
-                        datStoreViewModel.saveUserName(name)
-                    }
+            infoViewModel.userInfo.collectLatest { userResponse ->
+                if (userResponse.http_code == 200) {
+                    val name = userResponse.user!!.fullname
+                    Constants.USER_NAME = name
+                    datStoreViewModel.saveUserName(name)
                 }
+            }
 
 
         }
@@ -176,7 +176,9 @@ fun ProfileScreen(
                     painter = painterResource(id = R.drawable.img_my_interests)
                 )
                 ProfileItem(
-                    onClick = {},
+                    onClick = {
+                        navHostController.navigate(Screen.AllAddressScreen.route)
+                    },
                     painter = painterResource(id = R.drawable.img_my_address)
                 )
                 ProfileItem(

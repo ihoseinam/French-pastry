@@ -61,6 +61,7 @@ import com.gmail.hamedvakhide.compose_jalali_datepicker.JalaliDatePickerDialog
 import ir.hoseinahmadi.frenchpastry.R
 import ir.hoseinahmadi.frenchpastry.navigation.Screen
 import ir.hoseinahmadi.frenchpastry.ui.theme.LightCyan
+import ir.hoseinahmadi.frenchpastry.ui.theme.amber
 import ir.hoseinahmadi.frenchpastry.ui.theme.body1
 import ir.hoseinahmadi.frenchpastry.ui.theme.body2
 import ir.hoseinahmadi.frenchpastry.ui.theme.darkText
@@ -457,8 +458,8 @@ private fun TextFieldProfileInfo(
             unfocusedContainerColor = MaterialTheme.colorScheme.grayCategory,
             unfocusedIndicatorColor = Color.Transparent,
             disabledIndicatorColor = Color.Transparent,
-            cursorColor = MaterialTheme.colorScheme.LightCyan,
-            focusedIndicatorColor = MaterialTheme.colorScheme.LightCyan,
+            cursorColor = MaterialTheme.colorScheme.amber,
+            focusedIndicatorColor = MaterialTheme.colorScheme.amber,
             errorTextColor = Color.Red,
         ),
         singleLine = true

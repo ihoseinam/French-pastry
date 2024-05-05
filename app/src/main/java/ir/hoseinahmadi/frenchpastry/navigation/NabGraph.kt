@@ -9,6 +9,8 @@ import androidx.navigation.navArgument
 import ir.hoseinahmadi.frenchpastry.ui.screen.basket.BasketScreen
 import ir.hoseinahmadi.frenchpastry.ui.screen.CategoryScreen
 import ir.hoseinahmadi.frenchpastry.ui.screen.PastryScreen
+import ir.hoseinahmadi.frenchpastry.ui.screen.address.EditAddressScreen
+import ir.hoseinahmadi.frenchpastry.ui.screen.address.GetAllAddressScreen
 import ir.hoseinahmadi.frenchpastry.ui.screen.home.HomeScreen
 import ir.hoseinahmadi.frenchpastry.ui.screen.login.LoginScreen
 import ir.hoseinahmadi.frenchpastry.ui.screen.product_detail.ProductDetailScreen
@@ -21,7 +23,7 @@ import ir.hoseinahmadi.frenchpastry.ui.screen.splash.SplashScreen
 fun SetUpNavGraph(navHostController: NavHostController) {
     NavHost(
         navController = navHostController,
-        startDestination = Screen.BasketScreen.route
+        startDestination = Screen.SplashScreen.route
     ) {
         composable(Screen.SplashScreen.route) {
             SplashScreen(navHostController = navHostController)
@@ -78,6 +80,13 @@ fun SetUpNavGraph(navHostController: NavHostController) {
 
         composable(Screen.PastryScreen.route){
             PastryScreen(navHostController)
+        }
+
+        composable(Screen.AllAddressScreen.route){
+            GetAllAddressScreen(navHostController = navHostController)
+        }
+        composable(Screen.EditAddressScreen.route){
+            EditAddressScreen(navHostController = navHostController)
         }
 
     }
