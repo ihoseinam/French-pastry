@@ -574,8 +574,6 @@ fun DefaultOrder(shopViewModel: ShopViewModel, item: Pastry) {
 
                         }
                     }
-
-
                 }
 
 
@@ -644,8 +642,8 @@ fun DefaultOrder(shopViewModel: ShopViewModel, item: Pastry) {
                 shopViewModel.addShopOrder(
                     ShopEntities(
                         id = item.ID,
-                        salePrice = price,
-                        priceOr = priceDiscount,
+                        price = item.price,
+                        discount = item.discount_percent,
                         title = item.title,
                         img = item.gallery[0],
                         count = kilogram
@@ -978,10 +976,7 @@ fun HighOrder(shopViewModel: ShopViewModel, item: Pastry) {
         }
 
         val price = (item.sale_price * kilogram) / 10
-        var priceDiscount = (item.price * kilogram) / 10
-        if (!item.has_discount){
-            priceDiscount =0
-        }
+        val priceDiscount = (item.price * kilogram) / 10
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -1042,8 +1037,8 @@ fun HighOrder(shopViewModel: ShopViewModel, item: Pastry) {
                 shopViewModel.addShopOrder(
                     ShopEntities(
                         id = item.ID,
-                        salePrice = price,
-                        priceOr = priceDiscount,
+                        price = item.price,
+                        discount = item.discount_percent,
                         title = item.title,
                         img = item.gallery[0],
                         count = kilogram

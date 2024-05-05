@@ -8,8 +8,8 @@ data class ShopEntities(
     @PrimaryKey
     val id:Int,
     val title:String,
-    val salePrice:Int,
-    val priceOr :Int,
+    val price:Int,
+    val discount :Int,
     val img:String,
     val count:Int,
 )
