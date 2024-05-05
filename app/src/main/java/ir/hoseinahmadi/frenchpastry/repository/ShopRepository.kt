@@ -1,0 +1,27 @@
+package ir.hoseinahmadi.frenchpastry.repository
+
+import ir.hoseinahmadi.frenchpastry.data.db.dao.ShopDao
+import ir.hoseinahmadi.frenchpastry.data.db.entites.ShopEntities
+import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
+
+class ShopRepository @Inject constructor(
+    private var dao: ShopDao
+) {
+
+    suspend fun addShopOrder(item: ShopEntities) {
+        dao.addShopOrder(item)
+    }
+
+    suspend fun deleteShopOrder(item: ShopEntities) {
+        dao.deleteShopOrder(item)
+    }
+
+   suspend fun changeCartItem(id: Int, newCount: Int) {
+        dao.changeCartItem(id, newCount)
+    }
+
+    fun getAllItemShop(): Flow<List<ShopEntities>> = dao.getAllItemInShop()
+
+
+}

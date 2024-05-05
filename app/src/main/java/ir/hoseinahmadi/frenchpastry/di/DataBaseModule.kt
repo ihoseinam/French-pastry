@@ -9,6 +9,8 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import ir.hoseinahmadi.frenchpastry.data.db.PastryDataBase
 import ir.hoseinahmadi.frenchpastry.data.db.dao.FaveDao
+import ir.hoseinahmadi.frenchpastry.data.db.dao.ShopDao
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
@@ -28,7 +30,10 @@ object DataBaseModule {
 
     @Provides
     @Singleton
-    fun provideFaveDao(dataBase: PastryDataBase):FaveDao =dataBase.FaveDao()
+    fun provideFaveDao(dataBase: PastryDataBase): FaveDao = dataBase.FaveDao()
 
+    @Provides
+    @Singleton
+    fun provideShopDao(dataBase: PastryDataBase): ShopDao = dataBase.ShopDao()
 
 }

@@ -89,7 +89,7 @@ private fun ProductScreen(
             productDetailViewModel.productItem.collectLatest {
                 if (it.http_code == 200 && it.pastry != null) {
                     pastryItem = it
-                    delay(500)
+                    delay(300)
                     loading = false
                 } else {
                     loading = true
@@ -100,10 +100,10 @@ private fun ProductScreen(
 
 
     val config = LocalConfiguration.current
-    AddOrderBottomSheet()
     if (loading) {
         OurLoading(height = config.screenHeightDp.dp - 60.dp, isDark = true)
     } else {
+        AddOrderBottomSheet(pastryItem.pastry!!)
         Scaffold(
             bottomBar = {
                 BottomBarHome(

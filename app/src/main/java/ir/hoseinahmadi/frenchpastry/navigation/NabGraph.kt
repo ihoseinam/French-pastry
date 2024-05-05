@@ -1,15 +1,12 @@
 package ir.hoseinahmadi.frenchpastry.navigation
 
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import ir.hoseinahmadi.frenchpastry.ui.screen.BasketScreen
+import ir.hoseinahmadi.frenchpastry.ui.screen.basket.BasketScreen
 import ir.hoseinahmadi.frenchpastry.ui.screen.CategoryScreen
 import ir.hoseinahmadi.frenchpastry.ui.screen.PastryScreen
 import ir.hoseinahmadi.frenchpastry.ui.screen.home.HomeScreen

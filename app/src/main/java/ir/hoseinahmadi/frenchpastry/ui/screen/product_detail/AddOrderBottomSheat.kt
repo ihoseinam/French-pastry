@@ -1,12 +1,12 @@
 package ir.hoseinahmadi.frenchpastry.ui.screen.product_detail
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -26,10 +26,8 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MenuDefaults
-import androidx.compose.material3.MenuItemColors
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonDefaults
@@ -48,11 +46,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.accompanist.pager.ExperimentalPagerApi
+import ir.hoseinahmadi.frenchpastry.data.db.entites.ShopEntities
+import ir.hoseinahmadi.frenchpastry.data.model.product_detail.Pastry
 import ir.hoseinahmadi.frenchpastry.ui.theme.body1
 import ir.hoseinahmadi.frenchpastry.ui.theme.body2
 import ir.hoseinahmadi.frenchpastry.ui.theme.darkText
@@ -60,8 +58,8 @@ import ir.hoseinahmadi.frenchpastry.ui.theme.h1
 import ir.hoseinahmadi.frenchpastry.ui.theme.h2
 import ir.hoseinahmadi.frenchpastry.ui.theme.h4
 import ir.hoseinahmadi.frenchpastry.ui.theme.h6
-import ir.hoseinahmadi.frenchpastry.ui.theme.veryExtraSmall
 import ir.hoseinahmadi.frenchpastry.util.PastryHelper
+import ir.hoseinahmadi.frenchpastry.viewModel.ShopViewModel
 import kotlinx.coroutines.launch
 
 var showAddOrder = mutableStateOf(false)
@@ -71,7 +69,10 @@ var showAddOrder = mutableStateOf(false)
     ExperimentalFoundationApi::class
 )
 @Composable
-fun AddOrderBottomSheet() {
+fun AddOrderBottomSheet(
+    item: Pastry,
+    shopViewModel: ShopViewModel = hiltViewModel()
+) {
 
     val show by remember {
         showAddOrder
@@ -95,21 +96,21 @@ fun AddOrderBottomSheet() {
         ModalBottomSheet(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(480.dp),
+                .height(550.dp),
             containerColor = Color(0xffF0F3FF),
             onDismissRequest = { showAddOrder.value = false })
         {
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 50.dp)
+                    .padding(bottom = 20.dp)
             ) {
-
+                Header("سفارشی سازی")
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 6.dp, horizontal = 4.dp),
-                    horizontalArrangement = Arrangement.SpaceBetween
+                        .padding(vertical = 6.dp, horizontal = 5.dp),
+                    horizontalArrangement = Arrangement.Center
                 ) {
 
                     Card(
@@ -118,10 +119,10 @@ fun AddOrderBottomSheet() {
                         ),
                         shape = RoundedCornerShape(12.dp),
                         modifier = Modifier
-                            .height(40.dp)
-                            .weight(0.40f)
-                            .padding(horizontal = 5.dp)
-                            .border(1.dp, Color.LightGray, RoundedCornerShape(12.dp)),
+                            .height(45.dp)
+                            .width(180.dp)
+                            .padding(horizontal = 4.dp),
+                        border = BorderStroke(width = 1.dp, color = Color.LightGray),
                         onClick = {
                             scope.launch {
                                 pagerState.animateScrollToPage(0)
@@ -153,17 +154,17 @@ fun AddOrderBottomSheet() {
                         }
 
                     }
-
+                    Spacer(modifier = Modifier.padding(horizontal = 2.dp))
                     Card(
                         colors = CardDefaults.cardColors(
                             containerColor = Color.White
                         ),
                         shape = RoundedCornerShape(12.dp),
                         modifier = Modifier
-                            .height(40.dp)
-                            .weight(0.40f)
-                            .padding(horizontal = 5.dp)
-                            .border(1.dp, Color.LightGray, RoundedCornerShape(12.dp)),
+                            .height(45.dp)
+                            .width(180.dp)
+                            .padding(horizontal = 4.dp),
+                        border = BorderStroke(width = 1.dp, color = Color.LightGray),
                         onClick = {
                             scope.launch {
                                 pagerState.animateScrollToPage(1)
@@ -205,11 +206,11 @@ fun AddOrderBottomSheet() {
                 ) {
                     when (it) {
                         0 -> {
-                            DefaultOrder()
+                            DefaultOrder(shopViewModel, item)
                         }
 
                         1 -> {
-                            HighOrder()
+                            HighOrder(shopViewModel, item)
                         }
                     }
                 }
@@ -222,7 +223,7 @@ fun AddOrderBottomSheet() {
 }
 
 @Composable
-fun DefaultOrder() {
+fun DefaultOrder(shopViewModel: ShopViewModel, item: Pastry) {
 
     var kilogram by remember {
         mutableIntStateOf(1)
@@ -239,8 +240,8 @@ fun DefaultOrder() {
     var flores by remember {
         mutableIntStateOf(1)
     }
-    Column {
 
+    Column {
 
         Column(
             modifier = Modifier
@@ -581,6 +582,8 @@ fun DefaultOrder() {
             }
 
         }
+        val price = (item.sale_price * kilogram) / 10
+        val priceDiscount = (item.price * kilogram) / 10
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -600,15 +603,17 @@ fun DefaultOrder() {
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
+                if (item.has_discount) {
+                    Text(
+                        text = PastryHelper.pastryByLocateAndSeparator(priceDiscount.toString()),
+                        style = MaterialTheme.typography.h2,
+                        color = Color.DarkGray.copy(0.7f),
+                        textDecoration = TextDecoration.LineThrough
+                    )
+                    Spacer(modifier = Modifier.width(7.dp))
+                }
                 Text(
-                    text = PastryHelper.pastryByLocateAndSeparator("500000"),
-                    style = MaterialTheme.typography.h2,
-                    color = Color.DarkGray.copy(0.7f),
-                    textDecoration = TextDecoration.LineThrough
-                )
-                Spacer(modifier = Modifier.width(7.dp))
-                Text(
-                    text = PastryHelper.pastryByLocateAndSeparator("355000"),
+                    text = PastryHelper.pastryByLocateAndSeparator(price.toString()),
                     style = MaterialTheme.typography.h1,
                     fontWeight = FontWeight.Bold,
                     color = Color(0xff24A751)
@@ -635,10 +640,22 @@ fun DefaultOrder() {
                 .fillMaxWidth()
                 .padding(horizontal = 5.dp, vertical = 3.dp),
             shape = RoundedCornerShape(8.dp),
-            onClick = { /*TODO*/ })
+            onClick = {
+                shopViewModel.addShopOrder(
+                    ShopEntities(
+                        id = item.ID,
+                        salePrice = price,
+                        priceOr = priceDiscount,
+                        title = item.title,
+                        img = item.gallery[0],
+                        count = kilogram
+                    )
+                )
+                showAddOrder.value = false
+            })
         {
             Text(
-                text = "ثبت سفارش",
+                text = "افزودن به سبد خرید (عادی)",
                 style = MaterialTheme.typography.body1,
                 color = Color.White,
             )
@@ -648,7 +665,7 @@ fun DefaultOrder() {
 }
 
 @Composable
-fun HighOrder() {
+fun HighOrder(shopViewModel: ShopViewModel, item: Pastry) {
 
     var kilogram by remember {
         mutableIntStateOf(10)
@@ -914,7 +931,7 @@ fun HighOrder() {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 9.dp, vertical = 6.dp),
+                    .padding(horizontal = 9.dp, vertical = 5.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -959,6 +976,12 @@ fun HighOrder() {
             }
 
         }
+
+        val price = (item.sale_price * kilogram) / 10
+        var priceDiscount = (item.price * kilogram) / 10
+        if (!item.has_discount){
+            priceDiscount =0
+        }
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -978,15 +1001,17 @@ fun HighOrder() {
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
+                if (item.has_discount) {
+                    Text(
+                        text = PastryHelper.pastryByLocateAndSeparator(priceDiscount.toString()),
+                        style = MaterialTheme.typography.h2,
+                        color = Color.DarkGray.copy(0.7f),
+                        textDecoration = TextDecoration.LineThrough
+                    )
+                    Spacer(modifier = Modifier.width(7.dp))
+                }
                 Text(
-                    text = PastryHelper.pastryByLocateAndSeparator("500000"),
-                    style = MaterialTheme.typography.h2,
-                    color = Color.DarkGray.copy(0.7f),
-                    textDecoration = TextDecoration.LineThrough
-                )
-                Spacer(modifier = Modifier.width(7.dp))
-                Text(
-                    text = PastryHelper.pastryByLocateAndSeparator("355000"),
+                    text = PastryHelper.pastryByLocateAndSeparator(price.toString()),
                     style = MaterialTheme.typography.h1,
                     fontWeight = FontWeight.Bold,
                     color = Color(0xff24A751)
@@ -1013,10 +1038,22 @@ fun HighOrder() {
                 .fillMaxWidth()
                 .padding(horizontal = 5.dp, vertical = 3.dp),
             shape = RoundedCornerShape(8.dp),
-            onClick = { /*TODO*/ })
+            onClick = {
+                shopViewModel.addShopOrder(
+                    ShopEntities(
+                        id = item.ID,
+                        salePrice = price,
+                        priceOr = priceDiscount,
+                        title = item.title,
+                        img = item.gallery[0],
+                        count = kilogram
+                    )
+                )
+                showAddOrder.value = false
+            })
         {
             Text(
-                text = "ثبت سفارش",
+                text = "افزودن به سبد خرید (عمده)",
                 style = MaterialTheme.typography.body1,
                 color = Color.White,
             )
