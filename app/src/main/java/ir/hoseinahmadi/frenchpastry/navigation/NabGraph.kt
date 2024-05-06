@@ -13,8 +13,10 @@ import androidx.navigation.navArgument
 import ir.hoseinahmadi.frenchpastry.ui.screen.basket.BasketScreen
 import ir.hoseinahmadi.frenchpastry.ui.screen.CategoryScreen
 import ir.hoseinahmadi.frenchpastry.ui.screen.PastryScreen
+import ir.hoseinahmadi.frenchpastry.ui.screen.address.AddAddressScreen
 import ir.hoseinahmadi.frenchpastry.ui.screen.address.EditAddressScreen
 import ir.hoseinahmadi.frenchpastry.ui.screen.address.GetAllAddressScreen
+import ir.hoseinahmadi.frenchpastry.ui.screen.fave.FaveScreen
 import ir.hoseinahmadi.frenchpastry.ui.screen.home.HomeScreen
 import ir.hoseinahmadi.frenchpastry.ui.screen.login.LoginScreen
 import ir.hoseinahmadi.frenchpastry.ui.screen.product_detail.ProductDetailScreen
@@ -32,12 +34,15 @@ fun SetUpNavGraph(navHostController: NavHostController) {
         )} ,
         exitTransition = { slideOutOfContainer(
             AnimatedContentTransitionScope.SlideDirection.Right,
-            animationSpec = tween(700)
+            animationSpec = tween(800)
         ) },
         navController = navHostController,
         startDestination = Screen.SplashScreen.route
     ) {
-        composable(Screen.SplashScreen.route) {
+        composable(Screen.SplashScreen.route,
+            enterTransition = { fadeIn() },
+            exitTransition = { fadeOut(animationSpec = tween(800)) }
+            ) {
             SplashScreen(navHostController = navHostController)
         }
         composable(Screen.HomeScreen.route) {
@@ -50,7 +55,7 @@ fun SetUpNavGraph(navHostController: NavHostController) {
             ProfileScreen(navHostController)
         }
         composable(Screen.BasketScreen.route) {
-            BasketScreen()
+            BasketScreen(navHostController)
         }
         composable(Screen.CategoryScreen.route) {
             CategoryScreen()
@@ -99,6 +104,20 @@ fun SetUpNavGraph(navHostController: NavHostController) {
         }
         composable(Screen.EditAddressScreen.route){
             EditAddressScreen(navHostController = navHostController)
+        }
+        composable(Screen.AddAddressScreen.route + "?data={data}",
+            arguments = listOf(
+                navArgument("data"){
+                    nullable =true
+                    type = NavType.StringType
+                }
+            )
+            ){
+            AddAddressScreen(data = it.arguments?.getString("data"), navHostController = navHostController)
+        }
+
+        composable(Screen.FaveScreen.route){
+            FaveScreen(navHostController = navHostController)
         }
 
     }

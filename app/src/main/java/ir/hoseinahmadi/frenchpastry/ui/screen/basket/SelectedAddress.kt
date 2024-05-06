@@ -36,6 +36,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -45,10 +46,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import ir.hoseinahmadi.frenchpastry.R
+import ir.hoseinahmadi.frenchpastry.data.model.addres.Addresse
 import ir.hoseinahmadi.frenchpastry.data.model.addres.addredResponse
-import ir.hoseinahmadi.frenchpastry.ui.screen.address.BottomSheetAddAddress
-import ir.hoseinahmadi.frenchpastry.ui.screen.address.showBottomSheetAddAddress
+import ir.hoseinahmadi.frenchpastry.navigation.Screen
+
 import ir.hoseinahmadi.frenchpastry.ui.theme.body1
 import ir.hoseinahmadi.frenchpastry.ui.theme.h2
 import ir.hoseinahmadi.frenchpastry.util.PastryHelper
@@ -61,7 +64,8 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SelectedAddress(
-onClick: () -> Unit
+    navHostController: NavHostController,
+    onClick: () -> Unit
 ) {
 
     var selectedTabIndex by remember {
@@ -180,13 +184,15 @@ onClick: () -> Unit
             HorizontalPager(
                 modifier = Modifier.fillMaxSize(),
                 state = pagerState
-            ) {pagerState ->
+            ) { pagerState ->
                 when (pagerState) {
                     0 -> {
-                        SendPost()
+                        SendPost(navHostController = navHostController)
                     }
 
-                    1 -> { PersonDelivery() }
+                    1 -> {
+                        PersonDelivery()
+                    }
                 }
             }
         }
@@ -197,12 +203,14 @@ onClick: () -> Unit
 
 @Composable
 fun SendPost(
+    navHostController: NavHostController,
     viewModel: AddressViewModel = hiltViewModel()
 ) {
 
     var allAddress by remember {
-        mutableStateOf<addredResponse>(addredResponse())
+        mutableStateOf<List<Addresse>>(emptyList())
     }
+
     val loading by viewModel.loading.collectAsState(initial = false)
 
     val context = LocalContext.current
@@ -211,7 +219,7 @@ fun SendPost(
         launch {
             viewModel.allAddress.collectLatest {
                 if (it.http_code == 200 && it.addresses != null) {
-                    allAddress = it
+                    allAddress = it.addresses
                 }
 
             }
@@ -238,7 +246,7 @@ fun SendPost(
             item {
                 OurLoading(height = 200.dp, isDark = true)
             }
-        } else if (allAddress.addresses!!.isEmpty()) {
+        } else if (allAddress.isEmpty()) {
             item {
                 Text(
                     modifier = Modifier
@@ -251,21 +259,20 @@ fun SendPost(
                 )
             }
         } else {
-            itemsIndexed(allAddress.addresses!!) { index, item ->
+            itemsIndexed(allAddress) { index, item ->
                 SelectedAddressCardItem(item, index)
             }
         }
 
         item {
-            BottomSheetAddAddress()
             OutlinedButton(
-               border = BorderStroke(1.dp, Color.Black),
+                border = BorderStroke(1.dp, Color.Black),
                 shape = RoundedCornerShape(8.dp),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(8.dp),
                 onClick = {
-                    showBottomSheetAddAddress.value = true
+                    navHostController.navigate(Screen.AddAddressScreen.route)
                 }) {
                 Text(
                     text = "افزودن آدرس جدید",
@@ -280,9 +287,11 @@ fun SendPost(
 }
 
 @Composable
-fun PersonDelivery(){
+fun PersonDelivery() {
     Text(
-        modifier = Modifier.fillMaxSize().padding(horizontal = 8.dp, vertical = 15.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 8.dp, vertical = 15.dp),
         text = PastryHelper.pastryByLocate("برای تحویل سفارش از ساعت 8الی 12 و 17 الی 22 می توانید در روز 1403/0/0 به شیرینی فرانسوی واقع در خیابان مدرس ..... مراجعه کنید"),
         style = MaterialTheme.typography.body1,
         color = Color.Black,

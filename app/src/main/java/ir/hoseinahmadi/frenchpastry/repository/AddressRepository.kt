@@ -64,8 +64,6 @@ class AddressRepository @Inject constructor(
 
         if (response.isSuccessful) {
             loading.emit(false)
-        }else{
-            loading.emit(false)
         }
     }
 
