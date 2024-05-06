@@ -20,7 +20,7 @@ fun ProfileItem(
     Card(
         colors = CardDefaults.cardColors(containerColor = Color.White),
         modifier = Modifier
-            .size(120.dp,135.dp)
+            .size(120.dp,130.dp)
             .padding(3.dp),
         onClick = { onClick() })
     {

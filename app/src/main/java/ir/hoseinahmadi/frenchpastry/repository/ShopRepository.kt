@@ -28,4 +28,7 @@ class ShopRepository @Inject constructor(
     suspend fun deleteAllItem(){
         dao.deleteAllItem()
     }
+    fun isHasIsCart(itemId: Int): Flow<Boolean> = dao.isHasIsCart(itemId)
+
+
 }

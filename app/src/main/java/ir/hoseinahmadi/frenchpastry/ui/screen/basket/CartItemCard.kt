@@ -1,13 +1,13 @@
 package ir.hoseinahmadi.frenchpastry.ui.screen.basket
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -16,8 +16,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
@@ -27,6 +29,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MenuDefaults
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -37,7 +40,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -61,7 +63,7 @@ fun CartItemCard(
     item: ShopEntities,
     shopViewModel: ShopViewModel = hiltViewModel()
 ) {
-
+    AlertDeleteOrder(item, shopViewModel)
     Card(
         shape = RoundedCornerShape(0.dp),
         colors = CardDefaults.cardColors(
@@ -91,12 +93,17 @@ fun CartItemCard(
             IconButton(
                 modifier = Modifier
                     .size(30.dp),
-                onClick = { shopViewModel.deleteShopOrder(item) }) {
+                onClick = {
+                    showDeleteOrder.value = true
+                }
+
+            ) {
                 Icon(
                     modifier = Modifier
                         .fillMaxSize(),
-                    painter = painterResource(id = R.drawable.deleteorder),
+                    painter = painterResource(id = R.drawable.ic_delete),
                     contentDescription = "",
+                    tint = Color.DarkGray
                 )
             }
             GlideImage(
@@ -144,13 +151,13 @@ fun CartItemCard(
                             color = Color.Black
                         )
                         Spacer(modifier = Modifier.width(3.dp))
-                        Icon(painter = painterResource(id = R.drawable.toman),
+                        Icon(
+                            painter = painterResource(id = R.drawable.toman),
                             contentDescription = "",
                             Modifier.size(20.dp),
                             tint = Color.Black
-                            )
+                        )
                     }
-
 
 
                 }
@@ -240,4 +247,102 @@ fun CartItemCard(
             modifier = Modifier.padding(vertical = 9.dp)
         )
     }
+}
+
+private var showDeleteOrder = mutableStateOf(false)
+
+@Composable
+private fun AlertDeleteOrder(item: ShopEntities, viewModel: ShopViewModel) {
+
+    val show by remember {
+        showDeleteOrder
+    }
+
+    if (show) {
+        AlertDialog(
+            containerColor = Color.White,
+            icon = {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Start
+                ) {
+                    IconButton(
+                        onClick = { showDeleteOrder.value = false }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.close),
+                            contentDescription = "",
+                            Modifier.size(30.dp),
+                            tint = Color.Black
+                        )
+                    }
+                }
+
+            },
+            title = {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.cancelic),
+                        contentDescription = "",
+                        Modifier.size(30.dp),
+                    )
+                    Spacer(modifier = Modifier.width(5.dp))
+                    Text(
+                        text = "آیا حذف این محصول اطمینان دارید؟",
+                        style = MaterialTheme.typography.body1,
+                        color = Color.Black,
+                    )
+                }
+
+            },
+            onDismissRequest = { /*TODO*/ },
+            confirmButton = {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(5.dp)
+                ) {
+                    Button(
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color.Black
+                        ),
+                        shape = RoundedCornerShape(9.dp),
+                        onClick = {
+                            viewModel.deleteShopOrder(item)
+                            showDeleteOrder.value = false
+                        }) {
+                        Text(
+                            text = "حذف محصول",
+                            style = MaterialTheme.typography.body2,
+                            color = Color.White,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(5.dp))
+                    OutlinedButton(
+                        modifier = Modifier.fillMaxWidth(),
+                        border = BorderStroke(1.dp, Color.Black),
+                        shape = RoundedCornerShape(9.dp),
+
+                        onClick = { showDeleteOrder.value = false }) {
+                        Text(
+                            text = "برگشت به سبد خرید",
+                            style = MaterialTheme.typography.body2,
+                            color = Color.Black,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+
+                }
+
+            },
+
+            )
+    }
+
+
 }

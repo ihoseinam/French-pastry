@@ -11,11 +11,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -62,13 +60,13 @@ fun MyTopBar(navHostController: NavHostController) {
             Image(
                 painter = painterResource(id = R.drawable.black_logo),
                 contentDescription = "",
-                Modifier.size(80.dp, 46.dp),
+                Modifier.size(82.dp, 48.dp),
             )
 
             IconButton(onClick = { /*TODO*/ }) {
                 Icon(
-                    Icons.Outlined.Notifications, contentDescription = "",
-                    Modifier.size(26.dp),
+                   painter = painterResource(id = R.drawable.ic_alert), contentDescription = "",
+                    Modifier.size(24.dp),
                 )
             }
 

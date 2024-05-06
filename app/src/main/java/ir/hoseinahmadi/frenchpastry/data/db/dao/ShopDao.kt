@@ -7,7 +7,6 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import ir.hoseinahmadi.frenchpastry.data.db.entites.ShopEntities
 import ir.hoseinahmadi.frenchpastry.ui.screen.basket.TotalDiscountsAndPaid
-import ir.hoseinahmadi.frenchpastry.util.Constants
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -34,5 +33,9 @@ interface ShopDao {
 
     @Query("delete from shopentities")
     suspend fun deleteAllItem()
+
+
+    @Query("select exists(select * from shopentities where id=:itemId) ")
+    fun isHasIsCart(itemId: Int): Flow<Boolean>
 
 }

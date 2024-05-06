@@ -13,19 +13,20 @@ import javax.inject.Inject
 @HiltViewModel
 class FaveViewModel @Inject constructor(
     private val repository: FaveRepository
-):ViewModel() {
+) : ViewModel() {
 
+    val allData: Flow<List<FaveEntities>> = repository.allData
 
-     fun addFaveItem(item: FaveEntities) {
+    fun addFaveItem(item: FaveEntities) {
         viewModelScope.launch(Dispatchers.IO) {
             repository.addFaveItem(item)
         }
     }
 
-     fun removeFaveItem(item: FaveEntities) {
-         viewModelScope.launch(Dispatchers.IO) {
-             repository.removeFaveItem(item)
-         }
+    fun removeFaveItem(item: FaveEntities) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.removeFaveItem(item)
+        }
     }
 
     fun isHasBookmark(itemId: Int): Flow<Boolean> = repository.isHasBookmark(itemId)

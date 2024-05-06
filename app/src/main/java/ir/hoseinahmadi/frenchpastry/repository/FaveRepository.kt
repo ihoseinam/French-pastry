@@ -1,6 +1,5 @@
 package ir.hoseinahmadi.frenchpastry.repository
 
-import androidx.room.Insert
 import ir.hoseinahmadi.frenchpastry.data.db.dao.FaveDao
 import ir.hoseinahmadi.frenchpastry.data.db.entites.FaveEntities
 import kotlinx.coroutines.flow.Flow
@@ -10,7 +9,7 @@ class FaveRepository @Inject constructor(
     private val dao: FaveDao
 ) {
 
-
+    val allData =dao.allData()
     suspend fun addFaveItem(item: FaveEntities) {
         dao.addFaveItem(item)
     }

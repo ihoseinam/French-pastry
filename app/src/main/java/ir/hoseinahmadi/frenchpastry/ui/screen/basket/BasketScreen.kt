@@ -48,6 +48,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import ir.hoseinahmadi.frenchpastry.R
 import ir.hoseinahmadi.frenchpastry.ui.screen.product_detail.Header
 import ir.hoseinahmadi.frenchpastry.ui.theme.body1
@@ -61,6 +62,7 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun BasketScreen(
+    navHostController: NavHostController,
     shopViewModel: ShopViewModel = hiltViewModel()
 ) {
 
@@ -135,7 +137,7 @@ val scope = rememberCoroutineScope()
                 }
 
                 1 -> {
-                    SelectedAddress(onClick = {scope.launch { pagerState.animateScrollToPage(2) }})
+                    SelectedAddress(onClick = {scope.launch { pagerState.animateScrollToPage(2) }}, navHostController = navHostController)
                 }
 
                 2 -> {

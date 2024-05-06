@@ -20,5 +20,7 @@ interface FaveDao {
     @Query("select exists(select * from faveentities where id=:itemId) ")
     fun isHasBookmark(itemId: Int): Flow<Boolean>
 
+    @Query("SELECT  * FROM faveentities")
+    fun allData(): Flow<List<FaveEntities>>
 
 }
