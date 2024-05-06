@@ -1,5 +1,6 @@
 package ir.hoseinahmadi.frenchpastry.ui.screen.address
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -19,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -26,7 +28,10 @@ import com.google.gson.Gson
 import ir.hoseinahmadi.frenchpastry.R
 import ir.hoseinahmadi.frenchpastry.data.model.addres.Addresse
 import ir.hoseinahmadi.frenchpastry.navigation.Screen
+import ir.hoseinahmadi.frenchpastry.ui.screen.product_detail.comment.extractTime
+import ir.hoseinahmadi.frenchpastry.ui.screen.product_detail.comment.persianDate
 import ir.hoseinahmadi.frenchpastry.ui.theme.body1
+import ir.hoseinahmadi.frenchpastry.ui.theme.h6
 import ir.hoseinahmadi.frenchpastry.util.PastryHelper
 import ir.hoseinahmadi.frenchpastry.viewModel.AddressViewModel
 
@@ -72,6 +77,9 @@ fun AddressCardItem(
                     .size(33.dp)
                     .clickable {
                         viewModel.deleteOrder(context, id = item.ID)
+                        Toast
+                            .makeText(context, "آدرس حذف شد", Toast.LENGTH_SHORT)
+                            .show()
                     },
                 tint = Color(0xffCF3C3C)
             )
@@ -107,6 +115,16 @@ fun AddressCardItem(
                 text = "آدرس:  ${item.address}",
                 style = MaterialTheme.typography.body1,
                 color = Color.Black
+            )
+
+            Text(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 12.dp, vertical = 6.dp),
+                text = PastryHelper.pastryByLocate("${extractTime(item.updated_at)} - ${persianDate(item.updated_at)}"),
+                style = MaterialTheme.typography.h6,
+                color = Color.Black,
+                textAlign = TextAlign.End
             )
 
         }

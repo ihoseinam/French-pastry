@@ -18,7 +18,7 @@ class AddressViewModel @Inject constructor(
 ) : ViewModel() {
 
     val allAddress: Flow<addredResponse> = repository.allAddress
-    val loading =repository.loading
+    val loading = repository.loading
 
     fun getAllAddress(context: Context) {
         viewModelScope.launch(Dispatchers.IO) {
@@ -26,7 +26,7 @@ class AddressViewModel @Inject constructor(
         }
     }
 
-     fun addAddress(
+    fun addAddress(
         context: Context,
         address: String,
         receiver: String,
@@ -42,13 +42,31 @@ class AddressViewModel @Inject constructor(
         }
     }
 
-     fun deleteOrder(
+    fun deleteOrder(
         context: Context,
-        id:String
-    ){
-         viewModelScope.launch(Dispatchers.IO) {
-             repository.deleteOrder(context,id)
-         }
-     }
+        id: String
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteOrder(context, id)
+        }
+    }
+
+    fun editAddress(
+        context: Context,
+        id: String,
+        address: String,
+        receiver: String,
+        phone: String,
+    ) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.editAddress(
+                context,
+                id = id,
+                address = address,
+                receiver = receiver,
+                phone = phone
+            )
+        }
+    }
 
 }

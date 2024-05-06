@@ -97,4 +97,39 @@ class AddressRepository @Inject constructor(
 
     }
 
+     suspend fun editAddress(
+        context: Context,
+        id:String,
+        address: String,
+        receiver: String,
+        phone: String,
+
+    ){
+        loading.emit(true)
+        val response = try {
+            apiInterface.editAddress(
+                apiKey = Constants.API_KEY,
+                deviceUid = DeviceInfo.getDeviceID(context),
+                publicKey = DeviceInfo.getPublicKey(context),
+                id = id,
+                address = address,
+                receiver = receiver,
+                phone = phone
+            )
+        } catch (e: Exception) {
+            Log.e("pasi", "editAddress error : ${e.message}")
+            return
+        }
+
+        if (response.isSuccessful) {
+            loading.emit(false)
+
+
+
+        }
+
+    }
+
+
+
 }

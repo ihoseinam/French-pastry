@@ -16,6 +16,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -47,111 +48,117 @@ fun BottomBarHome(
 ) {
 
     val isHas by viewModel.isHasIsCart(item.ID).collectAsState(initial = false)
-
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(Color.White)
-            .padding(
-                horizontal = 6.dp,
-                vertical = 7.dp
-            ),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        if (!isHas) {
-            Button(
-                shape = RoundedCornerShape(9.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Black,
-                    contentColor = Color.White
+    Column {
+        HorizontalDivider(
+            thickness = 1.dp,
+            color = Color.LightGray.copy(0.6f)
+        )
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(Color.White)
+                .padding(
+                    horizontal = 6.dp,
+                    vertical = 7.dp
                 ),
-                modifier = Modifier.padding(horizontal = 6.dp, vertical = 3.dp),
-                onClick = { showAddOrder.value = true }) {
-                Text(
-                    text = "افزودن به سبد خرید",
-                    style = MaterialTheme.typography.body2,
-                    color = Color.White
-                )
-
-            }
-        } else {
-            Column(
-                modifier = Modifier.fillMaxWidth(0.5f)
-                    .padding(start = 5.dp, bottom = 2.dp, top = 1.dp),
-                horizontalAlignment = Alignment.Start,
-                verticalArrangement = Arrangement.Center
-            ) {
-                Text(
-                    text = "موحود در سبد خرید شما",
-                    style = MaterialTheme.typography.h6,
-                    color = Color.DarkGray
-                )
-                Spacer(modifier = Modifier.height(2.dp))
-                Text(
-                    modifier = Modifier.clickable {
-                        navHostController.navigate(Screen.BasketScreen.route)
-
-                    },
-                    text = "رفتن به سبد خرید",
-                    style = MaterialTheme.typography.body2,
-                    color = MaterialTheme.colorScheme.LightCyan
-                )
-
-            }
-
-        }
-
-
-        Column(
-            Modifier.padding(end = 6.dp),
-            horizontalAlignment = Alignment.End,
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            if (item.has_discount) {
-                Row(
-                    Modifier.padding(end = 7.dp),
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    Box(
-                        modifier = Modifier
-                            .background(
-                                color = Color.Red,
-                                shape = CircleShape
-                            )
-                            .wrapContentWidth(Alignment.CenterHorizontally)
-                            .wrapContentHeight(Alignment.CenterVertically)
-                    ) {
-                        Text(
-                            text = PastryHelper.pastryByLocate(item.discount_percent_110n),
-                            style = MaterialTheme.typography.h6,
-                            color = Color.White,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier.padding(
-                                horizontal = 7.dp
-                            )
-                        )
-                    }
-                    Spacer(modifier = Modifier.padding(horizontal = 4.dp))
-
+            if (!isHas) {
+                Button(
+                    shape = RoundedCornerShape(9.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = Color.Black,
+                        contentColor = Color.White
+                    ),
+                    modifier = Modifier.padding(horizontal = 6.dp, vertical = 3.dp),
+                    onClick = { showAddOrder.value = true }) {
                     Text(
-                        text = PastryHelper.pastryByLocateAndSeparator((item.price / 10).toString()),
+                        text = "افزودن به سبد خرید",
                         style = MaterialTheme.typography.body2,
-                        color = Color.Gray,
-                        textDecoration = TextDecoration.LineThrough
+                        color = Color.White
                     )
 
+                }
+            } else {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth(0.5f)
+                        .padding(start = 12.dp, top = 8.dp, bottom = 8.dp),
+                    horizontalAlignment = Alignment.Start,
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = "موحود در سبد خرید شما",
+                        style = MaterialTheme.typography.h6,
+                        color = Color.DarkGray
+                    )
+                    Spacer(modifier = Modifier.height(2.dp))
+                    Text(
+                        modifier = Modifier.clickable {
+                            navHostController.navigate(Screen.BasketScreen.route)
+                        },
+                        text = "رفتن به سبد خرید",
+                        style = MaterialTheme.typography.body2,
+                        color = MaterialTheme.colorScheme.LightCyan
+                    )
 
                 }
+
             }
 
-            Text(
-                text = "${PastryHelper.pastryByLocateAndSeparator((item.sale_price / 10).toString())} تومان ",
-                style = MaterialTheme.typography.body1,
-                color = MaterialTheme.colorScheme.darkText,
-                fontWeight = FontWeight.SemiBold
-            )
+
+            Column(
+                Modifier.padding(end = 6.dp),
+                horizontalAlignment = Alignment.End,
+            ) {
+                if (item.has_discount) {
+                    Row(
+                        Modifier.padding(end = 7.dp),
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .background(
+                                    color = Color.Red,
+                                    shape = CircleShape
+                                )
+                                .wrapContentWidth(Alignment.CenterHorizontally)
+                                .wrapContentHeight(Alignment.CenterVertically)
+                        ) {
+                            Text(
+                                text = PastryHelper.pastryByLocate(item.discount_percent_110n),
+                                style = MaterialTheme.typography.h6,
+                                color = Color.White,
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier.padding(
+                                    horizontal = 7.dp
+                                )
+                            )
+                        }
+                        Spacer(modifier = Modifier.padding(horizontal = 4.dp))
+
+                        Text(
+                            text = PastryHelper.pastryByLocateAndSeparator((item.price / 10).toString()),
+                            style = MaterialTheme.typography.body2,
+                            color = Color.Gray,
+                            textDecoration = TextDecoration.LineThrough
+                        )
 
 
+                    }
+                }
+
+                Text(
+                    text = "${PastryHelper.pastryByLocateAndSeparator((item.sale_price / 10).toString())} تومان ",
+                    style = MaterialTheme.typography.body1,
+                    color = MaterialTheme.colorScheme.darkText,
+                    fontWeight = FontWeight.SemiBold
+                )
+
+
+            }
         }
     }
+
 }

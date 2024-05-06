@@ -25,7 +25,10 @@ import ir.hoseinahmadi.frenchpastry.navigation.Screen
 import ir.hoseinahmadi.frenchpastry.util.Constants
 
 @Composable
-fun MyTopBar(navHostController: NavHostController) {
+fun MyTopBar(
+    navHostController: NavHostController,
+    onClick: () ->Unit
+) {
     val item = listOf(
         Screen.HomeScreen.route,
         Screen.CategoryScreen.route,
@@ -49,7 +52,7 @@ fun MyTopBar(navHostController: NavHostController) {
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            IconButton(onClick = { /*TODO*/ }) {
+            IconButton(onClick = { onClick() }) {
                 Icon(
                     Icons.Filled.Menu,
                     contentDescription = "",
@@ -65,7 +68,7 @@ fun MyTopBar(navHostController: NavHostController) {
 
             IconButton(onClick = { /*TODO*/ }) {
                 Icon(
-                   painter = painterResource(id = R.drawable.ic_alert), contentDescription = "",
+                    painter = painterResource(id = R.drawable.ic_alert), contentDescription = "",
                     Modifier.size(24.dp),
                 )
             }

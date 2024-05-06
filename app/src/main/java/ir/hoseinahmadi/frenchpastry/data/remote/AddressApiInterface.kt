@@ -38,5 +38,15 @@ interface AddressApiInterface {
         @Path("id") id: String
     ):Response<addredResponse>
 
-
+    @FormUrlEncoded
+    @POST("v1/user/address/{id}")
+    suspend fun editAddress(
+        @Header("app-device-uid") deviceUid: String,
+        @Header("app-public-key") publicKey: String,
+        @Header("app-api-key") apiKey: String,
+        @Path("id")id:String,
+        @Field("address") address: String,
+        @Field("receiver") receiver: String,
+        @Field("phone") phone: String,
+    ): Response<addredResponse>
 }

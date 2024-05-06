@@ -130,7 +130,7 @@ fun SelectedAddress(
                                 }
                             })
                         Text(
-                            text = "تحویل حضوری",
+                            text = "ارسال با پیک",
                             style = MaterialTheme.typography.body1,
                             color = Color.Black
                         )
@@ -171,7 +171,7 @@ fun SelectedAddress(
                                 }
                             })
                         Text(
-                            text = "ارسال با پیک",
+                            text = "تحویل حضوری",
                             style = MaterialTheme.typography.body1,
                             color = Color.Black
                         )

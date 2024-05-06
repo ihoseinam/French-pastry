@@ -65,7 +65,7 @@ import kotlinx.coroutines.launch
 var showAddOrder = mutableStateOf(false)
 
 @OptIn(
-    ExperimentalMaterial3Api::class, ExperimentalPagerApi::class,
+    ExperimentalMaterial3Api::class,
     ExperimentalFoundationApi::class
 )
 @Composable
@@ -299,8 +299,8 @@ fun DefaultOrder(shopViewModel: ShopViewModel, item: Pastry) {
                             expanded = showMenu,
                             onDismissRequest = { showMenu = false }
                         ) {
-                            val item = 1..4
-                            item.forEach {
+                            val items = 1..4
+                            items.forEach {
                                 DropdownMenuItem(
                                     colors = MenuDefaults.itemColors(textColor = Color.Black),
                                     text = {
@@ -382,11 +382,11 @@ fun DefaultOrder(shopViewModel: ShopViewModel, item: Pastry) {
                             expanded = showMenu2,
                             onDismissRequest = { showMenu2 = false }
                         ) {
-                            val item = listOf(
+                            val items = listOf(
                                 "شکلاتی",
                                 "وانیلی",
                             )
-                            item.forEachIndexed { index, i ->
+                            items.forEachIndexed { index, i ->
                                 DropdownMenuItem(
                                     colors = MenuDefaults.itemColors(textColor = Color.Black),
                                     text = {
@@ -457,12 +457,12 @@ fun DefaultOrder(shopViewModel: ShopViewModel, item: Pastry) {
                             expanded = showMenu3,
                             onDismissRequest = { showMenu3 = false }
                         ) {
-                            val item = listOf(
+                            val items = listOf(
                                 "11-14",
                                 "5-7",
                                 "9-11",
                             )
-                            item.forEachIndexed { index, i ->
+                            items.forEachIndexed { index, i ->
                                 DropdownMenuItem(
                                     colors = MenuDefaults.itemColors(textColor = Color.Black),
                                     text = {
@@ -546,8 +546,8 @@ fun DefaultOrder(shopViewModel: ShopViewModel, item: Pastry) {
                             expanded = showMenu3,
                             onDismissRequest = { showMenu3 = false }
                         ) {
-                            val item = 1..3
-                            item.forEachIndexed { index, i ->
+                            val items = 1..3
+                            items.forEachIndexed { index, i ->
                                 DropdownMenuItem(
                                     colors = MenuDefaults.itemColors(textColor = Color.Black),
                                     text = {
@@ -737,8 +737,8 @@ fun HighOrder(shopViewModel: ShopViewModel, item: Pastry) {
                             expanded = showMenu,
                             onDismissRequest = { showMenu = false }
                         ) {
-                            val item = 1..4
-                            item.forEach {
+                            val items = 1..4
+                            items.forEach {
                                 DropdownMenuItem(
                                     colors = MenuDefaults.itemColors(textColor = Color.Black),
                                     text = {
@@ -820,11 +820,11 @@ fun HighOrder(shopViewModel: ShopViewModel, item: Pastry) {
                             expanded = showMenu2,
                             onDismissRequest = { showMenu2 = false }
                         ) {
-                            val item = listOf(
+                            val items = listOf(
                                 "شکلاتی",
                                 "وانیلی",
                             )
-                            item.forEachIndexed { index, i ->
+                            items.forEachIndexed { index, i ->
                                 DropdownMenuItem(
                                     colors = MenuDefaults.itemColors(textColor = Color.Black),
                                     text = {
@@ -895,12 +895,12 @@ fun HighOrder(shopViewModel: ShopViewModel, item: Pastry) {
                             expanded = showMenu3,
                             onDismissRequest = { showMenu3 = false }
                         ) {
-                            val item = listOf(
+                            val items = listOf(
                                 "11-14",
                                 "5-7",
                                 "9-11",
                             )
-                            item.forEachIndexed { index, i ->
+                            items.forEachIndexed { index, i ->
                                 DropdownMenuItem(
                                     colors = MenuDefaults.itemColors(textColor = Color.Black),
                                     text = {
@@ -929,7 +929,7 @@ fun HighOrder(shopViewModel: ShopViewModel, item: Pastry) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 9.dp, vertical = 5.dp),
+                    .padding(horizontal = 9.dp, vertical = 4.dp),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
@@ -1045,8 +1045,7 @@ fun HighOrder(shopViewModel: ShopViewModel, item: Pastry) {
                     )
                 )
                 showAddOrder.value = false
-            })
-        {
+            }) {
             Text(
                 text = "افزودن به سبد خرید (عمده)",
                 style = MaterialTheme.typography.body1,

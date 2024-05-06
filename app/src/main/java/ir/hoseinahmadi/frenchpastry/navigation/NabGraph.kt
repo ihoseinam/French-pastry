@@ -10,12 +10,11 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import ir.hoseinahmadi.frenchpastry.ui.screen.basket.BasketScreen
 import ir.hoseinahmadi.frenchpastry.ui.screen.CategoryScreen
 import ir.hoseinahmadi.frenchpastry.ui.screen.PastryScreen
 import ir.hoseinahmadi.frenchpastry.ui.screen.address.AddAddressScreen
-import ir.hoseinahmadi.frenchpastry.ui.screen.address.EditAddressScreen
 import ir.hoseinahmadi.frenchpastry.ui.screen.address.GetAllAddressScreen
+import ir.hoseinahmadi.frenchpastry.ui.screen.basket.BasketScreen
 import ir.hoseinahmadi.frenchpastry.ui.screen.fave.FaveScreen
 import ir.hoseinahmadi.frenchpastry.ui.screen.home.HomeScreen
 import ir.hoseinahmadi.frenchpastry.ui.screen.login.LoginScreen
@@ -102,9 +101,7 @@ fun SetUpNavGraph(navHostController: NavHostController) {
         composable(Screen.AllAddressScreen.route){
             GetAllAddressScreen(navHostController = navHostController)
         }
-        composable(Screen.EditAddressScreen.route){
-            EditAddressScreen(navHostController = navHostController)
-        }
+
         composable(Screen.AddAddressScreen.route + "?data={data}",
             arguments = listOf(
                 navArgument("data"){

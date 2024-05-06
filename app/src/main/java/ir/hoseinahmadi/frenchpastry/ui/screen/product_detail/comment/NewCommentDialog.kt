@@ -4,6 +4,7 @@ import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -33,6 +34,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import ir.hoseinahmadi.frenchpastry.ui.screen.product_detail.Header
 import ir.hoseinahmadi.frenchpastry.ui.theme.LightCyan
 import ir.hoseinahmadi.frenchpastry.ui.theme.amber
 import ir.hoseinahmadi.frenchpastry.ui.theme.body1
@@ -124,7 +126,7 @@ fun CommentForm(
             ""
         }
     }
-
+Header(title = "ثبت نظر")
     Text(
         text = score,
         modifier = Modifier
@@ -158,13 +160,7 @@ fun CommentForm(
 
     )
 
-    HorizontalDivider(
-        modifier = Modifier.padding(
-            top = 6.dp
-        ),
-        color = MaterialTheme.colorScheme.grayCategory,
-        thickness = 1.dp
-    )
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////
     var commentBody by remember { mutableStateOf("") }
 
@@ -180,18 +176,7 @@ fun CommentForm(
     ) {
 
 
-        Text(
-            text = "ثبت نظر",
-            modifier = Modifier
-                .padding(
-                    top = 20.dp,
-                    start = 4.dp,
-                    bottom = 4.dp
-                ),
-            style = MaterialTheme.typography.h3,
-            fontWeight = FontWeight.Bold,
-            color = MaterialTheme.colorScheme.darkText,
-        )
+        Spacer(modifier = Modifier.height(10.dp))
 
         TextField(
             modifier = Modifier
@@ -229,68 +214,68 @@ fun CommentForm(
 
         val context = LocalContext.current
 
-            Button(
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = Color.Black,
-                    contentColor = Color.White
+        Button(
+            colors = ButtonDefaults.buttonColors(
+                containerColor = Color.Black,
+                contentColor = Color.White
+            ),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(
+                    vertical = 16.dp,
                 ),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(
-                        vertical = 16.dp,
-                    ),
-                shape = RoundedCornerShape(8.dp),
-                onClick = {
-                    loadin = true
-                    if (commentBody.isBlank()) {
-                        loadin = false
-                        Toast.makeText(
-                            context,
-                            "commentBody is empty",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    } else if (sliderValue.toInt() - 1 == 0) {
-                        loadin = false
-                        Toast.makeText(
-                            context,
-                            "not score",
-                            Toast.LENGTH_SHORT
-                        ).show()
+            shape = RoundedCornerShape(8.dp),
+            onClick = {
+                loadin = true
+                if (commentBody.length <=15) {
+                    loadin = false
+                    Toast.makeText(
+                        context,
+                        "نظر را کامل تر وارد کنید",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else if (sliderValue.toInt() - 1 == 0) {
+                    loadin = false
+                    Toast.makeText(
+                        context,
+                        "امتیاز را وارد کنید",
+                        Toast.LENGTH_SHORT
+                    ).show()
 
-                    } else {
-                        viewModel.setNewComment(
-                            apiKey = Constants.API_KEY,
-                            deviceUid = DeviceInfo.getDeviceID(context),
-                            publicKey = DeviceInfo.getPublicKey(context),
-                            postId = productId,
-                            content = commentBody,
-                            rate = sliderValue.toInt() - 1,
-                        )
-                    }
-
-
-                },
-            ) {
-                AnimatedVisibility(visible = loadin) {
-                    Loading3Dots(isDark = false)
-                }
-                AnimatedVisibility(visible = !loadin) {
-                    Text(
-                        text = "ثبت نظر",
-                        modifier = Modifier
-                            .padding(
-                                vertical = 4.dp,
-                            ),
-                        style = MaterialTheme.typography.h4,
-                        color = Color.White,
+                } else {
+                    viewModel.setNewComment(
+                        apiKey = Constants.API_KEY,
+                        deviceUid = DeviceInfo.getDeviceID(context),
+                        publicKey = DeviceInfo.getPublicKey(context),
+                        postId = productId,
+                        content = commentBody,
+                        rate = sliderValue.toInt() - 1,
                     )
                 }
 
-            }
 
+            },
+        ) {
+            AnimatedVisibility(visible = loadin) {
+                Loading3Dots(isDark = false)
+            }
+            AnimatedVisibility(visible = !loadin) {
+                Text(
+                    text = "ثبت نظر",
+                    modifier = Modifier
+                        .padding(
+                            vertical = 4.dp,
+                        ),
+                    style = MaterialTheme.typography.h4,
+                    color = Color.White,
+                )
+            }
 
         }
 
 
     }
+
+
+}
 

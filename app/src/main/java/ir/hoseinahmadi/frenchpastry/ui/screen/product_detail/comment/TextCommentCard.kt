@@ -108,7 +108,7 @@ fun TextCommentCard(
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(8.dp),
+                    .padding(vertical = 9.dp, horizontal = 6.dp),
                 text = item.body,
                 style = MaterialTheme.typography.h5,
                 color = Color.Black,

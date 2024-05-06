@@ -58,8 +58,9 @@ fun AddAddressScreen(
     var p = ""
     var a = ""
 
+    val item = Gson().fromJson(data, Addresse::class.java)
+
     if (data != null) {
-        val item = Gson().fromJson(data, Addresse::class.java)
         title = "ویرایش آدرس"
         n = item.receiver
         p = item.phone
@@ -119,7 +120,7 @@ fun AddAddressScreen(
                 )
 
                 TextFieldAddAddress(
-                    value = phone,
+                    value = PastryHelper.pastryByLocate(phone),
                     onChangeValue = { phone = it },
                     hint = "شماره همراه گیرنده",
                     isError = check && phone.length != 11,
@@ -132,6 +133,7 @@ fun AddAddressScreen(
                     onChangeValue = { address = it },
                     hint = "خیابان- کوچه-پلاک",
                     isError = check && address.length < 20,
+                    singleLine = false
                 )
 
                 val context = LocalContext.current
@@ -149,27 +151,49 @@ fun AddAddressScreen(
                         if (name.length < 8) {
                             Toast.makeText(context, "نام را ماکل تر وارد کنید", Toast.LENGTH_SHORT)
                                 .show()
-                        } else if (InputValidation.isValidPhoneNumber(phone)) {
-                            Toast.makeText(context, "شماره تلفن صحیح نمی باشد", Toast.LENGTH_SHORT)
-                                .show()
                         } else if (address.length < 20) {
                             Toast.makeText(context, "آدرس را کامل تر وارد کنید", Toast.LENGTH_SHORT)
                                 .show()
-                        } else if (phone.length == 11) {
-                            viewModel.addAddress(
-                                context = context,
-                                phone = phone,
-                                address = address,
-                                receiver = name
-                            )
-                            viewModel.getAllAddress(context)
+                        } else if (phone.isNotEmpty() && phone.length == 11) {
+                            if (data == null) {
+                                viewModel.addAddress(
+                                    context = context,
+                                    phone = phone,
+                                    address = address,
+                                    receiver = name
+                                )
+                                Toast.makeText(
+                                    context,
+                                    "آدرس با موفقیت افزوده شد",
+                                    Toast.LENGTH_SHORT
+                                )
+                                    .show()
+                            } else {
+                                viewModel.editAddress(
+                                    context = context,
+                                    id = item.ID,
+                                    phone = phone,
+                                    address = address,
+                                    receiver = name
+                                )
+                                Toast.makeText(
+                                    context,
+                                    "آدرس با موفقیت ویرایش شد",
+                                    Toast.LENGTH_SHORT
+                                )
+                                    .show()
+                            }
+
                             navHostController.popBackStack()
+                            viewModel.getAllAddress(context)
                         } else {
+
                             Toast.makeText(
                                 context,
                                 "فرمت شماره تلفن اشتباه می باشد",
                                 Toast.LENGTH_SHORT
-                            ).show()
+                            )
+                                .show()
 
                         }
 
@@ -197,6 +221,7 @@ private fun TextFieldAddAddress(
     onChangeValue: (it: String) -> Unit,
     hint: String,
     isError: Boolean,
+    singleLine: Boolean = true,
     keyboardOptions: KeyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
     textDirection: TextDirection = TextDirection.Rtl
 ) {
@@ -204,7 +229,7 @@ private fun TextFieldAddAddress(
         modifier = Modifier
             .fillMaxWidth()
             .padding(top = 10.dp),
-        value = PastryHelper.pastryByLocate(value),
+        value = value,
         textStyle = MaterialTheme.typography.body1.copy(
             textDirection = textDirection
         ),
@@ -230,6 +255,6 @@ private fun TextFieldAddAddress(
             focusedIndicatorColor = MaterialTheme.colorScheme.LightCyan,
             errorTextColor = Color.Red,
         ),
-        singleLine = true
+        singleLine = singleLine
     )
 }

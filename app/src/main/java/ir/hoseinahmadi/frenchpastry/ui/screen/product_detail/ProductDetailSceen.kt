@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -84,15 +85,13 @@ private fun ProductScreen(
 
 
     LaunchedEffect(productId) {
-        launch { productDetailViewModel.getProductById(productId) }
         launch {
+            productDetailViewModel.getProductById(productId)
             productDetailViewModel.productItem.collectLatest {
                 if (it.http_code == 200 && it.pastry != null) {
                     pastryItem = it
-                    delay(300)
+                    delay(500)
                     loading = false
-                } else {
-                    loading = true
                 }
             }
         }
@@ -219,7 +218,7 @@ private fun ProductScreen(
 
 
 @Composable
- fun Header(title: String) {
+fun Header(title: String) {
     Row(
         modifier = Modifier
             .fillMaxWidth()

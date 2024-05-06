@@ -36,6 +36,7 @@ import com.bumptech.glide.integration.compose.GlideImage
 import ir.hoseinahmadi.frenchpastry.R
 import ir.hoseinahmadi.frenchpastry.data.model.home.PastryItem
 import ir.hoseinahmadi.frenchpastry.navigation.Screen
+import ir.hoseinahmadi.frenchpastry.ui.screen.product_detail.showAddOrder
 import ir.hoseinahmadi.frenchpastry.ui.theme.body1
 import ir.hoseinahmadi.frenchpastry.ui.theme.darkText
 import ir.hoseinahmadi.frenchpastry.ui.theme.h3
@@ -53,7 +54,7 @@ fun HomeItemCard(
         elevation = CardDefaults.cardElevation(2.dp),
         shape = RoundedCornerShape(10.dp),
         onClick = {
-                  navHostController.navigate(Screen.ProductDetailScreen.route+"?id=${item.ID}")
+            navHostController.navigate(Screen.ProductDetailScreen.route + "?id=${item.ID}")
         },
         modifier = Modifier
             .padding(5.dp)
@@ -165,7 +166,8 @@ fun HomeItemCard(
                     IconButton(
                         modifier = Modifier.size(40.dp),
                         onClick = {
-                            Log.e("pasi",item.ID.toString())
+                            navHostController.navigate(Screen.ProductDetailScreen.route)
+                            showAddOrder.value = true
                         }) {
                         Icon(
                             painterResource(id = R.drawable.img_shopping_card_recycler),
