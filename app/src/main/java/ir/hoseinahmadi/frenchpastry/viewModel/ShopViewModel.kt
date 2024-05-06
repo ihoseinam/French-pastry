@@ -38,7 +38,11 @@ class ShopViewModel @Inject constructor(
         }
 
    }
-
+     fun deleteAllItem(){
+         viewModelScope.launch(Dispatchers.IO) {
+             repository.deleteAllItem()
+         }
+         }
 
 
 }

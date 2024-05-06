@@ -16,7 +16,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.LeadingIconTab
 import androidx.compose.material3.MaterialTheme
@@ -130,9 +132,10 @@ fun ProfileScreen(
             modifier = Modifier
                 .clip(RoundedCornerShape(topStart = 22.dp, topEnd = 22.dp))
                 .fillMaxSize()
-                .background(Color.White),
+                .background(Color.White)
+                .verticalScroll(rememberScrollState()),
         ) {
-            Spacer(modifier = Modifier.height(15.dp))
+            Spacer(modifier = Modifier.height(10.dp))
             Header("سفارش های من")
 
             Row(
@@ -159,7 +162,6 @@ fun ProfileScreen(
                 )
             }
             Spacer(modifier = Modifier.height(10.dp))
-            Header("مشخصات من")
             FlowRow(
                 modifier = Modifier
                     .fillMaxWidth()

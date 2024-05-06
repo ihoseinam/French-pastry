@@ -54,19 +54,19 @@ fun AddressCardItem(
                 painter = painterResource(id = R.drawable.ic_message_edit),
                 contentDescription = "",
                 modifier = Modifier
-                    .size(30.dp)
+                    .size(33.dp)
                     .clickable {
                     },
                 tint = Color.Black,
             )
 
-            Spacer(modifier = Modifier.height(4.dp))
+            Spacer(modifier = Modifier.height(6.dp))
 
             Icon(
                 painter = painterResource(id = R.drawable.deleteorder),
                 contentDescription = "",
                 modifier = Modifier
-                    .size(30.dp)
+                    .size(33.dp)
                     .clickable {
                         viewModel.deleteOrder(context, id = item.ID)
                     },
@@ -86,21 +86,21 @@ fun AddressCardItem(
                 .padding(end = 15.dp)
         ) {
             Text(
-                modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp),
+                modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
                 text = "گیرنده: ${item.receiver}  ",
                 style = MaterialTheme.typography.body1,
                 color = Color.Black
             )
 
             Text(
-                modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp),
+                modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
                 text = "شماره همراه:  ${PastryHelper.pastryByLocate(item.phone)}",
                 style = MaterialTheme.typography.body1,
                 color = Color.Black
             )
 
             Text(
-                modifier = Modifier.padding(horizontal = 10.dp, vertical = 4.dp),
+                modifier = Modifier.padding(horizontal = 10.dp, vertical = 8.dp),
                 text = "آدرس:  ${item.address}",
                 style = MaterialTheme.typography.body1,
                 color = Color.Black

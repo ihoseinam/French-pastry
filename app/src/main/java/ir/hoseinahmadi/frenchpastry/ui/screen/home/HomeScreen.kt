@@ -118,7 +118,6 @@ fun Home(
             OurLoading(height = config.screenHeightDp.dp - 60.dp, isDark = true)
         } else {
             Scaffold(
-                topBar = { TopBarHome() }
             ) {
                 LazyColumn(
                     modifier = Modifier
@@ -158,36 +157,4 @@ private suspend fun refreshedMain(homeViewModel: HomeViewModel) {
     homeViewModel.getMain()
 }
 
-@Composable
-private fun TopBarHome() {
 
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 5.dp, vertical = 2.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        IconButton(onClick = { /*TODO*/ }) {
-            Icon(
-                Icons.Filled.Menu,
-                contentDescription = "",
-                tint = Color.Black
-            )
-        }
-
-        Image(
-            painter = painterResource(id = R.drawable.black_logo),
-            contentDescription = "",
-            Modifier.size(80.dp, 46.dp),
-        )
-
-        IconButton(onClick = { /*TODO*/ }) {
-            Icon(
-                Icons.Outlined.Notifications, contentDescription = "",
-                Modifier.size(26.dp),
-            )
-        }
-
-    }
-}

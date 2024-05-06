@@ -65,7 +65,7 @@ fun GetAllAddressScreen(
         launch { viewModel.getAllAddress(context) }
         launch {
             viewModel.allAddress.collectLatest {
-                if (it.http_code==200&&it.addresses!=null){
+                if (it.http_code == 200 && it.addresses != null) {
                     allAddress = it
                 }
 
@@ -136,22 +136,26 @@ fun GetAllAddressScreen(
                 item {
                     OurLoading(height = config.screenHeightDp.dp - 60.dp, isDark = true)
                 }
-            } else if (allAddress.addresses!!.isEmpty()){
+            } else if (allAddress.addresses!!.isEmpty()) {
                 item {
-                 Text(
-                     modifier = Modifier.fillMaxWidth().padding(top = 50.dp),
-                     text = "آدرسی برای نمایش وجود ندارد!",
-                     style = MaterialTheme.typography.body1,
-                     color = Color.Black,
-                     textAlign = TextAlign.Center
-                 )
+                    Text(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 50.dp),
+                        text = "آدرسی برای نمایش وجود ندارد!",
+                        style = MaterialTheme.typography.body1,
+                        color = Color.Black,
+                        textAlign = TextAlign.Center
+                    )
                 }
             } else {
                 item {
                     Header(title = "آدرس های من")
                 }
-
-                items(allAddress.addresses!!) {
+                items(
+                    items = allAddress.addresses!!,
+                    key = { it.ID }
+                ) {
                     AddressCardItem(it)
                 }
             }

@@ -44,11 +44,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import ir.hoseinahmadi.frenchpastry.R
 import ir.hoseinahmadi.frenchpastry.ui.screen.product_detail.Header
 import ir.hoseinahmadi.frenchpastry.ui.theme.body1
+import ir.hoseinahmadi.frenchpastry.ui.theme.h1
 import ir.hoseinahmadi.frenchpastry.ui.theme.h2
 import ir.hoseinahmadi.frenchpastry.util.PastryHelper
 
@@ -85,7 +88,7 @@ fun BasketScreen(
         selectedTabIndex = pagerState.currentPage
     }
 
-
+val scope = rememberCoroutineScope()
     Scaffold(
         containerColor = Color(0xffF4F6FF),
         topBar = {
@@ -124,14 +127,20 @@ fun BasketScreen(
         ) {
             when (it) {
                 0 -> {
-                    Orders(shopViewModel, pagerState)
+                    Orders(shopViewModel, onClick = {
+                        scope.launch {
+                            pagerState.animateScrollToPage(1)
+                        }
+                    })
                 }
 
                 1 -> {
-
+                    SelectedAddress(onClick = {scope.launch { pagerState.animateScrollToPage(2) }})
                 }
 
-                2 -> {}
+                2 -> {
+                    ConfirmOrder(onClick = {scope.launch { pagerState.animateScrollToPage(0) }})
+                }
             }
         }
     }
@@ -194,7 +203,7 @@ private fun TopHead(
 @Composable
 private fun Orders(
     shopViewModel: ShopViewModel,
-    pagerState: PagerState
+   onClick: () -> Unit
 ) {
     val allItem by shopViewModel.allItemShop.collectAsState(initial = emptyList())
 
@@ -204,7 +213,7 @@ private fun Orders(
             if (allItem.isNotEmpty()){
                 BottomBarBasket(
                     shopViewModel,
-                    pagerState
+                    onClick = {onClick() }
                 )
             }
 
@@ -217,9 +226,24 @@ private fun Orders(
                 .background(Color(0xffF4F6FF))
         ) {
             item { Spacer(modifier = Modifier.height(18.dp)) }
-            items(allItem) {
-                CartItemCard(item = it)
+            if (allItem.isEmpty()) {
+                item {
+                    Text(
+                        modifier = Modifier.fillMaxWidth()
+                            .padding(horizontal = 7.dp, vertical = 25.dp),
+                        text = "سبد خرید شما خالی می باشد !",
+                        style = MaterialTheme.typography.body1,
+                        color = Color.Black,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center
+                        )
+                }
+            }else{
+                items(allItem) {
+                    CartItemCard(item = it)
+                }
             }
+
         }
     }
 
@@ -229,7 +253,7 @@ private fun Orders(
 @Composable
 private fun BottomBarBasket(
     viewModel: ShopViewModel,
-    pagerState: PagerState,
+    onClick : () ->Unit,
 ) {
 
     val all by viewModel.allPriceAndDiscount.collectAsState(initial = TotalDiscountsAndPaid())
@@ -332,9 +356,7 @@ private fun BottomBarBasket(
             ),
             shape = RoundedCornerShape(9.dp),
             onClick = {
-                scope.launch {
-                    pagerState.animateScrollToPage(1)
-                }
+                onClick()
             })
         {
             Text(

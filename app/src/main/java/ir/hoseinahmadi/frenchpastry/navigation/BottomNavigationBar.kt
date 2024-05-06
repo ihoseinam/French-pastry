@@ -118,12 +118,15 @@ fun BottomNavigationBar(
                 }
                 Box(contentAlignment = Alignment.TopCenter) {
                         IconButton(onClick = {
-                            navHostController
-                                .navigate(Screen.BasketScreen.route){
-                                    popUpTo(0){
-                                        inclusive =true
+                            if (backStackEntry.value?.destination?.route!=Screen.BasketScreen.route){
+                                navHostController
+                                    .navigate(Screen.BasketScreen.route){
+                                        popUpTo(0){
+                                            inclusive =true
+                                        }
                                     }
-                                }
+                            }
+
                         }) {
                             Icon(
                                 painter = painterResource(id = R.drawable.ic_shopping_cart),
@@ -161,7 +164,11 @@ fun BottomNavigationBar(
                                             indicatorColor = Color.White
                                         ),
                                         selected = selected,
-                                        onClick = { navHostController.navigate(item.route){ popUpTo(0){ inclusive =true } } },
+                                        onClick = {
+                                            if (!selected){
+                                                navHostController.navigate(item.route){ popUpTo(0){ inclusive =true } }
+                                            }
+                                             },
                                         icon = {
                                             Icon(
                                                 painter = item.selectedIcon,

@@ -15,7 +15,6 @@ class AddressRepository @Inject constructor(
 ) {
     val loading = MutableStateFlow(false)
     val allAddress = MutableStateFlow<addredResponse>(addredResponse())
-    val resultAddAddress = MutableStateFlow(false)
     suspend fun getAllAddress(context: Context) {
         loading.emit(true)
         val response = try {
@@ -65,7 +64,6 @@ class AddressRepository @Inject constructor(
 
         if (response.isSuccessful) {
             loading.emit(false)
-            resultAddAddress.emit(true)
         }else{
             loading.emit(false)
         }

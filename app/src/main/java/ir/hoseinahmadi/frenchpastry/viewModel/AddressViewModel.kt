@@ -18,7 +18,6 @@ class AddressViewModel @Inject constructor(
 ) : ViewModel() {
 
     val allAddress: Flow<addredResponse> = repository.allAddress
-    val resultAddAddress = repository.resultAddAddress
     val loading =repository.loading
 
     fun getAllAddress(context: Context) {

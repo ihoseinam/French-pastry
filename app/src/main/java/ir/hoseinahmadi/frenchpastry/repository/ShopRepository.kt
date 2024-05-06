@@ -25,5 +25,7 @@ class ShopRepository @Inject constructor(
     fun getAllItemShop(): Flow<List<ShopEntities>> = dao.getAllItemInShop()
 
     fun getAllPriceAndDiscount(): Flow<TotalDiscountsAndPaid> = dao.getTotalDiscountsAndPaid()
-
+    suspend fun deleteAllItem(){
+        dao.deleteAllItem()
+    }
 }

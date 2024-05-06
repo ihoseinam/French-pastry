@@ -18,17 +18,21 @@ interface ShopDao {
     suspend fun addShopOrder(item: ShopEntities)
 
     @Delete
-    fun deleteShopOrder(item: ShopEntities)
+    suspend fun deleteShopOrder(item: ShopEntities)
 
     @Query("update shopentities set count =:newCount where id=:id")
-    fun changeCartItem(id: Int, newCount: Int)
+   suspend fun changeCartItem(id: Int, newCount: Int)
 
     @Query("select total(count) as count from shopentities")
     fun getCartItemCount(): Flow<Int>
 
     @Query("select * from shopentities")
     fun getAllItemInShop(): Flow<List<ShopEntities>>
+
     @Query("SELECT SUM((price * discount / 100) * count) AS totalDiscount, SUM((price - (price * discount / 100)) * count) AS totalPaid FROM shopentities")
     fun getTotalDiscountsAndPaid(): Flow<TotalDiscountsAndPaid>
+
+    @Query("delete from shopentities")
+    suspend fun deleteAllItem()
 
 }

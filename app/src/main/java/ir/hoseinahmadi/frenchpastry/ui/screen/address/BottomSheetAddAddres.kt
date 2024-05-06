@@ -30,6 +30,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.unit.dp
+import androidx.core.text.isDigitsOnly
 import androidx.hilt.navigation.compose.hiltViewModel
 import ir.hoseinahmadi.frenchpastry.ui.screen.product_detail.Header
 import ir.hoseinahmadi.frenchpastry.ui.theme.LightCyan
@@ -102,15 +103,10 @@ fun BottomSheetAddAddress(
                     onChangeValue = { address = it },
                     hint = "خیابان- کوچه-پلاک",
                     isError = check && address.length < 20,
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                 )
 
                 val context = LocalContext.current
-                val result by viewModel.resultAddAddress.collectAsState(initial = false)
-                if (result) {
-                    viewModel.getAllAddress(context)
-                    showBottomSheetAddAddress.value = false
-                }
+
                 Button(
                     shape = RoundedCornerShape(9.dp),
                     modifier = Modifier
@@ -130,14 +126,18 @@ fun BottomSheetAddAddress(
                         } else if (address.length < 20) {
                             Toast.makeText(context, "آدرس را کامل تر وارد کنید", Toast.LENGTH_SHORT)
                                 .show()
-                        } else {
+                        } else if (phone.length==11) {
                             viewModel.addAddress(
                                 context = context,
                                 phone = phone,
                                 address = address,
                                 receiver = name
                             )
-                            Toast.makeText(context, "آدرس با موفقیت ثبت شد", Toast.LENGTH_SHORT).show()
+                            showBottomSheetAddAddress.value =false
+                            viewModel.getAllAddress(context)
+                        }else{
+                            Toast.makeText(context, "فرمت شماره تلفن اشتباه می باشد", Toast.LENGTH_SHORT).show()
+
                         }
 
                     })
