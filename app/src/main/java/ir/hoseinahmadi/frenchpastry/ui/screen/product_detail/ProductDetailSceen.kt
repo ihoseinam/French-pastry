@@ -100,7 +100,7 @@ private fun ProductScreen(
 
     val config = LocalConfiguration.current
     if (loading) {
-        OurLoading(height = config.screenHeightDp.dp - 60.dp, isDark = true)
+        OurLoading(height = config.screenHeightDp.dp , isDark = true)
     } else {
         AddOrderBottomSheet(pastryItem.pastry!!)
         Scaffold(

@@ -3,6 +3,7 @@ package ir.hoseinahmadi.frenchpastry
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -13,6 +14,7 @@ import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.navigation.NavHostController
@@ -38,8 +40,9 @@ class MainActivity : ComponentActivity() {
                 ModalNavigationDrawer(
                     drawerState = drawerState,
                     drawerContent = {
-                        DrawerContent(navHostController,drawerState) }) {
+                        DrawerContent(navHostController, onClick = { scope.launch { drawerState.close() } }) }) {
                     Scaffold(
+                        containerColor = Color(0xffF4F6FF),
                         topBar = {
                             MyTopBar(navHostController) {
                                 scope.launch {

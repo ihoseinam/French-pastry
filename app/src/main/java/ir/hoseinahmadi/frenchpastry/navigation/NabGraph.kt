@@ -27,14 +27,16 @@ import ir.hoseinahmadi.frenchpastry.ui.screen.splash.SplashScreen
 @Composable
 fun SetUpNavGraph(navHostController: NavHostController) {
     NavHost(
-        enterTransition ={slideIntoContainer(
-            AnimatedContentTransitionScope.SlideDirection.Left,
-            animationSpec = tween(800)
-        )} ,
-        exitTransition = { slideOutOfContainer(
-            AnimatedContentTransitionScope.SlideDirection.Right,
-            animationSpec = tween(800)
-        ) },
+//        enterTransition ={slideIntoContainer(
+//            AnimatedContentTransitionScope.SlideDirection.Left,
+//            animationSpec = tween(800)
+//        )} ,
+//        exitTransition = { slideOutOfContainer(
+//            AnimatedContentTransitionScope.SlideDirection.Right,
+//            animationSpec = tween(800)
+//        ) },
+        enterTransition = { fadeIn() },
+        exitTransition = { fadeOut() },
         navController = navHostController,
         startDestination = Screen.SplashScreen.route
     ) {

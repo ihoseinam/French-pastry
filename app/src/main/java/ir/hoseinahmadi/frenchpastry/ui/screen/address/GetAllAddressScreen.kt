@@ -131,7 +131,7 @@ fun GetAllAddressScreen(
             }
             if (loading) {
                 item {
-                    OurLoading(height = config.screenHeightDp.dp - 60.dp, isDark = true)
+                    OurLoading(height = config.screenHeightDp.dp , isDark = true)
                 }
             } else if (allAddress.addresses!!.isEmpty()) {
                 item {

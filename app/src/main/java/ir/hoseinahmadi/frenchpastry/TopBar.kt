@@ -4,6 +4,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -48,6 +49,7 @@ fun MyTopBar(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
+                .background(Color.White)
                 .padding(horizontal = 5.dp, vertical = 2.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
@@ -69,7 +71,7 @@ fun MyTopBar(
             IconButton(onClick = { /*TODO*/ }) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_alert), contentDescription = "",
-                    Modifier.size(24.dp),
+                    Modifier.size(22.dp),
                 )
             }
 

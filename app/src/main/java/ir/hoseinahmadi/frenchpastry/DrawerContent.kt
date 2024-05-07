@@ -1,6 +1,7 @@
 package ir.hoseinahmadi.frenchpastry
 
 import android.graphics.drawable.Icon
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -14,10 +15,16 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DrawerState
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -26,40 +33,49 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import ir.hoseinahmadi.frenchpastry.navigation.Screen
 import ir.hoseinahmadi.frenchpastry.ui.theme.body1
 import ir.hoseinahmadi.frenchpastry.ui.theme.body2
+import ir.hoseinahmadi.frenchpastry.ui.theme.h6
 import ir.hoseinahmadi.frenchpastry.util.Constants
 import ir.hoseinahmadi.frenchpastry.util.PastryHelper
+import ir.hoseinahmadi.frenchpastry.viewModel.DatStoreViewModel
 import kotlinx.coroutines.launch
 
 @Composable
-fun DrawerContent(navHostController: NavHostController, drawerState: DrawerState) {
+fun DrawerContent(
+    navHostController: NavHostController,
+    onClick: () -> Unit,
+    datStoreViewModel: DatStoreViewModel = hiltViewModel()
+) {
+    val scope = rememberCoroutineScope()
+    val context = LocalContext.current
     Column(
         modifier = Modifier
-            .background(Color(0xffF0F3FF))
+            .background(Color.White)
             .fillMaxWidth(0.85f)
             .fillMaxHeight()
     ) {
-        val scope = rememberCoroutineScope()
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 12.dp)
-                .background(Color(0xffF0F3FF))
+                .padding(horizontal = 10.dp)
+                .background(Color.White)
         ) {
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 10.dp),
+                    .padding(top = 12.dp),
                 horizontalArrangement = Arrangement.End
             ) {
                 IconButton(
-                    onClick = {
-                        scope.launch { drawerState.close() }
-                    }
+                    onClick = { onClick() }
                 ) {
                     Icon(
                         painterResource(id = R.drawable.close),
@@ -69,11 +85,9 @@ fun DrawerContent(navHostController: NavHostController, drawerState: DrawerState
                     )
                 }
             }
-
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 5.dp)
                     .height(60.dp),
             ) {
                 Image(
@@ -82,23 +96,27 @@ fun DrawerContent(navHostController: NavHostController, drawerState: DrawerState
                     Modifier.fillMaxSize(),
                     contentScale = ContentScale.FillBounds
                 )
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(horizontal = 8.dp),
+                            .padding(horizontal = 10.dp),
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
                             text = Constants.USER_NAME,
                             color = Color.White,
-                            style = MaterialTheme.typography.body1
+                            style = MaterialTheme.typography.body1,
+                            fontWeight = FontWeight.Bold
                         )
                         Text(
                             text = PastryHelper.pastryByLocate(Constants.USER_PHONE),
                             color = Color.White,
-                            style = MaterialTheme.typography.body2
+                            style = MaterialTheme.typography.body1
                         )
 
 
@@ -106,38 +124,201 @@ fun DrawerContent(navHostController: NavHostController, drawerState: DrawerState
 
                 }
             }
+            Spacer(modifier = Modifier.height(20.dp))
+
+            TopItem(
+                icon = painterResource(id = R.drawable.ic_user),
+                title = "پروفایل کاربری",
+                onClick = {
+                    onClick()
+                    navHostController.navigate(Screen.ProfileScreen.route)
+                }
+            )
+            HorizontalDivider(
+                thickness = 1.dp,
+                color = Color.LightGray.copy(0.5f),
+                modifier = Modifier.padding(vertical = 2.dp)
+            )
+            TopItem(
+                icon = painterResource(id = R.drawable.ic_orders),
+                title = "سفارش های من",
+                onClick = {
+                    Toast.makeText(context, "سفارش فعالی ندارید!", Toast.LENGTH_SHORT).show()
+                }
+            )
+            HorizontalDivider(
+                thickness = 1.dp,
+                color = Color.LightGray.copy(0.5f),
+                modifier = Modifier.padding(vertical = 2.dp)
+            )
+            TopItem(
+                icon = painterResource(id = R.drawable.ic_support),
+                title = "پشتیبانی",
+                onClick = {}
+            )
+            HorizontalDivider(
+                thickness = 1.dp,
+                color = Color.LightGray.copy(0.5f),
+                modifier = Modifier.padding(vertical = 2.dp)
+            )
+
+            TopItem(
+                icon = painterResource(id = R.drawable.ic_about_us),
+                title = "درباره ما",
+                onClick = {
+                    Toast.makeText(context, "ما گوی ایم !", Toast.LENGTH_SHORT).show()
+                }
+            )
+            HorizontalDivider(
+                thickness = 1.dp,
+                color = Color.LightGray.copy(0.5f),
+                modifier = Modifier.padding(vertical = 2.dp)
+            )
+
+            TopItem(
+                icon = painterResource(id = R.drawable.ic_contact_us),
+                title = "ارتباط با ما",
+                onClick = {}
+            )
+            HorizontalDivider(
+                thickness = 1.dp,
+                color = Color.LightGray.copy(0.5f),
+                modifier = Modifier.padding(vertical = 2.dp)
+            )
+
+
+
+            Card(
+                colors = CardDefaults.cardColors(
+                    containerColor = Color.White
+                ),
+                modifier = Modifier
+                    .fillMaxWidth(),
+                onClick = {
+
+                }) {
+                Row(
+                    modifier = Modifier
+                        .padding(vertical = 8.dp, horizontal = 8.dp)
+                        .fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Row(
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_upgrade),
+                            contentDescription = "",
+                            Modifier.size(28.dp),
+                            tint = Color.Black
+                        )
+                        Spacer(modifier = Modifier.width(7.dp))
+                        Text(
+                            text = "بروزرسانی نرم افزار",
+                            style = MaterialTheme.typography.body2,
+                            color = Color.Black
+                        )
+
+                    }
+
+                    Text(
+                        text = "۱.۰.۰",
+                        style = MaterialTheme.typography.h6,
+                        color = Color.DarkGray
+                    )
+
+
+                }
+            }
+
+            HorizontalDivider(
+                thickness = 1.dp,
+                color = Color.LightGray.copy(0.5f),
+                modifier = Modifier.padding(vertical = 2.dp)
+            )
+
+            TopItem(
+                icon = painterResource(id = R.drawable.ic_exit),
+                title = "خروج از حساب کاربری",
+                onClick = {
+                    datStoreViewModel.saveUserName("")
+                    datStoreViewModel.saveUserLogin(false)
+                    datStoreViewModel.saveUserPhone("")
+                    datStoreViewModel.saveUserApiKey("")
+                    Constants.API_KEY =""
+                    Constants.CHECKED_LOGIN =false
+                    Constants.USER_NAME =""
+                    onClick()
+                    navHostController.navigate(Screen.HomeScreen.route)
+                }
+            )
 
             Box(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.BottomCenter
             ) {
                 Box(
-                    contentAlignment = Alignment.Center){
-                    Image(painter = painterResource(id = R.drawable.img_navigation),
-                        contentDescription ="",
-                        modifier = Modifier.fillMaxWidth()
-                            .height(240.dp),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Image(
+                        painter = painterResource(id = R.drawable.img_navigation),
+                        contentDescription = "",
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(250.dp),
                         contentScale = ContentScale.FillBounds
-                        )
+                    )
                 }
                 Icon(
                     painter = painterResource(id = R.drawable.mylogo),
                     contentDescription = "",
                     tint = Color.Black,
-                    modifier = Modifier.size(300.dp,90.dp)
+                    modifier = Modifier.size(300.dp, 90.dp)
                 )
-                
+
             }
         }
 
     }
+
+
 }
 
 @Composable
 fun TopItem(
     icon: Painter,
-    title: String
+    title: String,
+    onClick: () -> Unit
 ) {
+    Card(
+        colors = CardDefaults.cardColors(
+            containerColor = Color.White
+        ),
+        modifier = Modifier
+            .fillMaxWidth(),
+        onClick = { onClick() }) {
+        Row(
+            modifier = Modifier
+                .padding(vertical = 8.dp, horizontal = 8.dp)
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Start
+        ) {
+            Icon(
+                painter = icon, contentDescription = "",
+                Modifier.size(28.dp),
+                tint = Color.Black
+            )
+            Spacer(modifier = Modifier.width(7.dp))
+            Text(
+                text = title,
+                style = MaterialTheme.typography.body2,
+                color = Color.Black
+            )
+        }
+    }
 
 
 }
