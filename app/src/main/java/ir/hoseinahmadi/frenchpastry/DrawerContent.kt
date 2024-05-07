@@ -51,7 +51,6 @@ fun DrawerContent(
     onClick: () -> Unit,
     datStoreViewModel: DatStoreViewModel = hiltViewModel()
 ) {
-    val scope = rememberCoroutineScope()
     val context = LocalContext.current
     Column(
         modifier = Modifier
@@ -271,24 +270,14 @@ fun DrawerContent(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.BottomCenter
             ) {
-                Box(
-                    contentAlignment = Alignment.Center
-                ) {
                     Image(
                         painter = painterResource(id = R.drawable.img_navigation),
                         contentDescription = "",
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(250.dp),
+                            .height(270.dp),
                         contentScale = ContentScale.FillBounds
                     )
-                }
-                Icon(
-                    painter = painterResource(id = R.drawable.mylogo),
-                    contentDescription = "",
-                    tint = Color.Black,
-                    modifier = Modifier.size(300.dp, 90.dp)
-                )
 
             }
         }

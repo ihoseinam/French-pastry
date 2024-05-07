@@ -3,7 +3,6 @@ package ir.hoseinahmadi.frenchpastry
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -40,17 +39,19 @@ class MainActivity : ComponentActivity() {
             val scope = rememberCoroutineScope()
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
                 ModalNavigationDrawer(
+                    gesturesEnabled = drawerState.isOpen,
                     drawerState = drawerState,
                     drawerContent = {
-                        DrawerContent(navHostController, onClick = { scope.launch { drawerState.close() } }) }) {
+                        DrawerContent(
+                            navHostController,
+                            onClick = { scope.launch { drawerState.close() } })
+                    }) {
                     Scaffold(
                         containerColor = Color(0xffF4F6FF),
                         topBar = {
                             MyTopBar(navHostController) {
                                 scope.launch {
-                                    if (drawerState.isOpen)
-                                        drawerState.close()
-                                    else drawerState.open()
+                                   drawerState.open()
                                 }
                             }
                         },
@@ -61,10 +62,13 @@ class MainActivity : ComponentActivity() {
                         Column(
                             modifier = Modifier
                                 .fillMaxSize()
-                                .padding(it)
+                                .padding(it),
                         ) {
                             SetUpNavGraph(navHostController)
+
+
                         }
+
                     }
                 }
 

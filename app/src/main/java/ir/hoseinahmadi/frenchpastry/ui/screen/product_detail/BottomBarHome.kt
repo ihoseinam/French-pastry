@@ -18,6 +18,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -90,7 +91,7 @@ fun BottomBarHome(
                 ) {
                     Text(
                         text = "موحود در سبد خرید شما",
-                        style = MaterialTheme.typography.h6,
+                        style = MaterialTheme.typography.body2,
                         color = Color.DarkGray
                     )
                     Spacer(modifier = Modifier.height(2.dp))
@@ -99,7 +100,7 @@ fun BottomBarHome(
                             navHostController.navigate(Screen.BasketScreen.route)
                         },
                         text = "رفتن به سبد خرید",
-                        style = MaterialTheme.typography.body2,
+                        style = MaterialTheme.typography.body1,
                         color = MaterialTheme.colorScheme.LightCyan
                     )
 

@@ -57,8 +57,8 @@ fun ProfileScreen(
 
     val context = LocalContext.current
     LaunchedEffect(true) {
-        launch { infoViewModel.getUserInfo(context = context) }
         launch {
+            infoViewModel.getUserInfo(context = context)
             infoViewModel.userInfo.collectLatest { userResponse ->
                 if (userResponse.http_code == 200) {
                     val name = userResponse.user!!.fullname

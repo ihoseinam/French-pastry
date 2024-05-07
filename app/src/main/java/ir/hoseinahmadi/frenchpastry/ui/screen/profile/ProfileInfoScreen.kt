@@ -119,7 +119,7 @@ fun ProfileInfoScreen(
     val context = LocalContext.current
     LaunchedEffect(true) {
         launch {
-            infoViewModel.getUserInfo(context =context)
+            infoViewModel.getUserInfo(context = context)
         }
         launch {
             infoViewModel.userInfo.collectLatest { userResponse ->
@@ -388,7 +388,7 @@ fun ProfileInfoScreen(
                                     sex = sex.toString(),
                                     birthdate = userDate,
                                 )
-
+                                Constants.USER_NAME = userName
                             }
                         }) {
                         AnimatedVisibility(visible = !loading) {

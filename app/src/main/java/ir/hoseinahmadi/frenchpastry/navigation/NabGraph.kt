@@ -1,9 +1,9 @@
 package ir.hoseinahmadi.frenchpastry.navigation
 
-import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -42,7 +42,7 @@ fun SetUpNavGraph(navHostController: NavHostController) {
     ) {
         composable(Screen.SplashScreen.route,
             enterTransition = { fadeIn() },
-            exitTransition = { fadeOut(animationSpec = tween(800)) }
+            exitTransition = { fadeOut(animationSpec = tween(700)) }
         ) {
             SplashScreen(navHostController = navHostController)
         }
@@ -72,7 +72,7 @@ fun SetUpNavGraph(navHostController: NavHostController) {
             it.arguments?.getInt("id")?.let { id ->
                 ProductDetailScreen(
                     navHostController = navHostController,
-                    productId = id
+                    productId = id,
                 )
             }
 

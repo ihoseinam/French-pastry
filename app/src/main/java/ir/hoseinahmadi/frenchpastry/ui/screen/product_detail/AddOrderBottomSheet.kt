@@ -1,5 +1,6 @@
 package ir.hoseinahmadi.frenchpastry.ui.screen.product_detail
 
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -44,11 +45,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.google.accompanist.pager.ExperimentalPagerApi
 import ir.hoseinahmadi.frenchpastry.data.db.entites.ShopEntities
 import ir.hoseinahmadi.frenchpastry.data.model.product_detail.Pastry
 import ir.hoseinahmadi.frenchpastry.ui.theme.body1
@@ -628,7 +629,7 @@ fun DefaultOrder(shopViewModel: ShopViewModel, item: Pastry) {
 
 
         }
-
+        val context = LocalContext.current
         Button(
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Black
@@ -649,6 +650,7 @@ fun DefaultOrder(shopViewModel: ShopViewModel, item: Pastry) {
                         count = kilogram
                     )
                 )
+                Toast.makeText(context, "به سبد خرید اضافه شد", Toast.LENGTH_SHORT).show()
                 showAddOrder.value = false
             })
         {
@@ -1023,7 +1025,7 @@ fun HighOrder(shopViewModel: ShopViewModel, item: Pastry) {
 
 
         }
-
+        val context = LocalContext.current
         Button(
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color.Black
@@ -1044,6 +1046,7 @@ fun HighOrder(shopViewModel: ShopViewModel, item: Pastry) {
                         count = kilogram
                     )
                 )
+                Toast.makeText(context, "به سبد خرید اضافه شد", Toast.LENGTH_SHORT).show()
                 showAddOrder.value = false
             }) {
             Text(

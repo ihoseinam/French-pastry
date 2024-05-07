@@ -13,9 +13,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -72,7 +72,7 @@ fun ProductDetailScreen(
 private fun ProductScreen(
     navHostController: NavHostController,
     productId: Int,
-    productDetailViewModel: ProductDetailViewModel
+    productDetailViewModel: ProductDetailViewModel,
 ) {
 
     var pastryItem by remember {
@@ -100,10 +100,11 @@ private fun ProductScreen(
 
     val config = LocalConfiguration.current
     if (loading) {
-        OurLoading(height = config.screenHeightDp.dp , isDark = true)
+        OurLoading(height = config.screenHeightDp.dp, isDark = true)
     } else {
         AddOrderBottomSheet(pastryItem.pastry!!)
         Scaffold(
+
             bottomBar = {
                 BottomBarHome(
                     pastryItem.pastry!!,

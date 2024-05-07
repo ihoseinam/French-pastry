@@ -12,6 +12,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -69,91 +70,91 @@ fun GetAllAddressScreen(
     }
 
     val config = LocalConfiguration.current
-
-    Scaffold(
-        containerColor = Color(0xffF4F6FF),
-        topBar = {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(
-                        horizontal = 5.dp,
-                        vertical = 8.dp
-                    ),
-                horizontalArrangement = Arrangement.Start,
-            ) {
-                IconButton(onClick = { navHostController.popBackStack() }) {
-                    Icon(
-                        Icons.Rounded.Close,
-                        contentDescription = "",
-                        tint = Color.Black
-                    )
-                }
-            }
-
-
-        },
-        bottomBar = {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(5.dp),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Button(
-                    shape = RoundedCornerShape(9.dp),
+    if (loading) {
+        OurLoading(height = config.screenHeightDp.dp, isDark = true)
+    } else {
+        Scaffold(
+            containerColor = Color(0xffF4F6FF),
+            topBar = {
+                Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(3.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color.Black
-                    ),
-                    onClick = {
-                        navHostController.navigate(Screen.AddAddressScreen.route)
-                    }) {
-                    Text(
-                        text = "افزودن آدرس جدید",
-                        style = MaterialTheme.typography.body1,
-                        color = Color.White
-                    )
+                        .padding(
+                            horizontal = 5.dp,
+                            vertical = 8.dp
+                        ),
+                    horizontalArrangement = Arrangement.Start,
+                ) {
+                    IconButton(onClick = { navHostController.popBackStack() }) {
+                        Icon(
+                            Icons.Rounded.Close,
+                            contentDescription = "",
+                            tint = Color.Black
+                        )
+                    }
                 }
-            }
-        }
-    ) {
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(it)
-        ) {
-            item {
-                Header(title = "آدرس های من")
-            }
-            if (loading) {
-                item {
-                    OurLoading(height = config.screenHeightDp.dp , isDark = true)
-                }
-            } else if (allAddress.addresses!!.isEmpty()) {
-                item {
-                    Text(
+
+
+            },
+            bottomBar = {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(5.dp),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Button(
+                        shape = RoundedCornerShape(9.dp),
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(top = 50.dp),
-                        text = "آدرسی برای نمایش وجود ندارد!",
-                        style = MaterialTheme.typography.body1,
-                        color = Color.Black,
-                        textAlign = TextAlign.Center
-                    )
+                            .padding(3.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color.Black
+                        ),
+                        onClick = {
+                            navHostController.navigate(Screen.AddAddressScreen.route)
+                        }) {
+                        Text(
+                            text = "افزودن آدرس جدید",
+                            style = MaterialTheme.typography.body1,
+                            color = Color.White
+                        )
+                    }
                 }
-            } else {
-                items(
-                    items = allAddress.addresses!!,
-                    key = { it.ID }
-                ) {
-                    AddressCardItem(navHostController,it)
+            }
+        ) {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(it)
+            ) {
+
+                item {
+                    Header(title = "آدرس های من")
+                }
+                if (allAddress.addresses!!.isEmpty()) {
+                    item {
+                        Text(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 50.dp),
+                            text = "آدرسی برای نمایش وجود ندارد!",
+                            style = MaterialTheme.typography.body1,
+                            color = Color.Black,
+                            textAlign = TextAlign.Center
+                        )
+                    }
+                } else {
+                    items(
+                        items = allAddress.addresses!!,
+                        key = { item -> item.ID }
+                    ) { address ->
+                        AddressCardItem(navHostController, address)
+                    }
                 }
             }
         }
-
     }
+
 }

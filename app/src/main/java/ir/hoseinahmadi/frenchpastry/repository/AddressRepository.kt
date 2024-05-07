@@ -33,7 +33,7 @@ class AddressRepository @Inject constructor(
             body?.let {
                 allAddress.emit(it)
             }
-            delay(500)
+            delay(600)
             loading.emit(false)
         }
 
