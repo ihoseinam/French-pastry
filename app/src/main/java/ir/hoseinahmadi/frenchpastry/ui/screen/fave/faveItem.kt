@@ -1,5 +1,6 @@
 package ir.hoseinahmadi.frenchpastry.ui.screen.fave
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -34,6 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
@@ -54,6 +56,7 @@ import ir.hoseinahmadi.frenchpastry.viewModel.FaveViewModel
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun FaveItemCard(item: FaveEntities, viewModel: FaveViewModel) {
+val context = LocalContext.current
 
     Card(
         colors = CardDefaults.cardColors(
@@ -70,7 +73,11 @@ fun FaveItemCard(item: FaveEntities, viewModel: FaveViewModel) {
             horizontalArrangement = Arrangement.Start,
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            IconButton(modifier = Modifier.size(30.dp), onClick = { viewModel.removeFaveItem(item) }
+            IconButton(modifier = Modifier.size(30.dp), onClick = {
+
+                viewModel.removeFaveItem(item)
+                Toast.makeText(context, "حذف شد", Toast.LENGTH_SHORT).show()
+            }
             ) {
                 Icon(
                     modifier = Modifier

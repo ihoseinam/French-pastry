@@ -23,6 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import ir.hoseinahmadi.frenchpastry.navigation.BottomNavigationBar
 import ir.hoseinahmadi.frenchpastry.navigation.SetUpNavGraph
 import ir.hoseinahmadi.frenchpastry.ui.component.AppConfig
+import ir.hoseinahmadi.frenchpastry.ui.component.ChangeStatusBarColor
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -33,6 +34,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             AppConfig()
             navHostController = rememberNavController()
+            ChangeStatusBarColor(navHostController)
 
             val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
             val scope = rememberCoroutineScope()

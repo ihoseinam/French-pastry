@@ -43,7 +43,7 @@ fun SetUpNavGraph(navHostController: NavHostController) {
         composable(Screen.SplashScreen.route,
             enterTransition = { fadeIn() },
             exitTransition = { fadeOut(animationSpec = tween(800)) }
-            ) {
+        ) {
             SplashScreen(navHostController = navHostController)
         }
         composable(Screen.HomeScreen.route) {
@@ -78,44 +78,47 @@ fun SetUpNavGraph(navHostController: NavHostController) {
 
 
         }
-        composable(Screen.ProfileInfoScreen.route){
+        composable(Screen.ProfileInfoScreen.route) {
             ProfileInfoScreen(navHostController)
         }
         composable(Screen.CommentAndReplies.route + "?data={data}",
             arguments = listOf(
-                navArgument("data"){
+                navArgument("data") {
                     type = NavType.StringType
-                    defaultValue =""
-                    nullable =true
+                    defaultValue = ""
+                    nullable = true
                 }
             )
-            ){
+        ) {
             CommentAndRepliesScreen(
                 navHostController,
                 data = it.arguments?.getString("data").toString()
             )
         }
 
-        composable(Screen.PastryScreen.route){
+        composable(Screen.PastryScreen.route) {
             PastryScreen(navHostController)
         }
 
-        composable(Screen.AllAddressScreen.route){
+        composable(Screen.AllAddressScreen.route) {
             GetAllAddressScreen(navHostController = navHostController)
         }
 
         composable(Screen.AddAddressScreen.route + "?data={data}",
             arguments = listOf(
-                navArgument("data"){
-                    nullable =true
+                navArgument("data") {
+                    nullable = true
                     type = NavType.StringType
                 }
             )
-            ){
-            AddAddressScreen(data = it.arguments?.getString("data"), navHostController = navHostController)
+        ) {
+            AddAddressScreen(
+                data = it.arguments?.getString("data"),
+                navHostController = navHostController
+            )
         }
 
-        composable(Screen.FaveScreen.route){
+        composable(Screen.FaveScreen.route) {
             FaveScreen(navHostController = navHostController)
         }
 

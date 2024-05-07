@@ -1,6 +1,5 @@
 package ir.hoseinahmadi.frenchpastry
 
-import android.graphics.drawable.Icon
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -16,15 +15,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.DrawerState
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationDrawerItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
@@ -34,19 +30,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import ir.hoseinahmadi.frenchpastry.navigation.Screen
+import ir.hoseinahmadi.frenchpastry.ui.screen.login.steepLogin
 import ir.hoseinahmadi.frenchpastry.ui.theme.body1
 import ir.hoseinahmadi.frenchpastry.ui.theme.body2
 import ir.hoseinahmadi.frenchpastry.ui.theme.h6
 import ir.hoseinahmadi.frenchpastry.util.Constants
 import ir.hoseinahmadi.frenchpastry.util.PastryHelper
 import ir.hoseinahmadi.frenchpastry.viewModel.DatStoreViewModel
-import kotlinx.coroutines.launch
 
 @Composable
 fun DrawerContent(
@@ -151,10 +148,19 @@ fun DrawerContent(
                 color = Color.LightGray.copy(0.5f),
                 modifier = Modifier.padding(vertical = 2.dp)
             )
+
+            val uriHandler = LocalUriHandler.current
+
             TopItem(
                 icon = painterResource(id = R.drawable.ic_support),
                 title = "پشتیبانی",
-                onClick = {}
+                onClick = {
+                    try {
+                        uriHandler.openUri("tg://resolve?domain=i_hoseinam")
+                    }catch (e:Exception){
+                        Toast.makeText(context, "تلگرام یافت نشد", Toast.LENGTH_SHORT).show()
+                    }
+                }
             )
             HorizontalDivider(
                 thickness = 1.dp,
@@ -178,15 +184,20 @@ fun DrawerContent(
             TopItem(
                 icon = painterResource(id = R.drawable.ic_contact_us),
                 title = "ارتباط با ما",
-                onClick = {}
+                onClick = {
+                    try {
+                        uriHandler.openUri("tg://resolve?domain=i_hoseinam")
+                    }catch (e:Exception){
+                        Toast.makeText(context, "تلگرام یافت نشد", Toast.LENGTH_SHORT).show()
+                    }
+
+                }
             )
             HorizontalDivider(
                 thickness = 1.dp,
                 color = Color.LightGray.copy(0.5f),
                 modifier = Modifier.padding(vertical = 2.dp)
             )
-
-
 
             Card(
                 colors = CardDefaults.cardColors(
@@ -195,7 +206,7 @@ fun DrawerContent(
                 modifier = Modifier
                     .fillMaxWidth(),
                 onClick = {
-
+                    Toast.makeText(context, "آپدیتی وجود ندارد!", Toast.LENGTH_SHORT).show()
                 }) {
                 Row(
                     modifier = Modifier
@@ -251,6 +262,7 @@ fun DrawerContent(
                     Constants.CHECKED_LOGIN =false
                     Constants.USER_NAME =""
                     onClick()
+                    steepLogin.intValue =1
                     navHostController.navigate(Screen.HomeScreen.route)
                 }
             )

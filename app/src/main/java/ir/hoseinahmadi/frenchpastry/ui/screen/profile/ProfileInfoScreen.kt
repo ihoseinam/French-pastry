@@ -127,6 +127,7 @@ fun ProfileInfoScreen(
                     val name = userResponse.user!!.fullname
                     userName = name
                     Constants.USER_NAME = name
+                    Constants.USER_PHONE = userResponse.user.phone
                     datStoreViewModel.saveUserName(name)
                     userDate = userResponse.user.birthdate
                     userEmail = userResponse.user.email

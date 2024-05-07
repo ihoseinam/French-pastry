@@ -68,7 +68,7 @@ dependencies {
     implementation("androidx.core:core-ktx:1.13.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
     implementation("androidx.activity:activity-compose:1.9.0")
-    implementation(platform("androidx.compose:compose-bom:2024.04.01"))
+    implementation(platform("androidx.compose:compose-bom:2024.05.00"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
@@ -77,7 +77,7 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
-    androidTestImplementation(platform("androidx.compose:compose-bom:2024.04.01"))
+    androidTestImplementation(platform("androidx.compose:compose-bom:2024.05.00"))
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
@@ -109,12 +109,12 @@ dependencies {
 
 
     //hilt di
-    val hiltVersion = "2.48.1"
+    val hiltVersion = "2.49"
     implementation("com.google.dagger:hilt-android:$hiltVersion")
     ksp("com.google.dagger:hilt-compiler:$hiltVersion")
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
 
-    implementation("androidx.datastore:datastore-preferences:1.1.0")
+    implementation("androidx.datastore:datastore-preferences:1.1.1")
 
 
     implementation("io.coil-kt:coil-compose:2.0.0-rc01")
@@ -130,15 +130,13 @@ dependencies {
     implementation("com.google.accompanist:accompanist-pager:0.29.0-alpha")
     implementation("com.google.accompanist:accompanist-pager-indicators:0.29.0-alpha")
 
-    //paging3
-    implementation("androidx.paging:paging-compose:3.3.0-beta01")
+
 
     //chart
     implementation("com.patrykandpatrick.vico:compose:1.13.0")
 
-    implementation("androidx.compose.material:material-icons-extended:1.6.6")
+    implementation("androidx.compose.material:material-icons-extended:1.6.7")
 
-    implementation("com.fragula2:fragula-compose:2.10.1")
 
     implementation("com.github.hamooo90:jalali-datepicker-compose:1.0.0")
     implementation("ir.huri:JalaliCalendar:1.3.3")
