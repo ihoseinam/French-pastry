@@ -1,6 +1,10 @@
 package ir.hoseinahmadi.frenchpastry.ui.screen.product_detail
 
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -33,12 +37,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import ir.hoseinahmadi.frenchpastry.R
 import ir.hoseinahmadi.frenchpastry.data.db.entites.FaveEntities
+import ir.hoseinahmadi.frenchpastry.util.PastryHelper
 import ir.hoseinahmadi.frenchpastry.viewModel.FaveViewModel
 
 @Composable
@@ -49,6 +55,7 @@ fun TopBarDetail(
 ) {
 
     val isBookmarked by viewModel.isHasBookmark(item.id).collectAsState(initial = false)
+    val context = LocalContext.current as Activity
 
     Column(
         modifier = Modifier.fillMaxWidth()
@@ -80,18 +87,19 @@ fun TopBarDetail(
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-
                 IconToggleButton(checked = isBookmarked,
                     onCheckedChange = {
-                        if (!it){
+                        if (!it) {
                             viewModel.removeFaveItem(item)
-                        }else{
+                            Toast.makeText(context, "از لیست علاقه مندی حذف شد", Toast.LENGTH_SHORT).show()
+                        } else {
                             viewModel.addFaveItem(item)
+                            Toast.makeText(context, "به لیست علاقه مندی اضافه شد", Toast.LENGTH_SHORT).show()
                         }
                     }
                 ) {
                     Icon(
-                       imageVector = if (isBookmarked)Icons.Rounded.BookmarkAdded else Icons.Filled.BookmarkBorder,
+                        imageVector = if (isBookmarked) Icons.Rounded.BookmarkAdded else Icons.Filled.BookmarkBorder,
                         contentDescription = "",
                         tint = Color.Black,
                         modifier = Modifier.size(28.dp)
@@ -99,7 +107,14 @@ fun TopBarDetail(
                 }
 
 
-                IconButton(onClick = { /*TODO*/ }) {
+                IconButton(onClick = {
+                    shareToSocialMedia(
+                        context,
+                        item.name,
+                        item.salePrice.toString(),
+                        "https://hoseinahmadi.ir"
+                    )
+                }) {
                     Icon(
                         Icons.Rounded.Share,
                         contentDescription = "",
@@ -118,5 +133,21 @@ fun TopBarDetail(
             color = Color.LightGray.copy(0.6f)
         )
     }
+
+}
+private fun shareToSocialMedia(
+    context: Context,
+    productName: String,
+    productPrice: String,
+    url: String
+) {
+    val shareIntent = Intent(Intent.ACTION_SEND)
+    shareIntent.type = "text/plain"
+    shareIntent.putExtra(
+        Intent.EXTRA_TEXT,
+        "$productName با قیمت باورنکردنی ${PastryHelper.pastryByLocateAndSeparator(productPrice)} تومان فقط در شیرینی فرانسوی \n $url"
+    )
+
+    context.startActivity(Intent.createChooser(shareIntent, "اشتراک گذاری"))
 
 }
