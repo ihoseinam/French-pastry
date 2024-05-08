@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -38,6 +39,7 @@ import ir.hoseinahmadi.frenchpastry.data.model.home.PastryItem
 import ir.hoseinahmadi.frenchpastry.navigation.Screen
 import ir.hoseinahmadi.frenchpastry.ui.screen.product_detail.showAddOrder
 import ir.hoseinahmadi.frenchpastry.ui.theme.body1
+import ir.hoseinahmadi.frenchpastry.ui.theme.body2
 import ir.hoseinahmadi.frenchpastry.ui.theme.darkText
 import ir.hoseinahmadi.frenchpastry.ui.theme.h3
 import ir.hoseinahmadi.frenchpastry.ui.theme.h5
@@ -79,22 +81,27 @@ fun HomeItemCard(
                     model = item.thumbnail,
                     contentDescription = "",
                     contentScale = ContentScale.FillBounds
-                )
+                ){
+                    it.placeholder(R.drawable.img_place_holder)
+                }
                 if (item.has_discount) {
-                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.TopStart) {
+                    Box(modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.TopStart) {
                         Box(
                             contentAlignment = Alignment.Center,
-                            modifier = Modifier.padding(bottom = 10.dp)
+                            modifier = Modifier.size(62.dp,37.dp)
                         ) {
                             Image(
                                 painter = painterResource(id = R.drawable.img_off),
-                                contentDescription = ""
+                                contentDescription = "",
+                                modifier = Modifier.fillMaxSize(),
+                                contentScale = ContentScale.FillBounds
                             )
                             Box(contentAlignment = Alignment.Center) {
                                 Text(
                                     text = item.discount,
                                     color = Color.White,
-                                    style = MaterialTheme.typography.h6,
+                                    style = MaterialTheme.typography.body2,
                                     fontWeight = FontWeight.Bold
                                 )
                             }
@@ -166,7 +173,7 @@ fun HomeItemCard(
                     IconButton(
                         modifier = Modifier.size(40.dp),
                         onClick = {
-                            navHostController.navigate(Screen.ProductDetailScreen.route)
+                            navHostController.navigate(Screen.ProductDetailScreen.route + "?id=${item.ID}")
                             showAddOrder.value = true
                         }) {
                         Icon(

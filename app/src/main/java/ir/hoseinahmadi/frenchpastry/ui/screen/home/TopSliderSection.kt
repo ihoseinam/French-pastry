@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -77,11 +76,13 @@ fun TopSliderSection(
                         model = imageUrl,
                         contentDescription = "",
                         modifier = Modifier
-                            .padding(8.dp)
+                            .padding(5.dp)
                             .clip(RoundedCornerShape(16.dp))
                             .fillMaxSize(),
                         contentScale = ContentScale.FillBounds
-                    )
+                    ){
+                        it.placeholder(R.drawable.img_place_holder)
+                    }
                 }
 
             }
@@ -91,8 +92,7 @@ fun TopSliderSection(
             ) {
                 Row(
                     modifier = Modifier
-                        .padding(bottom = 3.dp)
-                        .size(75.dp, 23.dp)
+                        .size(80.dp, 25.dp)
                         .clip(
                             RoundedCornerShape(12.dp)
                         )
@@ -104,8 +104,8 @@ fun TopSliderSection(
                         pagerState = pagerState,
                         activeColor = Color.Black,
                         inactiveColor = Color(0xffD9D9D9),
-                        indicatorWidth = 7.dp,
-                        indicatorHeight = 7.dp,
+                        indicatorWidth = 8.dp,
+                        indicatorHeight = 8.dp,
                         indicatorShape = CircleShape
                     )
                 }

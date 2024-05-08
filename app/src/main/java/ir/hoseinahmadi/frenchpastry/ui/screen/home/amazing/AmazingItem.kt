@@ -39,6 +39,7 @@ import ir.hoseinahmadi.frenchpastry.data.model.home.PastryItem
 import ir.hoseinahmadi.frenchpastry.navigation.Screen
 import ir.hoseinahmadi.frenchpastry.ui.screen.product_detail.showAddOrder
 import ir.hoseinahmadi.frenchpastry.ui.theme.body1
+import ir.hoseinahmadi.frenchpastry.ui.theme.body2
 import ir.hoseinahmadi.frenchpastry.ui.theme.darkText
 import ir.hoseinahmadi.frenchpastry.ui.theme.font_bold
 import ir.hoseinahmadi.frenchpastry.ui.theme.h3
@@ -84,16 +85,21 @@ fun AmazingItem(
                     model = item.thumbnail,
                     contentDescription = "",
                     contentScale = ContentScale.FillBounds
-                )
+                ){
+                    it.placeholder(R.drawable.img_place_holder)
+                }
                 if (item.has_discount) {
-                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.TopStart) {
+                    Box(modifier = Modifier.fillMaxSize(),
+                        contentAlignment = Alignment.TopStart) {
                         Box(
                             contentAlignment = Alignment.Center,
-                            modifier = Modifier.padding(bottom = 10.dp)
+                            modifier = Modifier.size(50.dp,30.dp)
                         ) {
                             Image(
                                 painter = painterResource(id = R.drawable.img_off),
-                                contentDescription = ""
+                                contentDescription = "",
+                                modifier = Modifier.fillMaxSize(),
+                                contentScale = ContentScale.FillBounds
                             )
                             Box(contentAlignment = Alignment.Center) {
                                 Text(
@@ -169,7 +175,7 @@ fun AmazingItem(
                             modifier = Modifier.size(40.dp),
                             onClick = {
 
-                                navHostController.navigate(Screen.ProductDetailScreen.route)
+                                navHostController.navigate(Screen.ProductDetailScreen.route + "?id=${item.ID}")
                                 showAddOrder.value = true
                             }) {
                             Icon(

@@ -48,6 +48,7 @@ fun BottomBarHome(
     viewModel: ShopViewModel = hiltViewModel()
 ) {
 
+
     val isHas by viewModel.isHasIsCart(item.ID).collectAsState(initial = false)
     Column {
         HorizontalDivider(

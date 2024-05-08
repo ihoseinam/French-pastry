@@ -79,13 +79,9 @@ fun Home(
     navHostController: NavHostController,
     homeViewModel: HomeViewModel
 ) {
-    val sliderList = listOf(
-        "https://raw.githubusercontent.com/ihoseinam/video-shop/main/slider1.png",
-        "https://raw.githubusercontent.com/ihoseinam/video-shop/main/slider1.png",
-        "https://raw.githubusercontent.com/ihoseinam/video-shop/main/slider1.png",
-        "https://raw.githubusercontent.com/ihoseinam/video-shop/main/slider1.png",
-        "https://raw.githubusercontent.com/ihoseinam/video-shop/main/slider1.png",
-    )
+    var sliderList by remember {
+        mutableStateOf<List<String>>(emptyList())
+    }
 
     var loading by remember {
         mutableStateOf(true)
@@ -114,6 +110,7 @@ fun Home(
         newItemList = mainResponse.pastries[0]
         amazingItemList = mainResponse.pastries[1]
         popularItemList = mainResponse.pastries[2]
+        sliderList =mainResponse.sliders
         loading = false
 
     }
@@ -130,7 +127,6 @@ fun Home(
             if (Constants.USER_NAME == "") {
                 AlertInto(navHostController)
             }
-
             Scaffold(
             ) {
                 LazyColumn(
@@ -198,9 +194,7 @@ private fun AlertInto(navHostController: NavHostController) {
                 colors = ButtonDefaults.buttonColors(containerColor = Color.Black),
                 onClick = {
                     navHostController
-                        .navigate(Screen.ProfileInfoScreen.route){
-                            popUpTo(0){ inclusive =true }
-                        }
+                        .navigate(Screen.ProfileInfoScreen.route)
                 }) {
                 Text(
                     text = "بزن بریم",

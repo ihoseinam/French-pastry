@@ -84,12 +84,25 @@ private fun ProductScreen(
     }
 
 
+
+    var imgSlider by remember {
+        mutableStateOf<List<String>>(emptyList())
+    }
+
+    val fakeImg = listOf(
+            "https://raw.githubusercontent.com/ihoseinam/video-shop/main/slider1.png",
+            "https://raw.githubusercontent.com/ihoseinam/video-shop/main/slider1.png",
+        )
+
+
+
     LaunchedEffect(productId) {
         launch {
             productDetailViewModel.getProductById(productId)
             productDetailViewModel.productItem.collectLatest {
                 if (it.http_code == 200 && it.pastry != null) {
                     pastryItem = it
+                    imgSlider = it.pastry.gallery ?: fakeImg
                     delay(500)
                     loading = false
                 }
@@ -97,30 +110,36 @@ private fun ProductScreen(
         }
     }
 
+    var img = imgSlider
+    if (img.isEmpty() ||img==null) {
+        img= listOf(
+            "https://raw.githubusercontent.com/ihoseinam/video-shop/main/slider1.png",
+            "https://raw.githubusercontent.com/ihoseinam/video-shop/main/slider1.png",
+        )
 
+    }
     val config = LocalConfiguration.current
     if (loading) {
         OurLoading(height = config.screenHeightDp.dp, isDark = true)
     } else {
         AddOrderBottomSheet(pastryItem.pastry!!)
         Scaffold(
-
             bottomBar = {
-                BottomBarHome(
-                    pastryItem.pastry!!,
-                    navHostController,
-                )
+                    BottomBarHome(
+                        pastryItem.pastry!!,
+                        navHostController,
+                    )
             },
             topBar = {
-                TopBarDetail(
-                    navHostController = navHostController,
-                    FaveEntities(
-                        id = pastryItem.pastry!!.ID,
-                        name = pastryItem.pastry!!.title,
-                        imgAddress = pastryItem.pastry!!.gallery[0],
-                        salePrice = pastryItem.pastry!!.sale_price
+                    TopBarDetail(
+                        navHostController = navHostController,
+                        FaveEntities(
+                            id = pastryItem.pastry?.ID ?: 34,
+                            name = pastryItem.pastry?.title ?: "",
+                            imgAddress = img[0],
+                            salePrice = pastryItem.pastry?.sale_price ?: 0
+                        )
                     )
-                )
             }
         ) {
             LazyColumn(
@@ -131,7 +150,7 @@ private fun ProductScreen(
             ) {
                 item { Spacer(modifier = Modifier.height(10.dp)) }
                 item { Header(pastryItem.pastry!!.title) }
-                item { TopSliderSection(pastryItem.pastry!!.gallery) }
+                item { TopSliderSection(img) }
                 item { Header("مواد بکار رفته در شیرینی") }
                 items(pastryItem.pastry!!.materials) {
                     MaterialCard(item = it)

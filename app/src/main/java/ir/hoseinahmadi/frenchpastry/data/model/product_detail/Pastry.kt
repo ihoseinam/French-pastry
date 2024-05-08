@@ -14,7 +14,7 @@ data class Pastry(
     val discount_percent: Int,
     val discount_percent_110n: String,
     val excerpt: String,
-    val gallery: List<String>,
+    val gallery: List<String>?= null ,
     val has_discount: Boolean,
     val materials: List<Material>,
     val max_order: Int,

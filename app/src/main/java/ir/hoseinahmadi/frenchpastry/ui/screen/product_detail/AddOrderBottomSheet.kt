@@ -242,6 +242,15 @@ fun DefaultOrder(shopViewModel: ShopViewModel, item: Pastry) {
         mutableIntStateOf(1)
     }
 
+    var img = item.gallery
+    if (item.gallery ==null||img!!.isEmpty()) {
+        img= listOf(
+            "https://raw.githubusercontent.com/ihoseinam/video-shop/main/slider1.png",
+            "https://raw.githubusercontent.com/ihoseinam/video-shop/main/slider1.png",
+        )
+
+    }
+
     Column {
 
         Column(
@@ -646,7 +655,7 @@ fun DefaultOrder(shopViewModel: ShopViewModel, item: Pastry) {
                         price = item.price,
                         discount = item.discount_percent,
                         title = item.title,
-                        img = item.gallery[0],
+                        img = img!![0],
                         count = kilogram
                     )
                 )
@@ -678,7 +687,14 @@ fun HighOrder(shopViewModel: ShopViewModel, item: Pastry) {
     var time by remember {
         mutableStateOf("شنبه")
     }
+    var img = item.gallery
+    if (item.gallery ==null||img!!.isEmpty()) {
+        img= listOf(
+            "https://raw.githubusercontent.com/ihoseinam/video-shop/main/slider1.png",
+            "https://raw.githubusercontent.com/ihoseinam/video-shop/main/slider1.png",
+        )
 
+    }
 
     Column {
 
@@ -1042,7 +1058,7 @@ fun HighOrder(shopViewModel: ShopViewModel, item: Pastry) {
                         price = item.price,
                         discount = item.discount_percent,
                         title = item.title,
-                        img = item.gallery[0],
+                        img = img!![0],
                         count = kilogram
                     )
                 )

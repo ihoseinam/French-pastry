@@ -2,6 +2,7 @@ package ir.hoseinahmadi.frenchpastry.ui.screen.login
 
 import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -31,6 +32,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -39,6 +41,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
+import ir.hoseinahmadi.frenchpastry.R
 import ir.hoseinahmadi.frenchpastry.ui.theme.font_bold
 import ir.hoseinahmadi.frenchpastry.ui.theme.h1
 import ir.hoseinahmadi.frenchpastry.ui.theme.h3
@@ -59,7 +62,6 @@ val steepLogin = mutableIntStateOf(1)
 fun LoginScreen(
     navHostController: NavHostController,
     homeViewModel: HomeViewModel = hiltViewModel(),
-    datStoreViewModel: DatStoreViewModel = hiltViewModel()
 ) {
 
     val imgUr = listOf(
@@ -88,11 +90,11 @@ fun LoginScreen(
                 .weight(0.55f),
             contentAlignment = Alignment.TopCenter
         ) {
-            GlideImage(
+            Image(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(450.dp),
-                model = imgUr[0],
+                painter = painterResource(id = R.drawable.img_pastry_login),
                 contentDescription = "",
                 contentScale = ContentScale.FillBounds
             )
