@@ -1,5 +1,6 @@
 package ir.hoseinahmadi.frenchpastry.ui.screen.home
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
@@ -22,6 +23,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -44,7 +46,12 @@ fun TopProductHeader(
     Row(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 8.dp, vertical = 8.dp),
+            .padding(
+                start = 8.dp,
+                end = 8.dp,
+                top = 15.dp,
+                bottom = 5.dp
+            ),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
@@ -68,11 +75,14 @@ fun TopProductHeader(
             )
         }
 
-        TextButton(onClick = { onClick() }) {
+        val context = LocalContext.current
+        TextButton(onClick = {
+            onClick()
+            Toast.makeText(context, "محصولی برای نمایش وجود ندراد !", Toast.LENGTH_SHORT).show()
+        }) {
             Text(
                 text = "بیشتر",
                 color = Color.Black,
-                fontWeight = FontWeight.Bold,
                 style = MaterialTheme.typography.h3
             )
             Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight,

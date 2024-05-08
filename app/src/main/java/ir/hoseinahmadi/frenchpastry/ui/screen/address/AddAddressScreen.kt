@@ -1,14 +1,19 @@
 package ir.hoseinahmadi.frenchpastry.ui.screen.address
 
 import android.widget.Toast
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material3.Button
@@ -27,17 +32,24 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextDirection
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
 import com.google.gson.Gson
+import com.patrykandpatrick.vico.compose.chart.scroll.rememberChartScrollState
+import ir.hoseinahmadi.frenchpastry.R
 import ir.hoseinahmadi.frenchpastry.data.model.addres.Addresse
 import ir.hoseinahmadi.frenchpastry.ui.screen.product_detail.Header
 import ir.hoseinahmadi.frenchpastry.ui.theme.LightCyan
 import ir.hoseinahmadi.frenchpastry.ui.theme.body1
+import ir.hoseinahmadi.frenchpastry.ui.theme.body2
 import ir.hoseinahmadi.frenchpastry.ui.theme.darkText
 import ir.hoseinahmadi.frenchpastry.ui.theme.grayCategory
 import ir.hoseinahmadi.frenchpastry.ui.theme.h6
@@ -46,6 +58,7 @@ import ir.hoseinahmadi.frenchpastry.util.PastryHelper
 import ir.hoseinahmadi.frenchpastry.viewModel.AddressViewModel
 
 
+@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun AddAddressScreen(
     data: String?,
@@ -100,7 +113,12 @@ fun AddAddressScreen(
 
         }
     ) {
-        Column(modifier = Modifier.padding(it)) {
+        Column(
+            modifier = Modifier
+                .padding(it)
+                .verticalScroll(rememberScrollState())
+
+        ) {
             Header(title = title)
             Column(
                 modifier = Modifier
@@ -111,7 +129,23 @@ fun AddAddressScreen(
                     mutableStateOf(false)
                 }
 
+                Text(
+                    text = "تنها محدوده استان خراسان جنوبی- شهر بیرجند پذیرفته می شود.",
+                    style = MaterialTheme.typography.body2,
+                    color = Color.Black
+                )
+                Spacer(modifier = Modifier.height(5.dp))
 
+                GlideImage(
+                    modifier = Modifier.fillMaxWidth().height(350.dp),
+                    model = "https://raw.githubusercontent.com/ihoseinam/video-shop/main/map_img.jpg",
+                    contentDescription = "",
+                    contentScale = ContentScale.FillBounds
+                ){
+                    it.placeholder(R.drawable.img_place_holder)
+                }
+
+                Spacer(modifier = Modifier.height(10.dp))
                 TextFieldAddAddress(
                     value = name,
                     onChangeValue = { name = it },
@@ -183,9 +217,8 @@ fun AddAddressScreen(
                                 )
                                     .show()
                             }
-
-                            navHostController.popBackStack()
                             viewModel.getAllAddress(context)
+                            navHostController.popBackStack()
                         } else {
 
                             Toast.makeText(
@@ -200,7 +233,7 @@ fun AddAddressScreen(
                     })
                 {
                     Text(
-                        text = "افزودن آدرس جدید",
+                        text = title,
                         style = MaterialTheme.typography.body1,
                         color = Color.White
                     )
@@ -238,7 +271,7 @@ private fun TextFieldAddAddress(
             Text(
                 text = hint,
                 color = Color.DarkGray,
-                style = MaterialTheme.typography.h6
+                style = MaterialTheme.typography.body1
 
             )
         },

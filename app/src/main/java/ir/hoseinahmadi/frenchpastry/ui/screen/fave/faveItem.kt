@@ -64,7 +64,7 @@ val context = LocalContext.current
         ),
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 5.dp, vertical = 2.dp)
+            .padding(horizontal = 8.dp, vertical = 2.dp)
     ) {
         Row(
             modifier = Modifier

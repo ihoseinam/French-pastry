@@ -23,10 +23,12 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import ir.hoseinahmadi.frenchpastry.R
 import ir.hoseinahmadi.frenchpastry.ui.screen.product_detail.Header
 import ir.hoseinahmadi.frenchpastry.ui.theme.body1
 import ir.hoseinahmadi.frenchpastry.viewModel.FaveViewModel

@@ -33,16 +33,16 @@ import ir.hoseinahmadi.frenchpastry.ui.theme.h5
 fun AmazingItemShowMore() {
     Card(
         elevation = CardDefaults.cardElevation(2.dp),
-        shape = RoundedCornerShape(10.dp),
+        shape = RoundedCornerShape(14.dp),
         modifier = Modifier
             .padding(
                 top = 35.dp,
-                bottom = 20.dp,
+                bottom = 30.dp,
                 start = 7.dp,
                 end = 15.dp
             )
             .width(165.dp)
-            .height(210.dp),
+            .height(215.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White)
     ) {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {

@@ -30,7 +30,9 @@ import ir.hoseinahmadi.frenchpastry.data.model.addres.Addresse
 import ir.hoseinahmadi.frenchpastry.navigation.Screen
 import ir.hoseinahmadi.frenchpastry.ui.screen.product_detail.comment.extractTime
 import ir.hoseinahmadi.frenchpastry.ui.screen.product_detail.comment.persianDate
+import ir.hoseinahmadi.frenchpastry.ui.theme.LightCyan
 import ir.hoseinahmadi.frenchpastry.ui.theme.body1
+import ir.hoseinahmadi.frenchpastry.ui.theme.h5
 import ir.hoseinahmadi.frenchpastry.ui.theme.h6
 import ir.hoseinahmadi.frenchpastry.util.PastryHelper
 import ir.hoseinahmadi.frenchpastry.viewModel.AddressViewModel
@@ -97,21 +99,21 @@ fun AddressCardItem(
                 .padding(end = 15.dp)
         ) {
             Text(
-                modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
+                modifier = Modifier.padding(horizontal = 12.dp, vertical = 5.dp),
                 text = "گیرنده: ${item.receiver}  ",
                 style = MaterialTheme.typography.body1,
                 color = Color.Black
             )
 
             Text(
-                modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp),
+                modifier = Modifier.padding(horizontal = 12.dp, vertical = 5.dp),
                 text = "شماره همراه:  ${PastryHelper.pastryByLocate(item.phone)}",
                 style = MaterialTheme.typography.body1,
                 color = Color.Black
             )
 
             Text(
-                modifier = Modifier.padding(horizontal = 10.dp, vertical = 8.dp),
+                modifier = Modifier.padding(horizontal = 12.dp, vertical = 5.dp),
                 text = "آدرس:  ${item.address}",
                 style = MaterialTheme.typography.body1,
                 color = Color.Black
@@ -120,10 +122,10 @@ fun AddressCardItem(
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 12.dp, vertical = 6.dp),
+                    .padding(end = 13.dp, bottom = 10.dp, top = 4.dp),
                 text = PastryHelper.pastryByLocate("${extractTime(item.updated_at)} - ${persianDate(item.updated_at)}"),
-                style = MaterialTheme.typography.h6,
-                color = Color.Black,
+                style = MaterialTheme.typography.h5,
+                color = Color.DarkGray,
                 textAlign = TextAlign.End
             )
 
