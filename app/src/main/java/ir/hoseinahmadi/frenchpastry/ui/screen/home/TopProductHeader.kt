@@ -10,11 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowForward
-import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -29,13 +25,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import ir.hoseinahmadi.frenchpastry.R
-import ir.hoseinahmadi.frenchpastry.ui.theme.extraBoldNumber
 import ir.hoseinahmadi.frenchpastry.ui.theme.font_bold
-import ir.hoseinahmadi.frenchpastry.ui.theme.h1
 import ir.hoseinahmadi.frenchpastry.ui.theme.h2
 import ir.hoseinahmadi.frenchpastry.ui.theme.h3
-import ir.hoseinahmadi.frenchpastry.ui.theme.h4
-import ir.hoseinahmadi.frenchpastry.ui.theme.h5
 
 @Composable
 fun TopProductHeader(
@@ -78,7 +70,7 @@ fun TopProductHeader(
         val context = LocalContext.current
         TextButton(onClick = {
             onClick()
-            Toast.makeText(context, "محصولی برای نمایش وجود ندراد !", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "محصولی برای نمایش وجود ندارد !", Toast.LENGTH_SHORT).show()
         }) {
             Text(
                 text = "بیشتر",

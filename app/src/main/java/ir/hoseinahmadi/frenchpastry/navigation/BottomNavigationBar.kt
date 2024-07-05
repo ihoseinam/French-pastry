@@ -1,8 +1,5 @@
 package ir.hoseinahmadi.frenchpastry.navigation
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -36,6 +33,7 @@ import ir.hoseinahmadi.frenchpastry.util.Constants.CHECKED_LOGIN
 @Composable
 fun BottomNavigationBar(
     navHostController: NavHostController,
+    show:Boolean,
 ) {
 
 
@@ -66,14 +64,7 @@ fun BottomNavigationBar(
     )
 
     val backStackEntry = navHostController.currentBackStackEntryAsState()
-    val showBottomBar = backStackEntry.value?.destination?.route in item.map { it.route }
-
-
-    AnimatedVisibility(
-        visible = showBottomBar && CHECKED_LOGIN,
-        enter = fadeIn(),
-        exit = fadeOut(),
-    ) {
+    if(show && CHECKED_LOGIN) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()

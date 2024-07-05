@@ -12,7 +12,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -40,7 +39,7 @@ import ir.hoseinahmadi.frenchpastry.navigation.Screen
 import ir.hoseinahmadi.frenchpastry.ui.screen.product_detail.Header
 import ir.hoseinahmadi.frenchpastry.ui.theme.body1
 import ir.hoseinahmadi.frenchpastry.viewModel.AddressViewModel
-import ir.hoseinahmadi.mydigikala.ui.component.OurLoading
+import ir.hoseinahmadi.frenchpastry.ui.component.OurLoading
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 

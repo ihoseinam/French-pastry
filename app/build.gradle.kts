@@ -123,7 +123,7 @@ dependencies {
     //swipe refresh
     implementation("com.google.accompanist:accompanist-swiperefresh:0.27.0")
 
-//system ui controller
+    //system ui controller
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.28.0")
 
 

@@ -1,24 +1,20 @@
 package ir.hoseinahmadi.frenchpastry.ui.screen.profile
 
-import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.ArrowForward
 import androidx.compose.material.icons.rounded.CalendarMonth
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Edit
@@ -26,7 +22,6 @@ import androidx.compose.material.icons.rounded.Email
 import androidx.compose.material.icons.rounded.Phone
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -60,25 +55,21 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.gmail.hamedvakhide.compose_jalali_datepicker.JalaliDatePickerDialog
 import ir.hoseinahmadi.frenchpastry.R
-import ir.hoseinahmadi.frenchpastry.navigation.Screen
 import ir.hoseinahmadi.frenchpastry.ui.theme.LightCyan
-import ir.hoseinahmadi.frenchpastry.ui.theme.amber
 import ir.hoseinahmadi.frenchpastry.ui.theme.body1
-import ir.hoseinahmadi.frenchpastry.ui.theme.body2
 import ir.hoseinahmadi.frenchpastry.ui.theme.darkText
 import ir.hoseinahmadi.frenchpastry.ui.theme.font_bold
 import ir.hoseinahmadi.frenchpastry.ui.theme.grayCategory
 import ir.hoseinahmadi.frenchpastry.ui.theme.h2
 import ir.hoseinahmadi.frenchpastry.ui.theme.h4
 import ir.hoseinahmadi.frenchpastry.ui.theme.h6
-import ir.hoseinahmadi.frenchpastry.ui.theme.semiDarkText
 import ir.hoseinahmadi.frenchpastry.util.Constants
 import ir.hoseinahmadi.frenchpastry.util.PastryHelper
 import ir.hoseinahmadi.frenchpastry.viewModel.DatStoreViewModel
 import ir.hoseinahmadi.frenchpastry.viewModel.UserInfoViewModel
 import ir.hoseinahmadi.frenchpastry.wrapper.DeviceInfo
 import ir.hoseinahmadi.mydigikala.ui.component.Loading3Dots
-import ir.hoseinahmadi.mydigikala.ui.component.OurLoading
+import ir.hoseinahmadi.frenchpastry.ui.component.OurLoading
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -161,12 +152,14 @@ fun ProfileInfoScreen(
                     ),
                 horizontalArrangement = Arrangement.Start,
             ) {
-                IconButton(onClick = { navHostController.popBackStack() }) {
-                    Icon(
-                        Icons.Rounded.Close,
-                        contentDescription = "",
-                        tint = Color.Black
-                    )
+                if (Constants.CHECKED_LOGIN){
+                    IconButton(onClick = { navHostController.popBackStack() }) {
+                        Icon(
+                            Icons.Rounded.Close,
+                            contentDescription = "",
+                            tint = Color.Black
+                        )
+                    }
                 }
             }
 

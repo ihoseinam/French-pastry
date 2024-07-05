@@ -1,8 +1,5 @@
 package ir.hoseinahmadi.frenchpastry
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -20,32 +17,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.currentBackStackEntryAsState
-import ir.hoseinahmadi.frenchpastry.navigation.Screen
 import ir.hoseinahmadi.frenchpastry.util.Constants
 
 @Composable
 fun MyTopBar(
-    navHostController: NavHostController,
-    onClick: () ->Unit
+    show:Boolean,
+    onClick: () -> Unit
 ) {
-    val item = listOf(
-        Screen.HomeScreen.route,
-        Screen.CategoryScreen.route,
-        Screen.BasketScreen.route,
-        Screen.PastryScreen.route,
-        Screen.ProfileScreen.route
-    )
 
-    val backEntry = navHostController.currentBackStackEntryAsState()
-    val show = backEntry.value?.destination?.route in item
 
-    AnimatedVisibility(
-        visible = show && Constants.CHECKED_LOGIN,
-        enter = fadeIn(),
-        exit = fadeOut(),
-    ) {
+    if (show && Constants.CHECKED_LOGIN) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()

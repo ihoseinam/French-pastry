@@ -36,7 +36,6 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -49,7 +48,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import ir.hoseinahmadi.frenchpastry.R
 import ir.hoseinahmadi.frenchpastry.data.model.addres.Addresse
-import ir.hoseinahmadi.frenchpastry.data.model.addres.addredResponse
 import ir.hoseinahmadi.frenchpastry.navigation.Screen
 
 import ir.hoseinahmadi.frenchpastry.ui.theme.body1
@@ -57,7 +55,7 @@ import ir.hoseinahmadi.frenchpastry.ui.theme.h2
 import ir.hoseinahmadi.frenchpastry.util.PastryHelper
 import ir.hoseinahmadi.frenchpastry.viewModel.AddressViewModel
 import ir.hoseinahmadi.frenchpastry.viewModel.ShopViewModel
-import ir.hoseinahmadi.mydigikala.ui.component.OurLoading
+import ir.hoseinahmadi.frenchpastry.ui.component.OurLoading
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 

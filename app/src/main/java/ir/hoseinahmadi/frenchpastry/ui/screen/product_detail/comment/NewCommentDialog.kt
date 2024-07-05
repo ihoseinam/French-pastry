@@ -42,7 +42,6 @@ import ir.hoseinahmadi.frenchpastry.ui.theme.darkText
 import ir.hoseinahmadi.frenchpastry.ui.theme.grayAlpha
 import ir.hoseinahmadi.frenchpastry.ui.theme.grayCategory
 import ir.hoseinahmadi.frenchpastry.ui.theme.h2
-import ir.hoseinahmadi.frenchpastry.ui.theme.h3
 import ir.hoseinahmadi.frenchpastry.ui.theme.h4
 import ir.hoseinahmadi.frenchpastry.util.Constants
 import ir.hoseinahmadi.frenchpastry.viewModel.ProductDetailViewModel
@@ -90,6 +89,7 @@ fun CommentForm(
             if (it) {
                 showSetComment.value = false
                 viewModel.getProductById(productId)
+                viewModel.resetComment()
             }
         }
     }

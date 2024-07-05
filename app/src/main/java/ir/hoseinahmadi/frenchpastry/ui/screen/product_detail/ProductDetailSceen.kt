@@ -15,7 +15,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -37,6 +36,7 @@ import androidx.navigation.NavHostController
 import ir.hoseinahmadi.frenchpastry.R
 import ir.hoseinahmadi.frenchpastry.data.db.entites.FaveEntities
 import ir.hoseinahmadi.frenchpastry.data.model.product_detail.ProductResponse
+import ir.hoseinahmadi.frenchpastry.ui.component.OurLoading
 import ir.hoseinahmadi.frenchpastry.ui.screen.home.TopSliderSection
 import ir.hoseinahmadi.frenchpastry.ui.screen.product_detail.comment.NewCommentDialog
 import ir.hoseinahmadi.frenchpastry.ui.screen.product_detail.comment.ProductSetCommentSection
@@ -49,7 +49,6 @@ import ir.hoseinahmadi.frenchpastry.ui.theme.h2
 import ir.hoseinahmadi.frenchpastry.ui.theme.h4
 import ir.hoseinahmadi.frenchpastry.util.PastryHelper
 import ir.hoseinahmadi.frenchpastry.viewModel.ProductDetailViewModel
-import ir.hoseinahmadi.mydigikala.ui.component.OurLoading
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch

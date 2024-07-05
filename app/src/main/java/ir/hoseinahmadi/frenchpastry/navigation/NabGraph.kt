@@ -3,7 +3,6 @@ package ir.hoseinahmadi.frenchpastry.navigation
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -27,16 +26,8 @@ import ir.hoseinahmadi.frenchpastry.ui.screen.splash.SplashScreen
 @Composable
 fun SetUpNavGraph(navHostController: NavHostController) {
     NavHost(
-//        enterTransition ={slideIntoContainer(
-//            AnimatedContentTransitionScope.SlideDirection.Left,
-//            animationSpec = tween(800)
-//        )} ,
-//        exitTransition = { slideOutOfContainer(
-//            AnimatedContentTransitionScope.SlideDirection.Right,
-//            animationSpec = tween(800)
-//        ) },
-        enterTransition = { fadeIn() },
-        exitTransition = { fadeOut() },
+        enterTransition ={fadeIn(animationSpec = tween(800)) } ,
+        exitTransition = {fadeOut(animationSpec = tween(800))},
         navController = navHostController,
         startDestination = Screen.SplashScreen.route
     ) {

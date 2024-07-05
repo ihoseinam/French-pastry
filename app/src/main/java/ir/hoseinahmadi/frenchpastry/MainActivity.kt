@@ -17,9 +17,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 import ir.hoseinahmadi.frenchpastry.navigation.BottomNavigationBar
+import ir.hoseinahmadi.frenchpastry.navigation.Screen
 import ir.hoseinahmadi.frenchpastry.navigation.SetUpNavGraph
 import ir.hoseinahmadi.frenchpastry.ui.component.AppConfig
 import ir.hoseinahmadi.frenchpastry.ui.component.ChangeStatusBarColor
@@ -34,9 +36,19 @@ class MainActivity : ComponentActivity() {
             AppConfig()
             navHostController = rememberNavController()
             ChangeStatusBarColor(navHostController)
-
             val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
             val scope = rememberCoroutineScope()
+            val item = listOf(
+                Screen.HomeScreen.route,
+                Screen.CategoryScreen.route,
+                Screen.BasketScreen.route,
+                Screen.PastryScreen.route,
+                Screen.ProfileScreen.route
+            )
+
+            val backEntry = navHostController.currentBackStackEntryAsState()
+            val show = backEntry.value?.destination?.route in item
+
             CompositionLocalProvider(LocalLayoutDirection provides LayoutDirection.Rtl) {
                 ModalNavigationDrawer(
                     gesturesEnabled = drawerState.isOpen,
@@ -49,14 +61,14 @@ class MainActivity : ComponentActivity() {
                     Scaffold(
                         containerColor = Color(0xffF4F6FF),
                         topBar = {
-                            MyTopBar(navHostController) {
+                            MyTopBar(show = show) {
                                 scope.launch {
                                    drawerState.open()
                                 }
                             }
                         },
                         bottomBar = {
-                            BottomNavigationBar(navHostController)
+                            BottomNavigationBar(navHostController,show)
                         }
                     ) {
                         Column(
@@ -65,8 +77,6 @@ class MainActivity : ComponentActivity() {
                                 .padding(it),
                         ) {
                             SetUpNavGraph(navHostController)
-
-
                         }
 
                     }
