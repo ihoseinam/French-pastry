@@ -64,68 +64,76 @@ fun TopBarDetail(
             modifier = Modifier
                 .fillMaxWidth()
                 .background(Color.White)
-                .padding(horizontal = 4.dp, vertical = 5.dp),
+                .padding(horizontal = 4.dp, vertical = 6.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            IconButton(onClick = { navHostController.popBackStack() }) {
-                Icon(
-                    Icons.Rounded.ArrowForward,
+            Box(modifier = Modifier.fillMaxWidth()){
+
+                IconButton(
+                    modifier = Modifier.align(Alignment.CenterStart),
+                    onClick = { navHostController.popBackStack() }) {
+                    Icon(
+                        Icons.Rounded.ArrowForward,
+                        contentDescription = "",
+                        tint = Color.Black,
+                        modifier = Modifier.size(26.dp)
+                    )
+                }
+                Image(
+                    painter = painterResource(id = R.drawable.black_logo),
                     contentDescription = "",
-                    tint = Color.Black,
-                    modifier = Modifier.size(26.dp)
+                    Modifier
+                        .align(Alignment.Center)
+                        .size(90.dp, 50.dp),
                 )
-            }
 
-            Image(
-                painter = painterResource(id = R.drawable.black_logo),
-                contentDescription = "",
-                Modifier.size(82.dp, 48.dp),
-            )
-
-            Row(
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                IconToggleButton(checked = isBookmarked,
-                    onCheckedChange = {
-                        if (!it) {
-                            viewModel.removeFaveItem(item)
-                            Toast.makeText(context, "از لیست علاقه مندی حذف شد", Toast.LENGTH_SHORT).show()
-                        } else {
-                            viewModel.addFaveItem(item)
-                            Toast.makeText(context, "به لیست علاقه مندی اضافه شد", Toast.LENGTH_SHORT).show()
-                        }
-                    }
+                Row(
+                    modifier = Modifier.align(Alignment.CenterEnd),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Icon(
-                        imageVector = if (isBookmarked) Icons.Rounded.BookmarkAdded else Icons.Filled.BookmarkBorder,
-                        contentDescription = "",
-                        tint = Color.Black,
-                        modifier = Modifier.size(28.dp)
-                    )
+                    IconToggleButton(checked = isBookmarked,
+                        onCheckedChange = {
+                            if (!it) {
+                                viewModel.removeFaveItem(item)
+                                Toast.makeText(context, "از لیست علاقه مندی حذف شد", Toast.LENGTH_SHORT).show()
+                            } else {
+                                viewModel.addFaveItem(item)
+                                Toast.makeText(context, "به لیست علاقه مندی اضافه شد", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    ) {
+                        Icon(
+                            imageVector = if (isBookmarked) Icons.Rounded.BookmarkAdded else Icons.Filled.BookmarkBorder,
+                            contentDescription = "",
+                            tint = Color.Black,
+                            modifier = Modifier.size(28.dp)
+                        )
+                    }
+
+
+                    IconButton(onClick = {
+                        shareToSocialMedia(
+                            context,
+                            item.name,
+                            item.salePrice.toString(),
+                            "https://hoseinahmadi.ir"
+                        )
+                    }) {
+                        Icon(
+                            Icons.Rounded.Share,
+                            contentDescription = "",
+                            tint = Color.Black,
+                            modifier = Modifier.size(25.dp)
+
+                        )
+                    }
+
+
                 }
-
-
-                IconButton(onClick = {
-                    shareToSocialMedia(
-                        context,
-                        item.name,
-                        item.salePrice.toString(),
-                        "https://hoseinahmadi.ir"
-                    )
-                }) {
-                    Icon(
-                        Icons.Rounded.Share,
-                        contentDescription = "",
-                        tint = Color.Black,
-                        modifier = Modifier.size(25.dp)
-
-                    )
-                }
-
-
             }
+
 
         }
         HorizontalDivider(
