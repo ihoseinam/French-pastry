@@ -80,7 +80,7 @@ fun TopBarDetail(
             Image(
                 painter = painterResource(id = R.drawable.black_logo),
                 contentDescription = "",
-                Modifier.padding(start = 27.dp),
+                Modifier.size(82.dp, 48.dp),
             )
 
             Row(

@@ -83,15 +83,14 @@ private fun ProductScreen(
     }
 
 
-
     var imgSlider by remember {
         mutableStateOf<List<String>>(emptyList())
     }
 
     val fakeImg = listOf(
-            "https://raw.githubusercontent.com/ihoseinam/video-shop/main/slider1.png",
-            "https://raw.githubusercontent.com/ihoseinam/video-shop/main/slider1.png",
-        )
+        "https://raw.githubusercontent.com/ihoseinam/video-shop/main/slider1.png",
+        "https://raw.githubusercontent.com/ihoseinam/video-shop/main/slider1.png",
+    )
 
 
 
@@ -110,12 +109,11 @@ private fun ProductScreen(
     }
 
     var img = imgSlider
-    if (img.isEmpty() ||img==null) {
-        img= listOf(
+    if (img.isEmpty() || img == null) {
+        img = listOf(
             "https://raw.githubusercontent.com/ihoseinam/video-shop/main/slider1.png",
             "https://raw.githubusercontent.com/ihoseinam/video-shop/main/slider1.png",
         )
-
     }
     val config = LocalConfiguration.current
     if (loading) {
@@ -124,21 +122,21 @@ private fun ProductScreen(
         AddOrderBottomSheet(pastryItem.pastry!!)
         Scaffold(
             bottomBar = {
-                    BottomBarHome(
-                        pastryItem.pastry!!,
-                        navHostController,
-                    )
+                BottomBarHome(
+                    pastryItem.pastry!!,
+                    navHostController,
+                )
             },
             topBar = {
-                    TopBarDetail(
-                        navHostController = navHostController,
-                        FaveEntities(
-                            id = pastryItem.pastry?.ID ?: 34,
-                            name = pastryItem.pastry?.title ?: "",
-                            imgAddress = img[0],
-                            salePrice = pastryItem.pastry?.sale_price ?: 0
-                        )
+                TopBarDetail(
+                    navHostController = navHostController,
+                    item = FaveEntities(
+                        id = pastryItem.pastry?.ID ?: 34,
+                        name = pastryItem.pastry?.title ?: "",
+                        imgAddress = img[0],
+                        salePrice = pastryItem.pastry?.sale_price ?: 0
                     )
+                )
             }
         ) {
             LazyColumn(

@@ -1,5 +1,11 @@
 package ir.hoseinahmadi.frenchpastry.navigation
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -33,7 +39,7 @@ import ir.hoseinahmadi.frenchpastry.util.Constants.CHECKED_LOGIN
 @Composable
 fun BottomNavigationBar(
     navHostController: NavHostController,
-    show:Boolean,
+    show: Boolean,
 ) {
 
 
@@ -64,7 +70,12 @@ fun BottomNavigationBar(
     )
 
     val backStackEntry = navHostController.currentBackStackEntryAsState()
-    if(show && CHECKED_LOGIN) {
+
+    AnimatedVisibility(
+        visible = show && CHECKED_LOGIN,
+        enter = fadeIn() + expandVertically(animationSpec = tween(1000)),
+        exit = fadeOut() + shrinkVertically(animationSpec = tween(1000))
+    ) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -90,24 +101,24 @@ fun BottomNavigationBar(
                     )
                 }
                 Box(contentAlignment = Alignment.TopCenter) {
-                        IconButton(onClick = {
-                            if (backStackEntry.value?.destination?.route!=Screen.BasketScreen.route){
-                                navHostController
-                                    .navigate(Screen.BasketScreen.route){
-                                        popUpTo(0){
-                                            inclusive =true
-                                        }
+                    IconButton(onClick = {
+                        if (backStackEntry.value?.destination?.route != Screen.BasketScreen.route) {
+                            navHostController
+                                .navigate(Screen.BasketScreen.route) {
+                                    popUpTo(0) {
+                                        inclusive = true
                                     }
-                            }
-
-                        }) {
-                            Icon(
-                                painter = painterResource(id = R.drawable.ic_shopping_cart),
-                                contentDescription = "",
-                                tint = Color.White,
-                                modifier = Modifier.size(22.dp)
-                            )
+                                }
                         }
+
+                    }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_shopping_cart),
+                            contentDescription = "",
+                            tint = Color.White,
+                            modifier = Modifier.size(22.dp)
+                        )
+                    }
 
                 }
 
@@ -122,8 +133,9 @@ fun BottomNavigationBar(
                     val selected = item.route == backStackEntry.value?.destination?.route
                     if (index != 2) {
                         Box(
-                            modifier = Modifier.fillMaxHeight()
-                                .size(70.dp,60.dp),
+                            modifier = Modifier
+                                .fillMaxHeight()
+                                .size(70.dp, 60.dp),
                         ) {
                             Box(
                                 modifier = Modifier.fillMaxSize(),
@@ -138,10 +150,14 @@ fun BottomNavigationBar(
                                         ),
                                         selected = selected,
                                         onClick = {
-                                            if (!selected){
-                                                navHostController.navigate(item.route){ popUpTo(0){ inclusive =true } }
+                                            if (!selected) {
+                                                navHostController.navigate(item.route) {
+                                                    popUpTo(0) {
+                                                        inclusive = true
+                                                    }
+                                                }
                                             }
-                                             },
+                                        },
                                         icon = {
                                             Icon(
                                                 painter = item.selectedIcon,
@@ -166,9 +182,8 @@ fun BottomNavigationBar(
                             }
 
                         }
-                    }
-                    else {
-                       Spacer(modifier = Modifier.padding(horizontal = 14.dp))
+                    } else {
+                        Spacer(modifier = Modifier.padding(horizontal = 14.dp))
                     }
 
 

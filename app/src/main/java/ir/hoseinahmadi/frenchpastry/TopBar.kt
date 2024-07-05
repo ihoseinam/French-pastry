@@ -1,5 +1,11 @@
 package ir.hoseinahmadi.frenchpastry
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -18,15 +24,20 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import ir.hoseinahmadi.frenchpastry.util.Constants
+import ir.hoseinahmadi.frenchpastry.util.Constants.CHECKED_LOGIN
 
 @Composable
 fun MyTopBar(
-    show:Boolean,
+    show: Boolean,
     onClick: () -> Unit
 ) {
 
 
-    if (show && Constants.CHECKED_LOGIN) {
+    AnimatedVisibility(
+        visible = show && CHECKED_LOGIN,
+        enter = fadeIn() + expandVertically(animationSpec = tween(1000)),
+        exit = fadeOut() + shrinkVertically(animationSpec = tween(1000))
+    ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
